@@ -4,6 +4,8 @@
     "Model": "model.html",
     "Loss": "loss.html",
     "Skeleton": "skeleton.html",
-    "MocapDataset": "mocap_dataset.html"
+    "MocapDataset": "mocap_dataset.html",
+    "Human3.6 Dataset": "h36m_dataset.html",
+    "Camera": "camera.html"
   }
 }

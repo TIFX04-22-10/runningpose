@@ -21,6 +21,12 @@ entries:
     - output: web,pdf
       title: MocapDataset
       url: mocap_dataset.html
+    - output: web,pdf
+      title: Human3.6 Dataset
+      url: h36m_dataset.html
+    - output: web,pdf
+      title: Camera
+      url: camera.html
     output: web
     title: runningpose
   output: web

@@ -59,15 +59,14 @@ class Skeleton:
 
         return valid_joints
 
-    # TODO: Remove i in loop?? Should be feasible.
     def _compute_metadata(self):
         self._has_children = np.zeros(len(self._parents)).astype(bool)
-        for i,parent in enumerate(self._parents):
+        for _, parent in enumerate(self._parents):
             if parent != -1:
                 self._has_children[parent] = True
 
         self._children = []
-        for i, parent in enumerate(self._parents):
+        for _, parent in enumerate(self._parents):
             self._children.append([])
         for i, parent in enumerate(self._parents):
             if parent != -1:
