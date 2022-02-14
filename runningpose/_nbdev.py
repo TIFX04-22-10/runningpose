@@ -3,9 +3,15 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"TemporalModelBase": "00_model.ipynb",
-         "TemporalModel": "00_model.ipynb"}
+         "TemporalModel": "00_model.ipynb",
+         "mpjpe": "01_loss.ipynb",
+         "p_mpjpe": "01_loss.ipynb",
+         "mean_velocity_error": "01_loss.ipynb",
+         "Skeleton": "02_skeleton.ipynb"}
 
-modules = ["core/model.py"]
+modules = ["core/model.py",
+           "core/loss.py",
+           "core/skeleton.py"]
 
 doc_url = "https://svenssona.github.io/runningpose/"
 

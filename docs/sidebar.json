@@ -2,6 +2,8 @@
   "runningpose": {
     "Overview": "/",
     "Model": "model.html",
-    "Loss": "loss.html"
+    "Loss": "loss.html",
+    "Skeleton": "skeleton.html",
+    "MocapDataset": "mocap_dataset.html"
   }
 }

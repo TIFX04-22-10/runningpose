@@ -15,6 +15,12 @@ entries:
     - output: web,pdf
       title: Loss
       url: loss.html
+    - output: web,pdf
+      title: Skeleton
+      url: skeleton.html
+    - output: web,pdf
+      title: MocapDataset
+      url: mocap_dataset.html
     output: web
     title: runningpose
   output: web
