@@ -1,5 +1,7 @@
 {
-  "{runningpose}": {
-    "Overview": "/"
+  "runningpose": {
+    "Overview": "/",
+    "Model": "model.html",
+    "Loss": "loss.html"
   }
 }
