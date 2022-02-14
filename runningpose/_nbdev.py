@@ -5,7 +5,7 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"TemporalModelBase": "00_model.ipynb",
          "TemporalModel": "00_model.ipynb"}
 
-modules = ["model.py"]
+modules = ["core/model.py"]
 
 doc_url = "https://svenssona.github.io/runningpose/"
 
