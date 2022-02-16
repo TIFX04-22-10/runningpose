@@ -32,15 +32,34 @@ nb_path: "03_mocap_dataset.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">runningpose.core.skeleton</span> <span class="kn">import</span> <span class="n">Skeleton</span>
-</pre></div>
+</div>
+    {% endraw %}
 
-    </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="MocapDataset" class="doc_header"><code>class</code> <code>MocapDataset</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/mocap_dataset.py#L10" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MocapDataset</code>(<strong><code>fps</code></strong>, <strong><code>skeleton</code></strong>)</p>
+</blockquote>
+<p>Motion capture dataset base class.</p>
+<p>Attributes:
+skeleton -- A skeleton model also known as a kinematic model.
+fps -- Frames per second.
+data -- Must be filled by subclass.
+cameras -- Must be filled by subclass.</p>
+
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -50,56 +69,6 @@ nb_path: "03_mocap_dataset.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">MocapDataset</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Motion capture dataset base class. </span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">    skeleton -- A skeleton model also known as a kinematic model. </span>
-<span class="sd">    fps -- Frames per second.</span>
-<span class="sd">    data -- Must be filled by subclass.</span>
-<span class="sd">    cameras -- Must be filled by subclass. </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">skeleton</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_skeleton</span> <span class="o">=</span> <span class="n">skeleton</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span> <span class="o">=</span> <span class="n">fps</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cameras</span> <span class="o">=</span> <span class="kc">None</span>
-    
-    <span class="k">def</span> <span class="nf">remove_joints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">joints_to_remove</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Removes specific joints and re-asigns the remaining joints in the dataset.&quot;&quot;&quot;</span>
-        <span class="n">kept_joints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_skeleton</span><span class="o">.</span><span class="n">remove_joints</span><span class="p">(</span><span class="n">joints_to_remove</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="n">sub_act_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">subject</span><span class="p">][</span><span class="n">action</span><span class="p">]</span>
-                <span class="k">if</span> <span class="s2">&quot;positions&quot;</span> <span class="ow">in</span> <span class="n">sub_act_data</span><span class="p">:</span>
-                    <span class="n">sub_act_data</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_act_data</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">][:,</span> <span class="n">kept_joints</span><span class="p">]</span>
-
-    <span class="c1"># Bunch of getters.</span>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    
-    <span class="k">def</span> <span class="nf">subjects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-    
-    <span class="k">def</span> <span class="nf">fps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fps</span>
-    
-    <span class="k">def</span> <span class="nf">skeleton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_skeleton</span>
-    
-    <span class="k">def</span> <span class="nf">cameras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cameras</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
     {% endraw %}

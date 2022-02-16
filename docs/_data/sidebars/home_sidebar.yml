@@ -27,6 +27,15 @@ entries:
     - output: web,pdf
       title: Camera
       url: camera.html
+    - output: web,pdf
+      title: Quarternion
+      url: quaternion.html
+    - output: web,pdf
+      title: Utility
+      url: utils.html
+    - output: web,pdf
+      title: Generators
+      url: generators.html
     output: web
     title: runningpose
   output: web

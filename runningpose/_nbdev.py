@@ -7,11 +7,32 @@ index = {"TemporalModelBase": "00_model.ipynb",
          "mpjpe": "01_loss.ipynb",
          "p_mpjpe": "01_loss.ipynb",
          "mean_velocity_error": "01_loss.ipynb",
-         "Skeleton": "02_skeleton.ipynb"}
+         "Skeleton": "02_skeleton.ipynb",
+         "MocapDataset": "03_mocap_dataset.ipynb",
+         "Human36mDataset": "04_h36m_dataset.ipynb",
+         "h36m_skeleton": "04_h36m_dataset.ipynb",
+         "normalize_screen_coordinates": "05_camera.ipynb",
+         "image_coordinates": "05_camera.ipynb",
+         "world_to_camera": "05_camera.ipynb",
+         "camera_to_world": "05_camera.ipynb",
+         "project_to_2d": "05_camera.ipynb",
+         "project_to_2d_linear": "05_camera.ipynb",
+         "qrot": "06_quaternion.ipynb",
+         "qinverse": "06_quaternion.ipynb",
+         "wrap": "07_utils.ipynb",
+         "deterministic_random": "07_utils.ipynb",
+         "ChunkedGenerator": "08_generators.ipynb",
+         "UnchunkedGenerator": "08_generators.ipynb"}
 
 modules = ["core/model.py",
            "core/loss.py",
-           "core/skeleton.py"]
+           "core/skeleton.py",
+           "core/mocap_dataset.py",
+           "core/h36m_dataset.py",
+           "core/camera.py",
+           "core/quaternion.py",
+           "core/utils.py",
+           "core/generators.py"]
 
 doc_url = "https://svenssona.github.io/runningpose/"
 

@@ -32,38 +32,27 @@ nb_path: "04_h36m_dataset.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">runningpose.core.skeleton</span> <span class="kn">import</span> <span class="n">Skeleton</span>
-<span class="kn">from</span> <span class="nn">runningpose.core.mocap_dataset</span> <span class="kn">import</span> <span class="n">MocapDataset</span>
-<span class="kn">from</span> <span class="nn">runningpose.core.camera</span> <span class="kn">import</span> <span class="n">normalize_screen_coordinates</span><span class="p">,</span> <span class="n">image_coordinates</span>
-</pre></div>
+</div>
+    {% endraw %}
 
-    </div>
-</div>
-</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ImportError</span>                               Traceback (most recent call last)
-<span class="ansi-green-fg">/tmp/ipykernel_42325/935631678.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">import</span> copy
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-green-fg">from</span> runningpose<span class="ansi-blue-fg">.</span>core<span class="ansi-blue-fg">.</span>skeleton <span class="ansi-green-fg">import</span> Skeleton
-<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> runningpose<span class="ansi-blue-fg">.</span>core<span class="ansi-blue-fg">.</span>mocap_dataset <span class="ansi-green-fg">import</span> MocapDataset
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-green-fg">from</span> runningpose<span class="ansi-blue-fg">.</span>core<span class="ansi-blue-fg">.</span>camera <span class="ansi-green-fg">import</span> normalize_screen_coordinates<span class="ansi-blue-fg">,</span> image_coordinates
 
-<span class="ansi-red-fg">ImportError</span>: cannot import name &#39;MocapDataset&#39; from &#39;runningpose.core.mocap_dataset&#39; (/media/richard/SecondLinux/repos/runningpose/runningpose/core/mocap_dataset.py)</pre>
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="Human36mDataset" class="doc_header"><code>class</code> <code>Human36mDataset</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/h36m_dataset.py#L13" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Human36mDataset</code>(<strong><code>path</code></strong>, <strong><code>remove_static_joints</code></strong>=<em><code>True</code></em>) :: <a href="/runningpose/mocap_dataset.html#MocapDataset"><code>MocapDataset</code></a></p>
+</blockquote>
+<p>Human3.6M pose estimation dataset.</p>
+
 </div>
+
 </div>
 
 </div>
@@ -75,56 +64,6 @@ nb_path: "04_h36m_dataset.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Human36mDataset</span><span class="p">(</span><span class="n">MocapDataset</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Human3.6M pose estimation dataset.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">remove_static_joints</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">skeleton</span><span class="o">=</span><span class="n">h36m_skeleton</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cameras</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">h36m_cameras_extrinsic_params</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">cameras</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cameras</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cam</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cameras</span><span class="p">):</span>
-                <span class="n">cam</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">h36m_cameras_intrinsic_params</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cam</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;res_w&quot;</span><span class="p">,</span> <span class="s2">&quot;res_h&quot;</span><span class="p">]:</span>
-                        <span class="n">cam</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
-        
-        <span class="c1"># Normalize camera frame.</span>
-        <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize_screen_coordinates</span><span class="p">(</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span> <span class="n">w</span><span class="o">=</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;res_w&#39;</span><span class="p">],</span> <span class="n">h</span><span class="o">=</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;res_h&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
-        <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;focal_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;focal_length&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;res_w&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span>
-        <span class="k">if</span> <span class="s1">&#39;translation&#39;</span> <span class="ow">in</span> <span class="n">cam</span><span class="p">:</span>
-            <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;translation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;translation&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span> <span class="c1"># Milimeters to meters.  </span>
-        <span class="c1"># Add intrinsic parameters vector.</span>
-        <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;intrinsic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;focal_length&#39;</span><span class="p">],</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;radial_distortion&#39;</span><span class="p">],</span>
-                                           <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;tangential_distortion&#39;</span><span class="p">]))</span>
-
-        <span class="c1"># Load serialized dataset.</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">&#39;positions_3d&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> 
-    
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">subject</span><span class="p">,</span> <span class="n">actions</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">action_name</span><span class="p">,</span> <span class="n">positions</span> <span class="ow">in</span> <span class="n">actions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">subject</span><span class="p">][</span><span class="n">action_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s1">&#39;positions&#39;</span><span class="p">:</span> <span class="n">positions</span><span class="p">,</span>
-                    <span class="s1">&#39;cameras&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cameras</span><span class="p">[</span><span class="n">subject</span><span class="p">],</span>
-                <span class="p">}</span>    
-                
-        <span class="k">if</span> <span class="n">remove_static_joints</span><span class="p">:</span>
-            <span class="c1"># Bring the skeleton to 17 joints instead of the original 32</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_joints</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">])</span>
-            
-            <span class="c1"># Rewire shoulders to the correct parents</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_skeleton</span><span class="o">.</span><span class="n">_parents</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_skeleton</span><span class="o">.</span><span class="n">_parents</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
@@ -162,239 +101,6 @@ nb_path: "04_h36m_dataset.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">h36m_skeleton</span> <span class="o">=</span> <span class="n">Skeleton</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>
-       <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
-       <span class="n">joints_left</span><span class="o">=</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">],</span>
-       <span class="n">joints_right</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">h36m_cameras_intrinsic_params</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span>
-        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;54138969&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">512.54150390625</span><span class="p">,</span> <span class="mf">515.4514770507812</span><span class="p">],</span>
-        <span class="s1">&#39;focal_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1145.0494384765625</span><span class="p">,</span> <span class="mf">1143.7811279296875</span><span class="p">],</span>
-        <span class="s1">&#39;radial_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.20709891617298126</span><span class="p">,</span> <span class="mf">0.24777518212795258</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0030751503072679043</span><span class="p">],</span>
-        <span class="s1">&#39;tangential_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0009756988729350269</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00142447161488235</span><span class="p">],</span>
-        <span class="s1">&#39;res_w&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="s1">&#39;res_h&#39;</span><span class="p">:</span> <span class="mi">1002</span><span class="p">,</span>
-        <span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span> <span class="c1"># Only used for visualization</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;55011271&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">508.8486328125</span><span class="p">,</span> <span class="mf">508.0649108886719</span><span class="p">],</span>
-        <span class="s1">&#39;focal_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1149.6756591796875</span><span class="p">,</span> <span class="mf">1147.5916748046875</span><span class="p">],</span>
-        <span class="s1">&#39;radial_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1942136287689209</span><span class="p">,</span> <span class="mf">0.2404085397720337</span><span class="p">,</span> <span class="mf">0.006819975562393665</span><span class="p">],</span>
-        <span class="s1">&#39;tangential_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0016190266469493508</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0027408944442868233</span><span class="p">],</span>
-        <span class="s1">&#39;res_w&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="s1">&#39;res_h&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="c1"># Only used for visualization</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;58860488&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">519.8158569335938</span><span class="p">,</span> <span class="mf">501.40264892578125</span><span class="p">],</span>
-        <span class="s1">&#39;focal_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1149.1407470703125</span><span class="p">,</span> <span class="mf">1148.7989501953125</span><span class="p">],</span>
-        <span class="s1">&#39;radial_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.2083381861448288</span><span class="p">,</span> <span class="mf">0.25548800826072693</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0024604974314570427</span><span class="p">],</span>
-        <span class="s1">&#39;tangential_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0014843869721516967</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0007599993259645998</span><span class="p">],</span>
-        <span class="s1">&#39;res_w&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="s1">&#39;res_h&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="mi">110</span><span class="p">,</span> <span class="c1"># Only used for visualization</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;60457274&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">514.9682006835938</span><span class="p">,</span> <span class="mf">501.88201904296875</span><span class="p">],</span>
-        <span class="s1">&#39;focal_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1145.5113525390625</span><span class="p">,</span> <span class="mf">1144.77392578125</span><span class="p">],</span>
-        <span class="s1">&#39;radial_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.198384091258049</span><span class="p">,</span> <span class="mf">0.21832367777824402</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.008947807364165783</span><span class="p">],</span>
-        <span class="s1">&#39;tangential_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0005872055771760643</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0018133620033040643</span><span class="p">],</span>
-        <span class="s1">&#39;res_w&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
-        <span class="s1">&#39;res_h&#39;</span><span class="p">:</span> <span class="mi">1002</span><span class="p">,</span>
-        <span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">110</span><span class="p">,</span> <span class="c1"># Only used for visualization</span>
-    <span class="p">},</span>
-<span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">h36m_cameras_extrinsic_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;S1&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1407056450843811</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1500701755285263</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.755240797996521</span><span class="p">,</span> <span class="mf">0.6223280429840088</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1841.1070556640625</span><span class="p">,</span> <span class="mf">4955.28466796875</span><span class="p">,</span> <span class="mf">1563.4454345703125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6157187819480896</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.764836311340332</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14833825826644897</span><span class="p">,</span> <span class="mf">0.11794740706682205</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1761.278564453125</span><span class="p">,</span> <span class="o">-</span><span class="mf">5078.0068359375</span><span class="p">,</span> <span class="mf">1606.2650146484375</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.14651472866535187</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14647851884365082</span><span class="p">,</span> <span class="mf">0.7653023600578308</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6094175577163696</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1846.7777099609375</span><span class="p">,</span> <span class="mf">5215.04638671875</span><span class="p">,</span> <span class="mf">1491.972412109375</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5834008455276489</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7853162288665771</span><span class="p">,</span> <span class="mf">0.14548823237419128</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14749594032764435</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1794.7896728515625</span><span class="p">,</span> <span class="o">-</span><span class="mf">3722.698974609375</span><span class="p">,</span> <span class="mf">1574.8927001953125</span><span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S2&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S3&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S4&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-        <span class="p">{},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S5&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1467377245426178</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.162370964884758</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7551892995834351</span><span class="p">,</span> <span class="mf">0.6178938746452332</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2097.3916015625</span><span class="p">,</span> <span class="mf">4880.94482421875</span><span class="p">,</span> <span class="mf">1605.732421875</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6159758567810059</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7626792192459106</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15728192031383514</span><span class="p">,</span> <span class="mf">0.1189815029501915</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2031.7008056640625</span><span class="p">,</span> <span class="o">-</span><span class="mf">5167.93310546875</span><span class="p">,</span> <span class="mf">1612.923095703125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.14291371405124664</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.12907841801643372</span><span class="p">,</span> <span class="mf">0.7678384780883789</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6110143065452576</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1620.5948486328125</span><span class="p">,</span> <span class="mf">5171.65869140625</span><span class="p">,</span> <span class="mf">1496.43701171875</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5920479893684387</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7814217805862427</span><span class="p">,</span> <span class="mf">0.1274748593568802</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15036417543888092</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1637.1737060546875</span><span class="p">,</span> <span class="o">-</span><span class="mf">3867.3173828125</span><span class="p">,</span> <span class="mf">1547.033203125</span><span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S6&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1337897777557373</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15692396461963654</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7571090459823608</span><span class="p">,</span> <span class="mf">0.6198879480361938</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1935.4517822265625</span><span class="p">,</span> <span class="mf">4950.24560546875</span><span class="p">,</span> <span class="mf">1618.0838623046875</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6147197484970093</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7628812789916992</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.16174767911434174</span><span class="p">,</span> <span class="mf">0.11819244921207428</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1969.803955078125</span><span class="p">,</span> <span class="o">-</span><span class="mf">5128.73876953125</span><span class="p">,</span> <span class="mf">1632.77880859375</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1529948115348816</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.13529130816459656</span><span class="p">,</span> <span class="mf">0.7646096348762512</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6112781167030334</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1769.596435546875</span><span class="p">,</span> <span class="mf">5185.361328125</span><span class="p">,</span> <span class="mf">1476.993408203125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5916101336479187</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7804774045944214</span><span class="p">,</span> <span class="mf">0.12832270562648773</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1561593860387802</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1721.668701171875</span><span class="p">,</span> <span class="o">-</span><span class="mf">3884.13134765625</span><span class="p">,</span> <span class="mf">1540.4879150390625</span><span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S7&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1435241848230362</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1631336808204651</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7548328638076782</span><span class="p">,</span> <span class="mf">0.6188824772834778</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1974.512939453125</span><span class="p">,</span> <span class="mf">4926.3544921875</span><span class="p">,</span> <span class="mf">1597.8326416015625</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6141672730445862</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7638262510299683</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1596645563840866</span><span class="p">,</span> <span class="mf">0.1177929937839508</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1937.0584716796875</span><span class="p">,</span> <span class="o">-</span><span class="mf">5119.7900390625</span><span class="p">,</span> <span class="mf">1631.5665283203125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.14550060033798218</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.12874816358089447</span><span class="p">,</span> <span class="mf">0.7660516500473022</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6127139329910278</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1741.8111572265625</span><span class="p">,</span> <span class="mf">5208.24951171875</span><span class="p">,</span> <span class="mf">1464.8245849609375</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5912848114967346</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7821764349937439</span><span class="p">,</span> <span class="mf">0.12445473670959473</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15196487307548523</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1734.7105712890625</span><span class="p">,</span> <span class="o">-</span><span class="mf">3832.42138671875</span><span class="p">,</span> <span class="mf">1548.5830078125</span><span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S8&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.14110587537288666</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15589867532253265</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7561917304992676</span><span class="p">,</span> <span class="mf">0.619644045829773</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2150.65185546875</span><span class="p">,</span> <span class="mf">4896.1611328125</span><span class="p">,</span> <span class="mf">1611.9046630859375</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6169601678848267</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7647668123245239</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14846350252628326</span><span class="p">,</span> <span class="mf">0.11158157885074615</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2219.965576171875</span><span class="p">,</span> <span class="o">-</span><span class="mf">5148.453125</span><span class="p">,</span> <span class="mf">1613.0440673828125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1471444070339203</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.13377119600772858</span><span class="p">,</span> <span class="mf">0.7670128345489502</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6100369691848755</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1571.2215576171875</span><span class="p">,</span> <span class="mf">5137.0185546875</span><span class="p">,</span> <span class="mf">1498.1761474609375</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5927824378013611</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7825870513916016</span><span class="p">,</span> <span class="mf">0.12147816270589828</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14631995558738708</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1476.913330078125</span><span class="p">,</span> <span class="o">-</span><span class="mf">3896.7412109375</span><span class="p">,</span> <span class="mf">1547.97216796875</span><span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S9&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.15540587902069092</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15548215806484222</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7532095313072205</span><span class="p">,</span> <span class="mf">0.6199594736099243</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2044.45849609375</span><span class="p">,</span> <span class="mf">4935.1171875</span><span class="p">,</span> <span class="mf">1481.2275390625</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.618784487247467</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7634735107421875</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14132238924503326</span><span class="p">,</span> <span class="mf">0.11933968216180801</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1990.959716796875</span><span class="p">,</span> <span class="o">-</span><span class="mf">5123.810546875</span><span class="p">,</span> <span class="mf">1568.8048095703125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.13357827067375183</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1367100477218628</span><span class="p">,</span> <span class="mf">0.7689454555511475</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6100738644599915</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1670.9921875</span><span class="p">,</span> <span class="mf">5211.98583984375</span><span class="p">,</span> <span class="mf">1528.387939453125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5879399180412292</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7823407053947449</span><span class="p">,</span> <span class="mf">0.1427614390850067</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14794869720935822</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1696.04345703125</span><span class="p">,</span> <span class="o">-</span><span class="mf">3827.099853515625</span><span class="p">,</span> <span class="mf">1591.4127197265625</span><span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;S11&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.15232472121715546</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15442320704460144</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7547563314437866</span><span class="p">,</span> <span class="mf">0.6191070079803467</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2098.440185546875</span><span class="p">,</span> <span class="mf">4926.5546875</span><span class="p">,</span> <span class="mf">1500.278564453125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.6189449429512024</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7600917220115662</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15300633013248444</span><span class="p">,</span> <span class="mf">0.1255258321762085</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2083.182373046875</span><span class="p">,</span> <span class="o">-</span><span class="mf">4912.1728515625</span><span class="p">,</span> <span class="mf">1561.07861328125</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.14943228662014008</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15650227665901184</span><span class="p">,</span> <span class="mf">0.7681233882904053</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6026304364204407</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1609.8153076171875</span><span class="p">,</span> <span class="mf">5177.3359375</span><span class="p">,</span> <span class="mf">1537.896728515625</span><span class="p">],</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5894251465797424</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7818877100944519</span><span class="p">,</span> <span class="mf">0.13991211354732513</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14715361595153809</span><span class="p">],</span>
-            <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">1590.738037109375</span><span class="p">,</span> <span class="o">-</span><span class="mf">3854.1689453125</span><span class="p">,</span> <span class="mf">1578.017578125</span><span class="p">],</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
-<span class="p">}</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
     {% endraw %}
