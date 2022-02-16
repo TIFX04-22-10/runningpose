@@ -36,6 +36,15 @@ entries:
     - output: web,pdf
       title: Generators
       url: generators.html
+    - output: web,pdf
+      title: Custom dataset
+      url: custom_dataset.html
+    - output: web,pdf
+      title: Visualization
+      url: visualization.html
+    - output: web,pdf
+      title: Arguments
+      url: arguments.html
     output: web
     title: runningpose
   output: web

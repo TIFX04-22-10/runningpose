@@ -22,7 +22,13 @@ index = {"TemporalModelBase": "00_model.ipynb",
          "wrap": "07_utils.ipynb",
          "deterministic_random": "07_utils.ipynb",
          "ChunkedGenerator": "08_generators.ipynb",
-         "UnchunkedGenerator": "08_generators.ipynb"}
+         "UnchunkedGenerator": "08_generators.ipynb",
+         "custom_camera_params": "09_custom_dataset.ipynb",
+         "get_resolution": "10_visualization.ipynb",
+         "get_fps": "10_visualization.ipynb",
+         "read_video": "10_visualization.ipynb",
+         "downsample_tensor": "10_visualization.ipynb",
+         "render_animation": "10_visualization.ipynb"}
 
 modules = ["core/model.py",
            "core/loss.py",
@@ -32,7 +38,10 @@ modules = ["core/model.py",
            "core/camera.py",
            "core/quaternion.py",
            "core/utils.py",
-           "core/generators.py"]
+           "core/generators.py",
+           "core/custom_dataset.py",
+           "core/visualization.py",
+           "core/arguments.py"]
 
 doc_url = "https://svenssona.github.io/runningpose/"
 
