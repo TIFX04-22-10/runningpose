@@ -28,7 +28,12 @@ index = {"TemporalModelBase": "00_model.ipynb",
          "get_fps": "10_visualization.ipynb",
          "read_video": "10_visualization.ipynb",
          "downsample_tensor": "10_visualization.ipynb",
-         "render_animation": "10_visualization.ipynb"}
+         "render_animation": "10_visualization.ipynb",
+         "coco_metadata": "12_data_utils.ipynb",
+         "h36m_metadata": "12_data_utils.ipynb",
+         "suggest_metadata": "12_data_utils.ipynb",
+         "output_prefix_2d": "13_prepare_data_2d_custom.ipynb",
+         "decode": "13_prepare_data_2d_custom.ipynb"}
 
 modules = ["core/model.py",
            "core/loss.py",
@@ -41,7 +46,9 @@ modules = ["core/model.py",
            "core/generators.py",
            "core/custom_dataset.py",
            "core/visualization.py",
-           "core/arguments.py"]
+           "core/arguments.py",
+           "data/data_utils.py",
+           "data/prepare_data_2d_custom.py"]
 
 doc_url = "https://svenssona.github.io/runningpose/"
 

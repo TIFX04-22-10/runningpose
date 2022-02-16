@@ -12,6 +12,8 @@
     "Generators": "generators.html",
     "Custom dataset": "custom_dataset.html",
     "Visualization": "visualization.html",
-    "Arguments": "arguments.html"
+    "Arguments": "arguments.html",
+    "Data utility": "data_utils.html",
+    "Prepare custom 2D data": "prepare_data_2d_custom.html"
   }
 }

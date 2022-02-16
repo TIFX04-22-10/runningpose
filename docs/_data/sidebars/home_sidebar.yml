@@ -45,6 +45,12 @@ entries:
     - output: web,pdf
       title: Arguments
       url: arguments.html
+    - output: web,pdf
+      title: Data utility
+      url: data_utils.html
+    - output: web,pdf
+      title: Prepare custom 2D data
+      url: prepare_data_2d_custom.html
     output: web
     title: runningpose
   output: web
