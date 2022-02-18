@@ -85,68 +85,6 @@ nb_path: "13_prepare_data_2d_custom.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">nbdev_export</span>
-<span class="k">try</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">nbdev.imports</span> <span class="kn">import</span> <span class="n">IN_NOTEBOOK</span>
-<span class="k">except</span><span class="p">:</span> <span class="n">IN_NOTEBOOK</span><span class="o">=</span><span class="kc">False</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span> <span class="o">!=</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This script must be launched from the &quot;data&quot; directory&#39;</span><span class="p">)</span>
-        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Custom dataset creator&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;--input&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;PATH&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;detections directory&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;--output&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;PATH&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output suffix for 2D detections&#39;</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Please specify the input directory&#39;</span><span class="p">)</span>
-        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Please specify an output suffix (e.g. detectron_pt_coco)&#39;</span><span class="p">)</span>
-        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Parsing 2D detections from&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
-    
-    <span class="n">metadata</span> <span class="o">=</span> <span class="n">suggest_metadata</span><span class="p">(</span><span class="s1">&#39;coco&#39;</span><span class="p">)</span>
-    <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;video_metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-    
-    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span> <span class="o">+</span> <span class="s1">&#39;/*.npz&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
-        <span class="n">canonical_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">data</span><span class="p">,</span> <span class="n">video_metadata</span> <span class="o">=</span> <span class="n">decode</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="n">output</span><span class="p">[</span><span class="n">canonical_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">output</span><span class="p">[</span><span class="n">canonical_name</span><span class="p">][</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;keypoints&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)]</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;video_metadata&#39;</span><span class="p">][</span><span class="n">canonical_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">video_metadata</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saving...&#39;</span><span class="p">)</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span><span class="n">output_prefix_2d</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">positions_2d</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done.&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>UsageError: Line magic function `%nbdev_export` not found.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     {% endraw %}

@@ -24,16 +24,18 @@ index = {"TemporalModelBase": "00_model.ipynb",
          "ChunkedGenerator": "08_generators.ipynb",
          "UnchunkedGenerator": "08_generators.ipynb",
          "custom_camera_params": "09_custom_dataset.ipynb",
-         "get_resolution": "10_visualization.ipynb",
+         "get_resolution": "14_infer_video.ipynb",
          "get_fps": "10_visualization.ipynb",
-         "read_video": "10_visualization.ipynb",
+         "read_video": "14_infer_video.ipynb",
          "downsample_tensor": "10_visualization.ipynb",
          "render_animation": "10_visualization.ipynb",
          "coco_metadata": "12_data_utils.ipynb",
          "h36m_metadata": "12_data_utils.ipynb",
          "suggest_metadata": "12_data_utils.ipynb",
          "output_prefix_2d": "13_prepare_data_2d_custom.ipynb",
-         "decode": "13_prepare_data_2d_custom.ipynb"}
+         "decode": "13_prepare_data_2d_custom.ipynb",
+         "parse_args": "14_infer_video.ipynb",
+         "main": "14_infer_video.ipynb"}
 
 modules = ["core/model.py",
            "core/loss.py",
@@ -48,7 +50,8 @@ modules = ["core/model.py",
            "core/visualization.py",
            "core/arguments.py",
            "data/data_utils.py",
-           "data/prepare_data_2d_custom.py"]
+           "data/prepare_data_2d_custom.py",
+           "inference/infer_video.py"]
 
 doc_url = "https://svenssona.github.io/runningpose/"
 

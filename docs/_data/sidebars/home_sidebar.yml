@@ -51,6 +51,9 @@ entries:
     - output: web,pdf
       title: Prepare custom 2D data
       url: prepare_data_2d_custom.html
+    - output: web,pdf
+      title: Inference Video
+      url: infer_video.html
     output: web
     title: runningpose
   output: web

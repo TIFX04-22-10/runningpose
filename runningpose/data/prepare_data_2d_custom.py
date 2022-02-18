@@ -61,3 +61,43 @@ def decode(filename):
         'bounding_boxes': boundary_box,
         'keypoints': key_points,
     }], metadata
+
+# Cell
+try: from nbdev.imports import IN_NOTEBOOK
+except: IN_NOTEBOOK=False
+
+if __name__ == '__main__' and not IN_NOTEBOOK:
+    if os.path.basename(os.getcwd()) != 'data':
+        print('This script must be launched from the "data" directory')
+        exit(0)
+
+    parser = argparse.ArgumentParser(description='Custom dataset creator')
+    parser.add_argument('-i', '--input', type=str, default='', metavar='PATH', help='detections directory')
+    parser.add_argument('-o', '--output', type=str, default='', metavar='PATH', help='output suffix for 2D detections')
+    args = parser.parse_args()
+
+    if not args.input:
+        print('Please specify the input directory')
+        exit(0)
+
+    if not args.output:
+        print('Please specify an output suffix (e.g. detectron_pt_coco)')
+        exit(0)
+
+    print('Parsing 2D detections from', args.input)
+
+    metadata = suggest_metadata('coco')
+    metadata['video_metadata'] = {}
+
+    output = {}
+    file_list = glob(args.input + '/*.npz')
+    for f in file_list:
+        canonical_name = os.path.splitext(os.path.basename(f))[0]
+        data, video_metadata = decode(f)
+        output[canonical_name] = {}
+        output[canonical_name]['custom'] = [data[0]['keypoints'].astype('float32')]
+        metadata['video_metadata'][canonical_name] = video_metadata
+
+    print('Saving...')
+    np.savez_compressed(output_prefix_2d + args.output, positions_2d=output, metadata=metadata)
+    print('Done.')
