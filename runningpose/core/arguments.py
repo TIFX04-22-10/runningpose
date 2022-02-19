@@ -7,6 +7,7 @@ import argparse
 
 # Cell
 def parse_args():
+    """Parses command-line arguments."""
     parser = argparse.ArgumentParser(description='Training script')
 
     # General arguments

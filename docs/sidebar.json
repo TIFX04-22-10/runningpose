@@ -15,7 +15,6 @@
     "Arguments": "arguments.html",
     "Data utility": "data_utils.html",
     "Prepare custom 2D data": "prepare_data_2d_custom.html",
-    "Inference Video": "infer_video.html",
-    "run": "run.html"
+    "Inference Video": "infer_video.html"
   }
 }
