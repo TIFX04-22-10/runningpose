@@ -54,6 +54,9 @@ entries:
     - output: web,pdf
       title: Inference Video
       url: infer_video.html
+    - output: web,pdf
+      title: run
+      url: run.html
     output: web
     title: runningpose
   output: web
