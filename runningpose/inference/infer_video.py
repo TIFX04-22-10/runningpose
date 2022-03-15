@@ -107,7 +107,7 @@ def main(args):
         keypoints = []
         for frame_i, im in enumerate(read_video(video_name)):
             t = time.time()
-            outputs = predictor(im)['instance'] # Removed to.("cpu") to run on gpu instead.
+            outputs = predictor(im)['instances'].to('cpu')
             print("Frame {} processed in {:.3f}s".format(frame_i, time.time()-t))
 
             # Checks if image is "empty or not".

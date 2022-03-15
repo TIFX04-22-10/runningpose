@@ -210,6 +210,7 @@ class UnchunkedGenerator:
 
     def num_frames(self):
         """Returns the total number of frames that we test on."""
+        count = 0
         for pose in self.poses_2d:
             count += pose.shape[0]
         return count
@@ -245,5 +246,9 @@ class UnchunkedGenerator:
                     batch_3d = np.concatenate((batch_3d, batch_3d), axis=0)
                     batch_3d[1, :, :, 0] *= -1
                     batch_3d[1, :, self.joints_left + self.joints_right] = batch_3d[1, :, self.joints_right + self.joints_left]
+
+                batch_2d = np.concatenate((batch_2d, batch_2d), axis=0)
+                batch_2d[1, :, :, 0] *= -1
+                batch_2d[1, :, self.kps_left + self.kps_right] = batch_2d[1, :, self.kps_right + self.kps_left]
 
         yield batch_cam, batch_3d, batch_2d

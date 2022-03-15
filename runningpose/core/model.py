@@ -59,14 +59,14 @@ class TemporalModelBase(nn.Module):
         assert x.shape[-2] == self.num_joints_in
         assert x.shape[-1] == self.in_features
 
-        sz = x.shape[0]
+        sz = x.shape[:3]
         x = x.view(x.shape[0], x.shape[1], -1)  # The size -1 is inferred from other dimensions.
         x = x.permute(0, 2, 1)
 
         x = self._forward_blocks(x) # Creates a forward block that subclasses implement.
 
         x = x.permute(0, 2, 1)
-        x = x.view(sz, -1, self.num_joints_out, 3)
+        x = x.view(sz[0], -1, self.num_joints_out, 3)
 
         return x
 

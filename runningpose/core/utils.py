@@ -3,6 +3,11 @@
 __all__ = ['wrap', 'deterministic_random']
 
 # Cell
+import torch
+import numpy as np
+import hashlib
+
+# Cell
 def wrap(func, *args, unsqueeze=False):
     """
     Wrap a torch function so it can be called with NumPy arrays.

@@ -18,6 +18,11 @@ class Skeleton:
     def __init__(self, parents, joints_left, joints_right):
         assert len(joints_left) == len(joints_right), "Skeleton is not symmetric."
 
+        self._parents = np.array(parents)
+        self._joints_left = joints_left
+        self._joints_right = joints_right
+        self._compute_metadata()
+
     def remove_joints(self, joints_to_remove):
         """
         Remove the joints specified in 'joints_to_remove'.

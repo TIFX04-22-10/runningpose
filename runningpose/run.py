@@ -8,12 +8,12 @@ import os
 import sys
 import errno
 
-from runningpose.core.arguments import parse_args
-from runningpose.core.camera import *
-from runningpose.core.model import *
-from runningpose.core.loss import *
-from runningpose.core.generators import ChunkedGenerator, UnchunkedGenerator
-from runningpose.core.utils import deterministic_random
+from core.arguments import parse_args
+from core.camera import *
+from core.model import *
+from core.loss import *
+from core.generators import ChunkedGenerator, UnchunkedGenerator
+from core.utils import deterministic_random
 from time import time
 
 args = parse_args()
@@ -29,10 +29,10 @@ except OSError as e:
 print('Loading dataset...')
 dataset_path = 'data/data_3d_' + args.dataset + '.npz'
 if args.dataset == 'h36m':
-    from runningpose.core.h36m_dataset import Human36mDataset
+    from core.h36m_dataset import Human36mDataset
     dataset = Human36mDataset(dataset_path)
 elif args.dataset.startswith('custom'):
-    from runningpose.core.custom_dataset import CustomDataset
+    from core.custom_dataset import CustomDataset
     dataset = CustomDataset('data/data_2d_' + args.dataset + '_' + args.keypoints + '.npz')
 else:
     raise KeyError('Invalid dataset')
@@ -644,12 +644,14 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
             model_traj.eval()
         N = 0
         for _, batch, batch_2d in test_generator.next_epoch():
+            print(batch_2d.size)
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
             if torch.cuda.is_available():
                 inputs_2d = inputs_2d.cuda()
 
             # Positional model
             if not use_trajectory_model:
+                print(inputs_2d.size())
                 predicted_3d_pos = model_pos(inputs_2d)
             else:
                 predicted_3d_pos = model_traj(inputs_2d)
@@ -657,6 +659,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
             # Test-time augmentation (if enabled)
             if test_generator.augment_enabled():
                 # Undo flipping and take average with non-flipped version
+                print(predicted_3d_pos.size())
                 predicted_3d_pos[1, :, :, 0] *= -1
                 if not use_trajectory_model:
                     predicted_3d_pos[1, :, joints_left + joints_right] = predicted_3d_pos[1, :, joints_right + joints_left]
@@ -757,7 +760,7 @@ if args.render:
         
         input_keypoints = image_coordinates(input_keypoints[..., :2], w=cam['res_w'], h=cam['res_h'])
         
-        from runningpose.core.visualization import render_animation
+        from core.visualization import render_animation
         render_animation(input_keypoints, keypoints_metadata, anim_output,
                          dataset.skeleton(), dataset.fps(), args.viz_bitrate, cam['azimuth'], args.viz_output,
                          limit=args.viz_limit, downsample=args.viz_downsample, size=args.viz_size,
