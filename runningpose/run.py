@@ -257,20 +257,27 @@ if not args.evaluate:
     final_momentum = 0.001
     
     
-    train_generator = ChunkedGenerator(args.batch_size//args.stride, cameras_train, poses_train, poses_train_2d, args.stride,
-                                       pad=pad, causal_shift=causal_shift, shuffle=True, augment=args.data_augmentation,
-                                       kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right)
+    train_generator = ChunkedGenerator(args.batch_size//args.stride, cameras_train, 
+                                       poses_train, poses_train_2d, args.stride,
+                                       pad=pad, causal_shift=causal_shift, shuffle=True, 
+                                       augment=args.data_augmentation,
+                                       kps_left=kps_left, kps_right=kps_right, 
+                                       joints_left=joints_left, joints_right=joints_right)
+
     train_generator_eval = UnchunkedGenerator(cameras_train, poses_train, poses_train_2d,
                                               pad=pad, causal_shift=causal_shift, augment=False)
+
     print('INFO: Training on {} frames'.format(train_generator_eval.num_frames()))
     if semi_supervised:
-        semi_generator = ChunkedGenerator(args.batch_size//args.stride, cameras_semi, None, poses_semi_2d, args.stride,
+        semi_generator = ChunkedGenerator(args.batch_size//args.stride, cameras_semi, None, 
+                                          poses_semi_2d, args.stride,
                                           pad=pad, causal_shift=causal_shift, shuffle=True,
                                           random_seed=4321, augment=args.data_augmentation,
-                                          kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right,
-                                          endless=True)
+                                          kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right, endless=True)
+
         semi_generator_eval = UnchunkedGenerator(cameras_semi, None, poses_semi_2d,
                                                  pad=pad, causal_shift=causal_shift, augment=False)
+
         print('INFO: Semi-supervision on {} frames'.format(semi_generator_eval.num_frames()))
 
     if args.resume:
@@ -391,7 +398,7 @@ if not args.evaluate:
 
                 optimizer.zero_grad()
 
-                # Predict 3D poses
+                # Predict 3D poses (forward)
                 predicted_3d_pos = model_pos_train(inputs_2d)
                 loss_3d_pos = mpjpe(predicted_3d_pos, inputs_3d)
                 epoch_loss_3d_train += inputs_3d.shape[0]*inputs_3d.shape[1] * loss_3d_pos.item()
@@ -632,7 +639,8 @@ if not args.evaluate:
             plt.close('all')
 
 # Evaluate
-def evaluate(test_generator, action=None, return_predictions=False, use_trajectory_model=False):
+def evaluate(test_generator, action=None, 
+             return_predictions=False, save_predictions=False, use_trajectory_model=False):
     epoch_loss_3d_pos = 0
     epoch_loss_3d_pos_procrustes = 0
     epoch_loss_3d_pos_scale = 0
@@ -664,7 +672,12 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 if not use_trajectory_model:
                     predicted_3d_pos[1, :, joints_left + joints_right] = predicted_3d_pos[1, :, joints_right + joints_left]
                 predicted_3d_pos = torch.mean(predicted_3d_pos, dim=0, keepdim=True)
-                
+
+            if save_predictions:
+                print(predicted_3d_pos.size())
+                predictions = predicted_3d_pos.cpu().numpy()
+                print(predictions.shape)
+                np.save('model_predictions', predictions)
             if return_predictions:
                 return predicted_3d_pos.squeeze(0).cpu().numpy()
                 
