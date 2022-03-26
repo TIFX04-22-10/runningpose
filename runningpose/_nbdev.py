@@ -32,13 +32,23 @@ index = {"TemporalModelBase": "00_model.ipynb",
          "read_video": "14_infer_video.ipynb",
          "downsample_tensor": "10_visualization.ipynb",
          "render_animation": "10_visualization.ipynb",
-         "parse_args": "14_infer_video.ipynb",
+         "parse_args": "15_prepare_data_COCO.ipynb",
          "coco_metadata": "13_prepare_data_2d_custom.ipynb",
          "h36m_metadata": "13_prepare_data_2d_custom.ipynb",
          "suggest_metadata": "13_prepare_data_2d_custom.ipynb",
          "output_prefix_2d": "13_prepare_data_2d_custom.ipynb",
          "decode": "13_prepare_data_2d_custom.ipynb",
-         "main": "14_infer_video.ipynb"}
+         "main": "15_prepare_data_COCO.ipynb",
+         "INFO": "15_prepare_data_COCO.ipynb",
+         "LICENSES": "15_prepare_data_COCO.ipynb",
+         "CATEGORIES": "15_prepare_data_COCO.ipynb",
+         "convert": "16_pycococreatortools.ipynb",
+         "natural_key": "16_pycococreatortools.ipynb",
+         "resize_binary_mask": "16_pycococreatortools.ipynb",
+         "close_contour": "16_pycococreatortools.ipynb",
+         "binary_mask_to_polygon": "16_pycococreatortools.ipynb",
+         "create_image_info": "16_pycococreatortools.ipynb",
+         "create_annotation_info": "16_pycococreatortools.ipynb"}
 
 modules = ["core/model.py",
            "core/loss.py",
@@ -54,7 +64,9 @@ modules = ["core/model.py",
            "core/arguments.py",
            "data/data_utils.py",
            "data/prepare_data_2d_custom.py",
-           "inference/infer_video.py"]
+           "data/inference/infer_video.py",
+           "data/prepare_data_COCO.py",
+           "data/pycoco/pycococreatortools.py"]
 
 doc_url = "https://svenssona.github.io/runningpose/"
 
