@@ -40,33 +40,22 @@ nb_path: "nbs/17_format_qtmdata.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-</div>
-    {% endraw %}
+<div class="output_wrapper">
+<div class="output">
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
+<div class="output_area">
 
-</div>
-    {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/format_qtmdata.py#L12" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>()</p>
+</blockquote>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 </div>
-    {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -87,13 +76,16 @@ nb_path: "nbs/17_format_qtmdata.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>497.07741288455264
-0
-497.0529247474559
-3
-</pre>
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/format_qtmdata.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
+</blockquote>
+<p>Loads the qtm data then removes unwanted keypoints.
+Then it infers new keypoints adds them.
+Further we scale the dataset using a the norm vector between the root and 'SpineThoracic2'.</p>
+
 </div>
+
 </div>
 
 </div>
@@ -106,187 +98,12 @@ nb_path: "nbs/17_format_qtmdata.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>HeadFront</th>
-      <th>SpineThoracic2</th>
-      <th>SpineThoracic12</th>
-      <th>LShoulderTop</th>
-      <th>LHand2</th>
-      <th>RShoulderTop</th>
-      <th>RHand2</th>
-      <th>WaistBack</th>
-      <th>LAnkleOut</th>
-      <th>RAnkleOut</th>
-      <th>LElbow</th>
-      <th>RElbow</th>
-      <th>LWrist</th>
-      <th>RWrist</th>
-      <th>LKnee</th>
-      <th>RKnee</th>
-      <th>LWaist</th>
-      <th>RWaist</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.484834</td>
-      <td>-0.036614</td>
-      <td>-0.090328</td>
-      <td>0.163355</td>
-      <td>0.633704</td>
-      <td>0.150681</td>
-      <td>0.612379</td>
-      <td>0.0</td>
-      <td>0.032792</td>
-      <td>0.063169</td>
-      <td>0.127646</td>
-      <td>0.106623</td>
-      <td>0.491473</td>
-      <td>0.486846</td>
-      <td>0.161041</td>
-      <td>0.213146</td>
-      <td>0.302770</td>
-      <td>0.310012</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>-0.039410</td>
-      <td>0.013318</td>
-      <td>0.002555</td>
-      <td>0.368715</td>
-      <td>0.824781</td>
-      <td>-0.362740</td>
-      <td>-0.812731</td>
-      <td>0.0</td>
-      <td>0.377205</td>
-      <td>-0.422892</td>
-      <td>0.615367</td>
-      <td>-0.584828</td>
-      <td>0.800006</td>
-      <td>-0.779526</td>
-      <td>0.268731</td>
-      <td>-0.292258</td>
-      <td>0.285479</td>
-      <td>-0.300144</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.403604</td>
-      <td>0.999241</td>
-      <td>0.356081</td>
-      <td>0.977313</td>
-      <td>-0.123361</td>
-      <td>0.952367</td>
-      <td>-0.149514</td>
-      <td>0.0</td>
-      <td>-1.927263</td>
-      <td>-1.918092</td>
-      <td>0.330230</td>
-      <td>0.299652</td>
-      <td>-0.026857</td>
-      <td>-0.042448</td>
-      <td>-1.085173</td>
-      <td>-1.074481</td>
-      <td>-0.006337</td>
-      <td>-0.005331</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.489083</td>
-      <td>-0.035409</td>
-      <td>-0.089930</td>
-      <td>0.166984</td>
-      <td>0.634540</td>
-      <td>0.152096</td>
-      <td>0.613416</td>
-      <td>0.0</td>
-      <td>0.031184</td>
-      <td>0.063374</td>
-      <td>0.129765</td>
-      <td>0.107232</td>
-      <td>0.493006</td>
-      <td>0.487171</td>
-      <td>0.160949</td>
-      <td>0.214866</td>
-      <td>0.305199</td>
-      <td>0.311737</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>-0.039573</td>
-      <td>0.012876</td>
-      <td>0.002736</td>
-      <td>0.367486</td>
-      <td>0.821784</td>
-      <td>-0.363321</td>
-      <td>-0.811503</td>
-      <td>0.0</td>
-      <td>0.379738</td>
-      <td>-0.423033</td>
-      <td>0.614391</td>
-      <td>-0.585089</td>
-      <td>0.797159</td>
-      <td>-0.778740</td>
-      <td>0.268905</td>
-      <td>-0.292514</td>
-      <td>0.284708</td>
-      <td>-0.300934</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1.402265</td>
-      <td>0.999290</td>
-      <td>0.356099</td>
-      <td>0.977763</td>
-      <td>-0.125721</td>
-      <td>0.952414</td>
-      <td>-0.150628</td>
-      <td>0.0</td>
-      <td>-1.926563</td>
-      <td>-1.918126</td>
-      <td>0.330247</td>
-      <td>0.299767</td>
-      <td>-0.028468</td>
-      <td>-0.043054</td>
-      <td>-1.084945</td>
-      <td>-1.074664</td>
-      <td>-0.006237</td>
-      <td>-0.005030</td>
-    </tr>
-  </tbody>
-</table>
 </div>
-</div>
+    {% endraw %}
 
-</div>
-
-</div>
-</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

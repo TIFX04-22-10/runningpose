@@ -49,7 +49,7 @@ def main(args):
 
     # Remove unwanted keypoints
     data_3D = data_3D.drop(
-        columns=['HeadL', 'HeadR', 'Chest', 'LThighFrontLow', 'RThighFrontLow', 'LShinFrontHigh', 'RShinFrontHigh', 'LForefoot2', 'LForefoot5', 'RForefoot2', 'RForefoot5', 'LHeelBack', 'RHeelBack', 'LArm', 'RArm']
+        columns=['HeadL', 'HeadR', 'Chest', 'LThighFrontLow', 'RThighFrontLow', 'LShinFrontHigh', 'RShinFrontHigh', 'LForefoot5', 'RForefoot5', 'LHeelBack', 'RHeelBack', 'LArm', 'RArm']
     )
     # Create "new" keypoints by finding the mean between some specific keypoints
     left_elbow_3D = data_3D.loc[:, ['LElbowOut','LElbowIn']].mean(axis=1)
@@ -97,14 +97,12 @@ def main(args):
 
     # Creates output names that depends on the name of the data file
     data_file_name =os.path.basename(os.path.normpath(args.data_file)).rsplit(".")[0]
-    print(data_file_name)
-    out_2D = os.path.join(args.output_dir, data_file_name + '2D-keypoints')
-    out_3D = os.path.join(args.output_dir, data_file_name + '3D-keypoints')
-    print(out_2D)
+    out_2D = os.path.join(args.output_dir, data_file_name + '_2D_keypoints.csv')
+    out_3D = os.path.join(args.output_dir, data_file_name + '_3D_keypoints.csv')
 
     # Save the keypoint data as csv files
     pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)
-    pd.DataFrame.to_csv(data_2D, path_or_buf=out_3D)
+    pd.DataFrame.to_csv(data_3D, path_or_buf=out_3D)
 
 # Cell
 try: from nbdev.imports import IN_NOTEBOOK

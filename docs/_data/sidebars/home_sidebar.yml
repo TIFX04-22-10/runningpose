@@ -54,6 +54,15 @@ entries:
     - output: web,pdf
       title: Inference Video
       url: infer_video.html
+    - output: web,pdf
+      title: Prepare data to COCO
+      url: prepare_data_COCO.html
+    - output: web,pdf
+      title: Python COCO creator tools
+      url: pycococreatortools.html
+    - output: web,pdf
+      title: Format qtmdata
+      url: format_qtmdata.html
     output: web
     title: runningpose
   output: web
