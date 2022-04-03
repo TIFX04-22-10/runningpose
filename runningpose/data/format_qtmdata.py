@@ -12,12 +12,6 @@ import os
 def parse_args():
     parser = argparse.ArgumentParser(description='Reformat qtmdata so that we can train.')
     parser.add_argument(
-        '--labels-file',
-        dest='labels_file',
-        help='labels text file that has the keypoint names',
-        type=str
-    )
-    parser.add_argument(
         '--data-file',
         dest='data_file',
         help='qtm text file that has been formated in matlab',
@@ -41,7 +35,7 @@ def main(args):
     Further we scale the dataset using a the norm vector between the root and 'SpineThoracic2'.
     """
     # Loads the textfiles
-    labels_np = np.loadtxt(args.labels_file, dtype = 'str')
+    labels_np = np.loadtxt('qtm_labels_py.txt', dtype = 'str')
     data_3D = np.loadtxt(args.data_file, dtype = 'float', delimiter= ',')
 
     # Reformats the data to a dataframe
@@ -66,7 +60,7 @@ def main(args):
 
     # Remove the keypoints that was taken as a mean
     data_3D = data_3D.drop(
-    columns=['LElbowOut','LElbowIn', 'RElbowOut','RElbowIn', 'LWristIn','LWristOut', 'RWristIn','RWristOut', 'LKneeIn','LKneeOut', 'RKneeIn','RKneeOut', 'WaistLFront','WaistL', 'WaistRFront','WaistR']
+        columns=['LElbowOut','LElbowIn', 'RElbowOut','RElbowIn', 'LWristIn','LWristOut', 'RWristIn','RWristOut', 'LKneeIn','LKneeOut', 'RKneeIn','RKneeOut', 'WaistLFront','WaistL', 'WaistRFront','WaistR']
     )
     # Adds the new keypoint data to the dataframe
     data_3D['LElbow'] = left_elbow_3D

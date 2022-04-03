@@ -47,22 +47,38 @@ LICENSES = [
 ]
 
 # Cell
-# In the case of a person, “keypoints” indicate different body parts. The “skeleton” indicates connections between points. For example, [16, 14] means "left_ankle" connects to "left_knee".
-# TODO: Update to match our keypoints.
+# In the case of a person, “keypoints” indicate different body parts. The “skeleton” indicates connections between points. For example, [20, 19] means "HeadFront" connects to "SpineThoracic2".
 CATEGORIES = [
    {
         "supercategory": "person",
         "id": 1,
         "name": "person",
         "keypoints": [
-            "nose","left_eye","right_eye","left_ear","right_ear",
-            "left_shoulder","right_shoulder","left_elbow","right_elbow",
-            "left_wrist","right_wrist","left_hip","right_hip",
-            "left_knee","right_knee","left_ankle","right_ankle"
+            'RWaist', # 1
+            'LWaist', # 2
+            'RKnee',  # 3
+            'LKnee',  # 4
+            'RWrist', # 5
+            'LWrist', # 6
+            'RElbow', # 7
+            'LElbow', # 8
+            'RForefoot2', # 9
+            'RAnkleOut', # 10
+            'LForefoot2', # 11
+            'LAnkleOut', # 12
+            'WaistBack', # 13
+            'RHand2', # 14
+            'RShoulderTop', # 15
+            'LHand2', # 16
+            'LShoulderTop', # 17
+            'SpineThoracic12', # 18
+            'SpineThoracic2', # 19
+            'HeadFront' # 20
         ],
         "skeleton": [
-            [16,14],[14,12],[17,15],[15,13],[12,13],[6,12],[7,13],[6,7],
-            [6,8],[7,9],[8,10],[9,11],[2,3],[1,2],[1,3],[2,4],[3,5],[4,6],[5,7]
+            [20, 19], [19, 15], [19, 17], [19, 18], [18, 13], [13, 1], [13, 2],
+            [1, 3], [2, 4], [3, 10], [4, 12], [10, 9], [12, 11], [15, 7], [17, 8],
+            [7, 5], [8, 6], [5, 14], [6, 16]
         ]
     }
 ]
