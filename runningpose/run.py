@@ -245,6 +245,7 @@ if not args.evaluate:
         losses_traj_valid = []
     else:
         optimizer = optim.Adam(model_pos_train.parameters(), lr=lr, amsgrad=True)
+        scaler = torch.cuda.amp.GradScaler()
         
     lr_decay = args.lr_decay
 
@@ -338,7 +339,6 @@ if not args.evaluate:
 
                 # Compute 3D poses
                 predicted_3d_pos_cat = model_pos_train(inputs_2d_cat)
-
                 loss_3d_pos = mpjpe(predicted_3d_pos_cat[:split_idx], inputs_3d)
                 epoch_loss_3d_train += inputs_3d.shape[0]*inputs_3d.shape[1] * loss_3d_pos.item()
                 N += inputs_3d.shape[0]*inputs_3d.shape[1]
@@ -398,16 +398,18 @@ if not args.evaluate:
 
                 optimizer.zero_grad()
 
-                # Predict 3D poses (forward)
-                predicted_3d_pos = model_pos_train(inputs_2d)
-                loss_3d_pos = mpjpe(predicted_3d_pos, inputs_3d)
-                epoch_loss_3d_train += inputs_3d.shape[0]*inputs_3d.shape[1] * loss_3d_pos.item()
-                N += inputs_3d.shape[0]*inputs_3d.shape[1]
+                # Predict 3D poses (forward).
+                with torch.cuda.amp.autocast():
+                    predicted_3d_pos = model_pos_train(inputs_2d)
+                    loss_3d_pos = mpjpe(predicted_3d_pos, inputs_3d)
+                    epoch_loss_3d_train += inputs_3d.shape[0]*inputs_3d.shape[1] * loss_3d_pos.item()
+                    N += inputs_3d.shape[0]*inputs_3d.shape[1]
 
+                # Backward
                 loss_total = loss_3d_pos
-                loss_total.backward()
-
-                optimizer.step()
+                scaler.scale(loss_total).backward()
+                scaler.step(optimizer)
+                optimizer.update()
 
         losses_3d_train.append(epoch_loss_3d_train / N)
 
