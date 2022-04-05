@@ -81,7 +81,8 @@ nb_path: "nbs/16_pycococreatortools.ipynb"
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="close_contour" class="doc_header"><code>close_contour</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>close_contour</code>(<strong><code>contour</code></strong>)</p>
 </blockquote>
-<p>Returns a closed contour i.e the last and first element in the countour is equal</p>
+<p>Returns a closed contour i.e the last and first element in the
+countour is equal.</p>
 
 </div>
 
@@ -111,14 +112,15 @@ nb_path: "nbs/16_pycococreatortools.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="binary_mask_to_polygon" class="doc_header"><code>binary_mask_to_polygon</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>binary_mask_to_polygon</code>(<strong><code>binary_mask</code></strong>, <strong><code>tolerance</code></strong>=<em><code>0</code></em>)</p>
+<h4 id="binary_mask_to_polygon" class="doc_header"><code>binary_mask_to_polygon</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>binary_mask_to_polygon</code>(<strong><code>binary_mask</code></strong>, <strong><code>tolerance</code></strong>=<em><code>0</code></em>)</p>
 </blockquote>
 <p>Converts a binary mask to COCO polygon representation.</p>
 <p>Args:</p>
 <ul>
 <li>binary_mask: a 2D binary numpy array where '1's represent the object.</li>
-<li>tolerance: Maximum distance from original points of polygon to approximated
-  polygonal chain. If tolerance is 0, the original coordinate array is returned.</li>
+<li>tolerance: Maximum distance from original points of polygon to
+approximated polygonal chain. If tolerance is 0, the original
+coordinate array is returned.</li>
 </ul>
 
 </div>
@@ -149,7 +151,7 @@ nb_path: "nbs/16_pycococreatortools.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="create_image_info" class="doc_header"><code>create_image_info</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_image_info</code>(<strong><code>image_id</code></strong>, <strong><code>file_name</code></strong>, <strong><code>image</code></strong>, <strong><code>date_captured</code></strong>=<em><code>'2022-04-03 15:53:26.134149'</code></em>, <strong><code>license_id</code></strong>=<em><code>1</code></em>, <strong><code>coco_url</code></strong>=<em><code>''</code></em>, <strong><code>flickr_url</code></strong>=<em><code>''</code></em>)</p>
+<h4 id="create_image_info" class="doc_header"><code>create_image_info</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L66" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_image_info</code>(<strong><code>image_id</code></strong>, <strong><code>file_name</code></strong>, <strong><code>image</code></strong>, <strong><code>date_captured</code></strong>=<em><code>'2022-04-05 07:49:08.377818'</code></em>, <strong><code>license_id</code></strong>=<em><code>1</code></em>, <strong><code>coco_url</code></strong>=<em><code>''</code></em>, <strong><code>flickr_url</code></strong>=<em><code>''</code></em>)</p>
 </blockquote>
 <p>Returns the image information in JSON style format.</p>
 
@@ -181,9 +183,10 @@ nb_path: "nbs/16_pycococreatortools.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="create_annotation_info" class="doc_header"><code>create_annotation_info</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L77" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_annotation_info</code>(<strong><code>annotation_id</code></strong>, <strong><code>image_id</code></strong>, <strong><code>binary_mask</code></strong>, <strong><code>bounding_box</code></strong>, <strong><code>image_size</code></strong>=<em><code>None</code></em>, <strong><code>tolerance</code></strong>=<em><code>2</code></em>, <strong><code>keypoints</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="create_annotation_info" class="doc_header"><code>create_annotation_info</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L86" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_annotation_info</code>(<strong><code>annotation_id</code></strong>, <strong><code>image_id</code></strong>, <strong><code>binary_mask</code></strong>, <strong><code>bounding_box</code></strong>, <strong><code>image_size</code></strong>=<em><code>None</code></em>, <strong><code>tolerance</code></strong>=<em><code>2</code></em>, <strong><code>keypoints</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
-<p>Returns annotation information as a dictionary for COCO-keypoints in a JSON style format.</p>
+<p>Returns annotation information as a dictionary for COCO-keypoints in a
+JSON style format.</p>
 
 </div>
 
@@ -239,6 +242,7 @@ Converted 13_prepare_data_2d_custom.ipynb.
 Converted 14_infer_video.ipynb.
 Converted 15_prepare_data_COCO.ipynb.
 Converted 16_pycococreatortools.ipynb.
+Converted 17_format_qtmdata.ipynb.
 Converted index.ipynb.
 </pre>
 </div>

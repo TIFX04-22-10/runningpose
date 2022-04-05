@@ -11,7 +11,10 @@ from .quaternion import qrot, qinverse
 
 # Cell
 def normalize_screen_coordinates(X, w, h):
-    """Normalize so that [0, w] is mapped to [-1, 1], while preserving the aspect ratio."""
+    """
+    Normalize so that [0, w] is mapped to [-1, 1], while preserving the
+    aspect ratio.
+    """
     assert X.shape[-1] == 2
 
     return X/w*2 - [1, h/w]
@@ -35,8 +38,10 @@ def camera_to_world(X, R, t):
 # Cell
 def project_to_2d(X, camera_params):
     """
-    Project 3D points to 2D using the Human3.6M camera projection function.
-    This is a differentiable and batched reimplementation of the original MATLAB script.
+    Project 3D points to 2D using the Human3.6M camera projection
+    function.
+    This is a differentiable and batched reimplementation of the
+    original MATLAB script.
 
     Arguments:
     X -- 3D points in *camera space* to transform (N, *, 3)
@@ -68,7 +73,8 @@ def project_to_2d(X, camera_params):
 # Cell
 def project_to_2d_linear(X, camera_params):
     """
-    Project 3D points to 2D using only linear parameters (focal length and principal point).
+    Project 3D points to 2D using only linear parameters
+    (focal length and principal point).
 
     Arguments:
     X -- 3D points in *camera space* to transform (N, *, 3)

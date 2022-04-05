@@ -42,7 +42,10 @@ def wrap(func, *args, unsqueeze=False):
 
 # Cell
 def deterministic_random(min_value, max_value, data):
-    """Pseudorandom generator that returns an int over some given interval and data."""
+    """
+    Pseudorandom generator that returns an int over some given interval
+    and data.
+    """
     digest = hashlib.sha256(data.encode()).digest()
     raw_value = int.from_bytes(digest[:4], byteorder='little', signed=False)
     return int(raw_value / (2**32 - 1) * (max_value - min_value)) + min_value

@@ -9,7 +9,8 @@ from detectron2.config import get_cfg
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
 
-# Workaround for the relative import error, removes the dot (.) infront when converting to .py script.
+# Workaround for the relative import error,
+# removes the dot (.) infront when converting to .py script.
 try:
     from .inference import infer_video
     from .pycoco import pycococreatortools as pycoco
@@ -37,7 +38,8 @@ INFO = {
 }
 
 # Cell
-# The “licenses” section contains a list of image licenses that apply to images in the dataset.
+# The “licenses” section contains a list of image licenses
+# that apply to images in the dataset.
 LICENSES = [
     {
         "id": 1,
@@ -47,7 +49,9 @@ LICENSES = [
 ]
 
 # Cell
-# In the case of a person, “keypoints” indicate different body parts. The “skeleton” indicates connections between points. For example, [20, 19] means "HeadFront" connects to "SpineThoracic2".
+# In the case of a person, “keypoints” indicate different body parts.
+# The “skeleton” indicates connections between points.
+# For example, [20, 19] means "HeadFront" connects to "SpineThoracic2".
 CATEGORIES = [
    {
         "supercategory": "person",
@@ -77,15 +81,17 @@ CATEGORIES = [
         ],
         "skeleton": [
             [20, 19], [19, 15], [19, 17], [19, 18], [18, 13], [13, 1], [13, 2],
-            [1, 3], [2, 4], [3, 10], [4, 12], [10, 9], [12, 11], [15, 7], [17, 8],
-            [7, 5], [8, 6], [5, 14], [6, 16]
+            [1, 3], [2, 4], [3, 10], [4, 12], [10, 9], [12, 11], [15, 7],
+            [17, 8], [7, 5], [8, 6], [5, 14], [6, 16]
         ]
     }
 ]
 
 # Cell
 def parse_args():
-    parser = argparse.ArgumentParser(description='Reformat to COCO-keypoint json format.')
+    parser = argparse.ArgumentParser(
+        description='Reformat to COCO-keypoint json format.'
+    )
     parser.add_argument(
         '--image-ext',
         dest='image_ext',
@@ -106,17 +112,20 @@ def parse_args():
 def main(args):
     print(os.getcwd())
     """
-    Runs inference on the video files and saves the dataset in json file format.
-    Predicts the boundary box and segementation points.
+    Runs inference on the video files and saves the dataset in json
+    file format. Predicts the boundary box and segementation points.
     Then adds the Qualisys keypoint data.
 
-    OBS! Make sure video_name matches csv file for 2D keypoints and that they are in the same folder.
+    OBS! Make sure video_name matches csv file for 2D keypoints and
+    that they are in the same folder.
     """
-    # Create a detectron2 config and a detectron2 DefaultPredictor to run inference on video.
+    # Create a detectron2 config and DefaultPredictor to run inference on video.
     cfg = get_cfg()
-    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+    cfg.merge_from_file(model_zoo.get_config_file(
+        "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7 # Set threshold for this model.
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+        "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
     predictor = DefaultPredictor(cfg)
 
     # Load the video folder in which we should predict.
@@ -138,7 +147,8 @@ def main(args):
     for video_name in im_list:
         print("Processing {}".format(video_name))
 
-        # Make sure video_name matches csv file for 2D keypoints and that they are in the same folder.
+        # Make sure video_name matches csv file for 2D keypoints
+        # and that they are in the same folder.
         # TODO: Change so that it only works for mp4
         keypoints = get_COCO_keypoints(video_name)
 
@@ -147,16 +157,20 @@ def main(args):
             t = time.time()
             outputs = predictor(im)["instances"].to('cpu')
             print("Frame {} processed in {:.3f}s".format(frame_i, time.time()-t))
-            # Filter out the person class from the prediction; 0 is the index for persons.
+            # Filter out the person class from the prediction;
+            # 0 is the index for persons.
             outputs = outputs[outputs.pred_classes == 0]
 
-            # Checks if image is "empty or not" and makes sure there is only one person detected.
+            # Checks if image is "empty or not" and makes sure there
+            # is only one person detected.
             if outputs.has("pred_boxes") and len(outputs) == 1:
-                # Converts the tensors to a numpy arrays and slice away the person class.
+                # Converts the tensors to a numpy arrays and slice away
+                # the person class.
                 bbox_tensor = outputs.pred_boxes.tensor.numpy()[0, :]
                 pred_masks_tensor = outputs.pred_masks.numpy()[0, :, :]
 
-                # Create the image section, it contains the complete list of images in your dataset.
+                # Create the image section, it contains the complete list
+                # of images in your dataset.
                 image_id = video_id + frame_i
                 image_info = pycoco.create_image_info(image_id, video_name, im)
                 coco_output["images"].append(image_info)
@@ -183,12 +197,13 @@ def main(args):
 # Cell
 def get_COCO_keypoints(video_name):
     """
-    Loads the formated qtm data for the video (.mp4) and reformats it to COCO format
-    i.e list: [x, y, v, x, y, v, ... x, y, v], where v is a visual parameter (0, 1, 2);
-    whether the keypoint is visual and measured.
+    Loads the formated qtm data for the video (.mp4) and reformats it to
+    COCO format i.e list: [x, y, v, x, y, v, ... x, y, v], where v is a visual
+    parameter (0, 1, 2); whether the keypoint is visual and measured.
         0 = not measured.
         1 = measured but not visual.
         2 = measured and visual.
+
     Returns a list of list with keypoints for each frame.
     """
     file_path = video_name.replace(".mp4", "_2D_keypoints.csv")

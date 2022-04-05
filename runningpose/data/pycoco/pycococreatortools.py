@@ -23,7 +23,10 @@ def resize_binary_mask(array, new_size):
 
 # Cell
 def close_contour(contour):
-    """Returns a closed contour i.e the last and first element in the countour is equal"""
+    """
+    Returns a closed contour i.e the last and first element in the
+    countour is equal.
+    """
     if not np.array_equal(contour[0], contour[-1]):
         contour = np.vstack((contour, contour[0]))
     return contour
@@ -35,12 +38,15 @@ def binary_mask_to_polygon(binary_mask, tolerance=0):
 
     Args:
     - binary_mask: a 2D binary numpy array where '1's represent the object.
-    - tolerance: Maximum distance from original points of polygon to approximated
-        polygonal chain. If tolerance is 0, the original coordinate array is returned.
+    - tolerance: Maximum distance from original points of polygon to
+    approximated polygonal chain. If tolerance is 0, the original
+    coordinate array is returned.
     """
     polygons = []
     # pad mask to close contours of shapes which start and end at an edge
-    padded_binary_mask = np.pad(binary_mask, pad_width=1, mode='constant', constant_values=0)
+    padded_binary_mask = np.pad(
+        binary_mask, pad_width=1, mode='constant', constant_values=0
+    )
     contours = measure.find_contours(padded_binary_mask, 0.5)
     contours = np.subtract(contours, 1)
     for contour in contours:
@@ -50,16 +56,19 @@ def binary_mask_to_polygon(binary_mask, tolerance=0):
             continue
         contour = np.flip(contour, axis=1)
         segmentation = contour.ravel().tolist()
-        # after padding and subtracting 1 we may get -0.5 points in our segmentation
+        # After padding and subtracting 1 we may get -0.5 points in our segmentation
         segmentation = [0 if i < 0 else i for i in segmentation]
         polygons.append(segmentation)
 
     return polygons
 
 # Cell
-def create_image_info(image_id, file_name, image,
-                      date_captured=datetime.datetime.utcnow().isoformat(' '), license_id=1, coco_url="", flickr_url=""):
+def create_image_info(
+        image_id, file_name, image,
+        date_captured=datetime.datetime.utcnow().isoformat(' '),
+        license_id=1, coco_url="", flickr_url=""):
     """Returns the image information in JSON style format."""
+
     image_info = {
         "id": image_id,
         "file_name": file_name,
@@ -74,13 +83,18 @@ def create_image_info(image_id, file_name, image,
     return image_info
 
 # Cell
-def create_annotation_info(annotation_id, image_id, binary_mask,
-                           bounding_box, image_size=None, tolerance=2, keypoints=None):
-    """Returns annotation information as a dictionary for COCO-keypoints in a JSON style format."""
+def create_annotation_info(
+        annotation_id, image_id, binary_mask,
+        bounding_box, image_size=None, tolerance=2, keypoints=None):
+    """
+    Returns annotation information as a dictionary for COCO-keypoints in a
+    JSON style format.
+    """
     if image_size is not None:
         binary_mask = resize_binary_mask(binary_mask, image_size)
 
-    binary_mask_encoded = mask.encode(np.asfortranarray(binary_mask.astype(np.uint8)))
+    binary_mask_encoded = mask.encode(
+        np.asfortranarray(binary_mask.astype(np.uint8)))
     area = mask.area(binary_mask_encoded)
 
     segmentation = binary_mask_to_polygon(binary_mask, tolerance)

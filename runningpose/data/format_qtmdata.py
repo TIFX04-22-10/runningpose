@@ -10,7 +10,9 @@ import os
 
 # Cell
 def parse_args():
-    parser = argparse.ArgumentParser(description='Reformat qtmdata so that we can train.')
+    parser = argparse.ArgumentParser(
+        description='Reformat qtmdata so that we can train.'
+    )
     parser.add_argument(
         '--data-file',
         dest='data_file',
@@ -32,7 +34,8 @@ def main(args):
     """
     Loads the qtm data then removes unwanted keypoints.
     Then it infers new keypoints adds them.
-    Further we scale the dataset using a the norm vector between the root and 'SpineThoracic2'.
+    Further we scale the dataset using a the norm vector between the
+    root and 'SpineThoracic2'.
     """
     # Loads the textfiles
     labels_np = np.loadtxt('qtm_labels_py.txt', dtype = 'str')
@@ -43,7 +46,11 @@ def main(args):
 
     # Remove unwanted keypoints
     data_3D = data_3D.drop(
-        columns=['HeadL', 'HeadR', 'Chest', 'LThighFrontLow', 'RThighFrontLow', 'LShinFrontHigh', 'RShinFrontHigh', 'LForefoot5', 'RForefoot5', 'LHeelBack', 'RHeelBack', 'LArm', 'RArm']
+        columns=[
+            'HeadL', 'HeadR', 'Chest', 'LThighFrontLow', 'RThighFrontLow',
+            'LShinFrontHigh', 'RShinFrontHigh', 'LForefoot5', 'RForefoot5',
+            'LHeelBack', 'RHeelBack', 'LArm', 'RArm'
+        ]
     )
     # Create "new" keypoints by finding the mean between some specific keypoints
     left_elbow_3D = data_3D.loc[:, ['LElbowOut','LElbowIn']].mean(axis=1)
@@ -60,7 +67,12 @@ def main(args):
 
     # Remove the keypoints that was taken as a mean
     data_3D = data_3D.drop(
-        columns=['LElbowOut','LElbowIn', 'RElbowOut','RElbowIn', 'LWristIn','LWristOut', 'RWristIn','RWristOut', 'LKneeIn','LKneeOut', 'RKneeIn','RKneeOut', 'WaistLFront','WaistL', 'WaistRFront','WaistR']
+        columns=[
+            'LElbowOut','LElbowIn', 'RElbowOut','RElbowIn', 'LWristIn',
+            'LWristOut', 'RWristIn','RWristOut', 'LKneeIn', 'LKneeOut',
+            'RKneeIn', 'RKneeOut', 'WaistLFront', 'WaistL', 'WaistRFront',
+            'WaistR'
+        ]
     )
     # Adds the new keypoint data to the dataframe
     data_3D['LElbow'] = left_elbow_3D
@@ -79,7 +91,9 @@ def main(args):
     data_3D_scaled = []
     for i in range(0, data_3D.shape[0], 3):
         # Calculates the scale factor for each frame
-        norm_vector = np.sqrt(np.square(data_3D['SpineThoracic2'].iloc[i:i+3]).sum(axis=0))
+        norm_vector = np.sqrt(np.square(
+            data_3D['SpineThoracic2'].iloc[i:i+3]).sum(axis=0)
+        )
         data_3D_scaled.append(data_3D.iloc[i:i+3].divide(norm_vector))
 
     # Reformat to dataframe again after all data has been scaled

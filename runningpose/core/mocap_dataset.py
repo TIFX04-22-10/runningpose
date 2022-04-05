@@ -25,13 +25,16 @@ class MocapDataset:
         self._cameras = None
 
     def remove_joints(self, joints_to_remove):
-        """Removes specific joints and re-asigns the remaining joints in the dataset."""
+        """
+        Removes specific joints and re-asigns the remaining joints in
+        the dataset.
+        """
         kept_joints = self._skeleton.remove_joints(joints_to_remove)
         for subject in self._data.keys():
             for action in self._data[subject].keys():
-                sub_act_data = self._data[subject][action]
-                if "positions" in sub_act_data:
-                    sub_act_data["positions"] = sub_act_data["positions"][:, kept_joints]
+                data = self._data[subject][action]
+                if "positions" in data:
+                    data["positions"] = data["positions"][:, kept_joints]
 
     # Bunch of getters.
     def __getitem__(self, key):

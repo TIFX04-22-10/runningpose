@@ -62,8 +62,10 @@ def downsample_tensor(X, factor):
     return np.mean(X[:length].reshape(-1, factor, *X.shape[1:]), axis=1)
 
 # Cell
-def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, azim, output, viewport,
-                     limit=-1, downsample=1, size=6, input_video_path=None, input_video_skip=0):
+def render_animation(
+        keypoints, keypoints_metadata, poses, skeleton, fps, bitrate,
+        azim, output, viewport, limit=-1, downsample=1,
+        size=6, input_video_path=None, input_video_skip=0):
     """
     TODO
     Render an animation. The supported output modes are:
@@ -108,7 +110,9 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
     # Decode video
     if input_video_path is None:
         # Black background
-        all_frames = np.zeros((keypoints.shape[0], viewport[1], viewport[0]), dtype='uint8')
+        all_frames = np.zeros(
+            (keypoints.shape[0], viewport[1], viewport[0]), dtype='uint8'
+        )
     else:
         # Load video using ffmpeg
         all_frames = []
@@ -126,7 +130,8 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
 
     if downsample > 1:
         keypoints = downsample_tensor(keypoints, downsample)
-        all_frames = downsample_tensor(np.array(all_frames), downsample).astype('uint8')
+        all_frames = downsample_tensor(
+            np.array(all_frames), downsample).astype('uint8')
         for idx in range(len(poses)):
             poses[idx] = downsample_tensor(poses[idx], downsample)
             trajectories[idx] = downsample_tensor(trajectories[idx], downsample)
@@ -147,8 +152,14 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
         nonlocal initialized, image, lines, points
 
         for n, ax in enumerate(ax_3d):
-            ax.set_xlim3d([-radius/2 + trajectories[n][i, 0], radius/2 + trajectories[n][i, 0]])
-            ax.set_ylim3d([-radius/2 + trajectories[n][i, 1], radius/2 + trajectories[n][i, 1]])
+            ax.set_xlim3d(
+                [-radius/2 + trajectories[n][i, 0], radius/2
+                + trajectories[n][i, 0]]
+            )
+            ax.set_ylim3d(
+                [-radius/2 + trajectories[n][i, 1], radius/2
+                + trajectories[n][i, 1]]
+            )
 
         # Update 2D poses
         joints_right_2d = keypoints_metadata['keypoints_symmetry'][1]
@@ -163,17 +174,24 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
 
                 if len(parents) == keypoints.shape[1] and keypoints_metadata['layout_name'] != 'coco':
                     # Draw skeleton only if keypoints match (otherwise we don't have the parents definition)
-                    lines.append(ax_in.plot([keypoints[i, j, 0], keypoints[i, j_parent, 0]],
-                                            [keypoints[i, j, 1], keypoints[i, j_parent, 1]], color='pink'))
+                    lines.append(ax_in.plot(
+                        [keypoints[i, j, 0], keypoints[i, j_parent, 0]],
+                        [keypoints[i, j, 1], keypoints[i, j_parent, 1]],
+                        color='pink'
+                        )
+                    )
 
                 col = 'red' if j in skeleton.joints_right() else 'black'
                 for n, ax in enumerate(ax_3d):
                     pos = poses[n][i]
-                    lines_3d[n].append(ax.plot([pos[j, 0], pos[j_parent, 0]],
-                                               [pos[j, 1], pos[j_parent, 1]],
-                                               [pos[j, 2], pos[j_parent, 2]], zdir='z', c=col))
+                    lines_3d[n].append(ax.plot(
+                        [pos[j, 0], pos[j_parent, 0]],
+                        [pos[j, 1], pos[j_parent, 1]],
+                        [pos[j, 2], pos[j_parent, 2]], zdir='z', c=col))
 
-            points = ax_in.scatter(*keypoints[i].T, 10, color=colors_2d, edgecolors='white', zorder=10)
+            points = ax_in.scatter(
+                *keypoints[i].T, 10, color=colors_2d, edgecolors='white', zorder=10
+            )
 
             initialized = True
         else:
@@ -191,16 +209,19 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
                     pos = poses[n][i]
                     lines_3d[n][j-1][0].set_xdata(np.array([pos[j, 0], pos[j_parent, 0]]))
                     lines_3d[n][j-1][0].set_ydata(np.array([pos[j, 1], pos[j_parent, 1]]))
-                    lines_3d[n][j-1][0].set_3d_properties(np.array([pos[j, 2], pos[j_parent, 2]]), zdir='z')
+                    lines_3d[n][j-1][0].set_3d_properties(np.array(
+                        [pos[j, 2], pos[j_parent, 2]]), zdir='z')
 
             points.set_offsets(keypoints[i])
 
-        print('{}/{}      '.format(i, limit), end='\r')
+        print('{}/{}'.format(i, limit), end='\r')
 
 
     fig.tight_layout()
 
-    anim = FuncAnimation(fig, update_video, frames=np.arange(0, limit), interval=1000/fps, repeat=False)
+    anim = FuncAnimation(
+        fig, update_video, frames=np.arange(0, limit),
+        interval=1000/fps, repeat=False)
     if output.endswith('.mp4'):
         Writer = writers['ffmpeg']
         writer = Writer(fps=fps, metadata={}, bitrate=bitrate)

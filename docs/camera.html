@@ -49,7 +49,8 @@ nb_path: "nbs/05_camera.ipynb"
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="normalize_screen_coordinates" class="doc_header"><code>normalize_screen_coordinates</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>normalize_screen_coordinates</code>(<strong><code>X</code></strong>, <strong><code>w</code></strong>, <strong><code>h</code></strong>)</p>
 </blockquote>
-<p>Normalize so that [0, w] is mapped to [-1, 1], while preserving the aspect ratio.</p>
+<p>Normalize so that [0, w] is mapped to [-1, 1], while preserving the
+aspect ratio.</p>
 
 </div>
 
@@ -79,7 +80,7 @@ nb_path: "nbs/05_camera.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="image_coordinates" class="doc_header"><code>image_coordinates</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>image_coordinates</code>(<strong><code>X</code></strong>, <strong><code>w</code></strong>, <strong><code>h</code></strong>)</p>
+<h4 id="image_coordinates" class="doc_header"><code>image_coordinates</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>image_coordinates</code>(<strong><code>X</code></strong>, <strong><code>w</code></strong>, <strong><code>h</code></strong>)</p>
 </blockquote>
 <p>Return the image coordinates</p>
 
@@ -111,7 +112,7 @@ nb_path: "nbs/05_camera.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="world_to_camera" class="doc_header"><code>world_to_camera</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
+<h4 id="world_to_camera" class="doc_header"><code>world_to_camera</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -142,7 +143,7 @@ nb_path: "nbs/05_camera.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="camera_to_world" class="doc_header"><code>camera_to_world</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L32" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
+<h4 id="camera_to_world" class="doc_header"><code>camera_to_world</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -173,10 +174,12 @@ nb_path: "nbs/05_camera.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_to_2d" class="doc_header"><code>project_to_2d</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
+<h4 id="project_to_2d" class="doc_header"><code>project_to_2d</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L39" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
 </blockquote>
-<p>Project 3D points to 2D using the Human3.6M camera projection function.
-This is a differentiable and batched reimplementation of the original MATLAB script.</p>
+<p>Project 3D points to 2D using the Human3.6M camera projection
+function.
+This is a differentiable and batched reimplementation of the
+original MATLAB script.</p>
 <p>Arguments:
 X -- 3D points in <em>camera space</em> to transform (N, *, 3)
 camera_params -- intrinsic parameteres (N, 2+2+3+2=9)</p>
@@ -209,9 +212,10 @@ camera_params -- intrinsic parameteres (N, 2+2+3+2=9)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_to_2d_linear" class="doc_header"><code>project_to_2d_linear</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L69" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d_linear</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
+<h4 id="project_to_2d_linear" class="doc_header"><code>project_to_2d_linear</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L74" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d_linear</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
 </blockquote>
-<p>Project 3D points to 2D using only linear parameters (focal length and principal point).</p>
+<p>Project 3D points to 2D using only linear parameters
+(focal length and principal point).</p>
 <p>Arguments:
 X -- 3D points in <em>camera space</em> to transform (N, *, 3)
 camera_params -- intrinsic parameteres (N, 2+2+3+2=9)</p>
@@ -268,6 +272,9 @@ Converted 11_arguments.ipynb.
 Converted 12_data_utils.ipynb.
 Converted 13_prepare_data_2d_custom.ipynb.
 Converted 14_infer_video.ipynb.
+Converted 15_prepare_data_COCO.ipynb.
+Converted 16_pycococreatortools.ipynb.
+Converted 17_format_qtmdata.ipynb.
 Converted index.ipynb.
 </pre>
 </div>

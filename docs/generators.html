@@ -53,17 +53,24 @@ nb_path: "nbs/08_generators.ipynb"
 The sequences are split into equal-length chunks and padded as necessary.</p>
 <p>Arguments:
 batch_size -- The batch size to use for training.
-cameras -- List of cameras, one element for each video (optional, used for semi-supervised training).
-poses_3d -- List of ground-truth 3D poses, one element for each video (optional, used for supervised training).
-poses_2d -- List of input 2D keypoints, one element for each video.
-chunk_length -- Number of output frames to predict for each training example (usually 1).
-pad -- 2D input padding to compensate for valid convolutions, per side (depends on the receptive field).
-causal_shift -- Asymmetric padding offset when causal convolutions are used (usually 0 or "pad").
+cameras -- List of cameras, one element for each video
+    (optional, used for semi-supervised training).</p>
+<p>poses_3d -- List of ground-truth 3D poses, one element for each video
+    (optional, used for supervised training).</p>
+<p>poses_2d -- List of input 2D keypoints, one element for each video.</p>
+<p>chunk_length -- Number of output frames to predict for each training
+    example (usually 1).</p>
+<p>pad -- 2D input padding to compensate for valid convolutions,
+    per side (depends on the receptive field).</p>
+<p>causal_shift -- Asymmetric padding offset when causal convolutions
+     are used (usually 0 or "pad").
 shuffle -- Randomly shuffle the dataset before each epoch.
 random_seed -- Initial seed to use for the random generator.
-augment -- Augment the dataset by flipping poses horizontally.
-kps_left and kps_right -- List of left/right 2D keypoints if flipping is enabled.
-joints_left and joints_right -- List of left/right 3D joints if flipping is enabled.</p>
+augment -- Augment the dataset by flipping poses horizontally.</p>
+<p>kps_left and kps_right -- List of left/right 2D keypoints if
+    flipping is enabled.</p>
+<p>joints_left and joints_right -- List of left/right 3D joints if
+    flipping is enabled.</p>
 
 </div>
 
@@ -93,21 +100,29 @@ joints_left and joints_right -- List of left/right 3D joints if flipping is enab
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="UnchunkedGenerator" class="doc_header"><code>class</code> <code>UnchunkedGenerator</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/generators.py#L175" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>UnchunkedGenerator</code>(<strong><code>cameras</code></strong>, <strong><code>poses_3d</code></strong>, <strong><code>poses_2d</code></strong>, <strong><code>pad</code></strong>=<em><code>0</code></em>, <strong><code>causal_shift</code></strong>=<em><code>0</code></em>, <strong><code>augment</code></strong>=<em><code>False</code></em>, <strong><code>kps_left</code></strong>=<em><code>None</code></em>, <strong><code>kps_right</code></strong>=<em><code>None</code></em>, <strong><code>joints_left</code></strong>=<em><code>None</code></em>, <strong><code>joints_right</code></strong>=<em><code>None</code></em>)</p>
+<h2 id="UnchunkedGenerator" class="doc_header"><code>class</code> <code>UnchunkedGenerator</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/generators.py#L217" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>UnchunkedGenerator</code>(<strong><code>cameras</code></strong>, <strong><code>poses_3d</code></strong>, <strong><code>poses_2d</code></strong>, <strong><code>pad</code></strong>=<em><code>0</code></em>, <strong><code>causal_shift</code></strong>=<em><code>0</code></em>, <strong><code>augment</code></strong>=<em><code>False</code></em>, <strong><code>kps_left</code></strong>=<em><code>None</code></em>, <strong><code>kps_right</code></strong>=<em><code>None</code></em>, <strong><code>joints_left</code></strong>=<em><code>None</code></em>, <strong><code>joints_right</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Non-batched data generator, used for testing.
-Sequences are returned one at a time (i.e. batch size = 1), without chunking.</p>
-<p>If data augmentation is enabled, the batches contain two sequences (i.e. batch size = 2),
-the second of which is a mirrored version of the first.</p>
+Sequences are returned one at a time (i.e. batch size = 1),
+without chunking.</p>
+<p>If data augmentation is enabled, the batches contain two sequences
+(i.e. batch size = 2),the second of which is a mirrored version of
+the first.</p>
 <p>Arguments:
-cameras -- list of cameras, one element for each video (optional, used for semi-supervised training)
-poses_3d -- list of ground-truth 3D poses, one element for each video (optional, used for supervised training)
-poses_2d -- list of input 2D keypoints, one element for each video
-pad -- 2D input padding to compensate for valid convolutions, per side (depends on the receptive field)
-causal_shift -- asymmetric padding offset when causal convolutions are used (usually 0 or "pad")
-augment -- augment the dataset by flipping poses horizontally
-kps_left and kps_right -- list of left/right 2D keypoints if flipping is enabled
-joints_left and joints_right -- list of left/right 3D joints if flipping is enabled</p>
+cameras -- list of cameras, one element for each video
+    (optional, used for semi-supervised training)</p>
+<p>poses_3d -- list of ground-truth 3D poses, one element for each video
+    (optional, used for supervised training)</p>
+<p>poses_2d -- list of input 2D keypoints, one element for each video</p>
+<p>pad -- 2D input padding to compensate for valid convolutions,
+    per side (depends on the receptive field)</p>
+<p>causal_shift -- asymmetric padding offset when causal convolutions
+    are used (usually 0 or "pad")</p>
+<p>augment -- augment the dataset by flipping poses horizontally</p>
+<p>kps_left and kps_right -- list of left/right 2D keypoints if
+    flipping is enabled</p>
+<p>joints_left and joints_right -- list of left/right 3D joints if
+    flipping is enabled</p>
 
 </div>
 
@@ -161,6 +176,9 @@ Converted 11_arguments.ipynb.
 Converted 12_data_utils.ipynb.
 Converted 13_prepare_data_2d_custom.ipynb.
 Converted 14_infer_video.ipynb.
+Converted 15_prepare_data_COCO.ipynb.
+Converted 16_pycococreatortools.ipynb.
+Converted 17_format_qtmdata.ipynb.
 Converted index.ipynb.
 </pre>
 </div>

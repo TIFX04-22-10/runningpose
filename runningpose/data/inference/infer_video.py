@@ -52,8 +52,10 @@ def parse_args():
 # Cell
 def get_resolution(filename):
     """Returns the width and height for a given video file."""
-    command = ['ffprobe', '-v', 'error', '-select_streams', 'v:0',
-               '-show_entries', 'stream=width,height', '-of', 'csv=p=0', filename]
+    command = [
+        'ffprobe', '-v', 'error', '-select_streams', 'v:0',
+        '-show_entries', 'stream=width,height', '-of', 'csv=p=0', filename
+    ]
     pipe = sp.Popen(command, stdout=sp.PIPE, bufsize=-1)
     for line in pipe.stdout:
         w, h = line.decode().strip().split(',')
@@ -64,13 +66,15 @@ def read_video(filename):
     """Loads a given video file and returns it as a data generator."""
     w, h = get_resolution(filename)
 
-    command = ['ffmpeg',
-            '-hide_banner',
-            '-i', filename,
-            '-f', 'image2pipe',
-            '-pix_fmt', 'bgr24',
-            '-vsync', '0',
-            '-vcodec', 'rawvideo', '-']
+    command = [
+        'ffmpeg',
+        '-hide_banner',
+        '-i', filename,
+        '-f', 'image2pipe',
+        '-pix_fmt', 'bgr24',
+        '-vsync', '0',
+        '-vcodec', 'rawvideo', '-'
+    ]
 
     pipe = sp.Popen(command, stdout=sp.PIPE, bufsize=-1)
     while True:
@@ -145,7 +149,10 @@ def main(args):
             'h': im.shape[0],
         }
 
-        np.savez_compressed(out_name, boxes=boundary_boxes, segments=segments, keypoints=keypoints, metadata=metadata)
+        np.savez_compressed(
+            out_name, boxes=boundary_boxes, segments=segments,
+            keypoints=keypoints, metadata=metadata
+        )
 
 # Cell
 try: from nbdev.imports import IN_NOTEBOOK

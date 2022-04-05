@@ -27,8 +27,10 @@ def decode(filename):
     for i in range(len(boundary_box)):
         if len(boundary_box[i][1]) == 0 or len(key_points[i][1]) == 0:
             # No bbox/keypoints detected for this frame -> will be interpolated.
-            results_boundary_box.append(np.full(4, np.nan, dtype=np.float32)) # 4 bounding box coordinates.
-            results_key_points.append(np.full((17, 4), np.nan, dtype=np.float32)) # 17 COCO keypoints
+            # 4 bounding box coordinates.
+            results_boundary_box.append(np.full(4, np.nan, dtype=np.float32))
+            # 17 COCO keypoints
+            results_key_points.append(np.full((17, 4), np.nan, dtype=np.float32))
             continue
         best_match = np.argmax(boundary_box[i][1][:, 4])
         best_boundary_box = boundary_box[i][1][best_match, :4]
@@ -44,11 +46,15 @@ def decode(filename):
     mask = ~np.isnan(boundary_box[:, 0])
     indices = np.arange(len(boundary_box))
     for i in range(4):
-        boundary_box[:, i] = np.interp(indices, indices[mask], boundary_box[mask, i])
+        boundary_box[:, i] = np.interp(
+            indices, indices[mask], boundary_box[mask, i]
+        )
 
     for i in range(17):
         for j in range(2):
-            key_points[:, i, j] = np.interp(indices, indices[mask], key_points[mask, i, j])
+            key_points[:, i, j] = np.interp(
+                indices, indices[mask], key_points[mask, i, j]
+            )
 
     print('{} total frames processed'.format(len(boundary_box)))
     print('{} frames were interpolated'.format(np.sum(~mask)))
@@ -101,8 +107,14 @@ if __name__ == '__main__' and not IN_NOTEBOOK:
         exit(0)
 
     parser = argparse.ArgumentParser(description='Custom dataset creator')
-    parser.add_argument('-i', '--input', type=str, default='', metavar='PATH', help='detections directory')
-    parser.add_argument('-o', '--output', type=str, default='', metavar='PATH', help='output suffix for 2D detections')
+    parser.add_argument(
+        '-i', '--input', type=str, default='',
+        metavar='PATH', help='detections directory'
+    )
+    parser.add_argument(
+        '-o', '--output', type=str, default='',
+        metavar='PATH', help='output suffix for 2D detections'
+    )
     args = parser.parse_args()
 
     if not args.input:
@@ -128,5 +140,7 @@ if __name__ == '__main__' and not IN_NOTEBOOK:
         metadata['video_metadata'][canonical_name] = video_metadata
 
     print('Saving...')
-    np.savez_compressed(output_prefix_2d + args.output, positions_2d=output, metadata=metadata)
+    np.savez_compressed(
+        output_prefix_2d + args.output, positions_2d=output, metadata=metadata
+    )
     print('Done.')
