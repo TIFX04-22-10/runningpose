@@ -101,10 +101,11 @@ def main(args):
 
     # Remove the y-dimension to get the 2D data for side cam.
     # OBS! This may vary between camera angels.
+    # TODO: Add argument argument for which dim to drop to 2D
     data_2D = data_3D.drop(index=range(1, data_3D.shape[0], 3))
 
     # Creates output names that depends on the name of the data file
-    data_file_name =os.path.basename(os.path.normpath(args.data_file)).rsplit(".")[0]
+    data_file_name = os.path.basename(os.path.normpath(args.data_file)).rsplit(".")[0]
     out_2D = os.path.join(args.output_dir, data_file_name + '_2D_keypoints.csv')
     out_3D = os.path.join(args.output_dir, data_file_name + '_3D_keypoints.csv')
 

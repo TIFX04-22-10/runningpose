@@ -143,3 +143,6 @@ checklink/cookies.txt
 
 # test data
 richardrun/
+
+# remove alvin static
+Alvin_static_*

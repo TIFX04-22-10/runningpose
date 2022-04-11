@@ -147,8 +147,131 @@ Converted 14_infer_video.ipynb.
 Converted 15_prepare_data_COCO.ipynb.
 Converted 16_pycococreatortools.ipynb.
 Converted 17_format_qtmdata.ipynb.
-Converted index.ipynb.
+No export destination, ignored:
+#export
+# Some basic setup:
+# Setup detectron2 logger
+import detectron2
+from detectron2.utils.logger import setup_logger
+setup_logger()
+
+# Import some common libraries
+import numpy as np
+import matplotlib.pyplot as plt
+import os, json, cv2, random
+
+# Import some common detectron2 utilities
+from detectron2 import model_zoo
+from detectron2.engine import DefaultTrainer
+from detectron2.config import get_cfg
+from detectron2.utils.visualizer import Visualizer
+from detectron2.data import MetadataCatalog, DatasetCatalog
+from detectron2.data.datasets import register_coco_instances
+No export destination, ignored:
+#export
+# register_coco_instances(&#34;my_dataset_train&#34;, {}, &#34;json_annotation_train.json&#34;, &#34;path/to/image/dir&#34;)
+# register_coco_instances(&#34;my_dataset_val&#34;, {}, &#34;json_annotation_val.json&#34;, &#34;path/to/image/dir&#34;)
+No export destination, ignored:
+#export
+# TODO: Add names from dataframe. 
+keypoint_names = [
+    &#39;RWaist&#39;, # 1
+    &#39;LWaist&#39;, # 2
+    &#39;RKnee&#39;,  # 3
+    &#39;LKnee&#39;,  # 4
+    &#39;RWrist&#39;, # 5
+    &#39;LWrist&#39;, # 6
+    &#39;RElbow&#39;, # 7
+    &#39;LElbow&#39;, # 8
+    &#39;RForefoot2&#39;, # 9
+    &#39;RAnkleOut&#39;, # 10
+    &#39;LForefoot2&#39;, # 11
+    &#39;LAnkleOut&#39;, # 12 
+    &#39;WaistBack&#39;, # 13
+    &#39;RHand2&#39;, # 14
+    &#39;RShoulderTop&#39;, # 15
+    &#39;LHand2&#39;, # 16
+    &#39;LShoulderTop&#39;, # 17
+    &#39;SpineThoracic12&#39;, # 18
+    &#39;SpineThoracic2&#39;, # 19
+    &#39;HeadFront&#39; # 20
+]
+keypoint_flip_map = [
+    (&#39;RShoulderTop&#39;, &#39;LShoulderTop&#39;), (&#39;RElbow&#39;, &#39;LElbow&#39;), (&#39;RWrist&#39;, &#39;LWrist&#39;),
+    (&#39;RHand2&#39;, &#39;LHand2&#39;), (&#39;RWaist&#39;, &#39;LWaist&#39;), (&#39;RKnee&#39;, &#39;LKnee&#39;), 
+    (&#39;RAnkleOut&#39;, &#39;LAnkleOut&#39;), (&#39;RForefoot2&#39;, &#39;LForefoot2&#39;)
+]
+# MetadataCatalog.get(&#34;my_dataset_train&#34;).keypoint_names = keypoint_names
+# MetadataCatalog.get(&#34;my_dataset_train&#34;).keypoint_flip_map = keypoint_flip_map
+# MetadataCatalog.get(&#34;my_dataset_train&#34;).evaluator_type = &#34;coco&#34;
+
+# dataset_dicts = DatasetCatalog.get(&#34;my_dataset_train&#34;)
+No export destination, ignored:
+#export 
+cfg = get_cfg()
+cfg.merge_from_file(model_zoo.get_config_file(
+    &#34;COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml&#34;))
+# cfg.DATASETS.TRAIN = (&#34;my_dataset_train&#34;,)
+# cfg.DATASETS.TEST = (&#34;my_dataset_test&#34;)
+cfg.DATALOADER.NUM_WORKERS = 2
+# Let training initialize from model zoo
+cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+    &#34;COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml&#34;) 
+cfg.SOLVER.IMS_PER_BATCH = 2
+cfg.SOLVER.BASE_LR = 0.00025  # Pick a good LR
+cfg.SOLVER.MAX_ITER = 300    # 300 iterations
+cfg.SOLVER.STEPS = []        # Do not decay learning rate
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128 # NOTE: Increase if possible  
+cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # Only have one class
+cfg.MODEL.RETINANET.NUM_CLASSES = 1
+cfg.MODEL.ROI_KEYPOINT_HEAD.NUM_KEYPOINTS = 20
+# More info on below see section 1.3: https://cocodataset.org/#keypoints-eval
+cfg.TEST.KEYPOINT_OKS_SIGMAS = np.ones((20, 1), dtype=float).tolist()
+
+os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+No export destination, ignored:
+#export
+trainer = DefaultTrainer(cfg) 
+trainer.resume_or_load(resume=False)
+trainer.train()
+Warning: Exporting to &#34;None.py&#34; but this module is not part of this build
+Warning: Exporting to &#34;None.py&#34; but this module is not part of this build
+Warning: Exporting to &#34;None.py&#34; but this module is not part of this build
 </pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">/tmp/ipykernel_13783/242600319.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> nbdev<span class="ansi-blue-fg">.</span>export <span class="ansi-green-fg">import</span> notebook2script<span class="ansi-blue-fg">;</span> notebook2script<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/media/richard/SecondLinux/minconda3/envs/fastai/lib/python3.7/site-packages/nbdev/export.py</span> in <span class="ansi-cyan-fg">notebook2script</span><span class="ansi-blue-fg">(fname, silent, to_dict, bare)</span>
+<span class="ansi-green-intense-fg ansi-bold">    428</span>     d <span class="ansi-blue-fg">=</span> collections<span class="ansi-blue-fg">.</span>defaultdict<span class="ansi-blue-fg">(</span>list<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> to_dict <span class="ansi-green-fg">else</span> <span class="ansi-green-fg">None</span>
+<span class="ansi-green-intense-fg ansi-bold">    429</span>     modules <span class="ansi-blue-fg">=</span> create_mod_files<span class="ansi-blue-fg">(</span>files<span class="ansi-blue-fg">,</span> to_dict<span class="ansi-blue-fg">,</span> bare<span class="ansi-blue-fg">=</span>bare<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 430</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> sorted<span class="ansi-blue-fg">(</span>files<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> d <span class="ansi-blue-fg">=</span> _notebook2script<span class="ansi-blue-fg">(</span>f<span class="ansi-blue-fg">,</span> modules<span class="ansi-blue-fg">,</span> silent<span class="ansi-blue-fg">=</span>silent<span class="ansi-blue-fg">,</span> to_dict<span class="ansi-blue-fg">=</span>d<span class="ansi-blue-fg">,</span> bare<span class="ansi-blue-fg">=</span>bare<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    431</span>     <span class="ansi-green-fg">if</span> to_dict<span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> d
+<span class="ansi-green-intense-fg ansi-bold">    432</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> add_init<span class="ansi-blue-fg">(</span>get_config<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;lib_path&#34;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/media/richard/SecondLinux/minconda3/envs/fastai/lib/python3.7/site-packages/nbdev/export.py</span> in <span class="ansi-cyan-fg">_notebook2script</span><span class="ansi-blue-fg">(fname, modules, silent, to_dict, bare)</span>
+<span class="ansi-green-intense-fg ansi-bold">    355</span>         code <span class="ansi-blue-fg">=</span> _from_future_import<span class="ansi-blue-fg">(</span>fname_out<span class="ansi-blue-fg">,</span> flags<span class="ansi-blue-fg">,</span> code<span class="ansi-blue-fg">,</span> to_dict<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    356</span>         <span class="ansi-green-fg">if</span> a<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 357</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">if</span> to_dict <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> _add2all<span class="ansi-blue-fg">(</span>fname_out<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">f&#34;&#39;{f}&#39;&#34;</span> <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> names <span class="ansi-green-fg">if</span> <span class="ansi-blue-fg">&#39;.&#39;</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">in</span> f <span class="ansi-green-fg">and</span> len<span class="ansi-blue-fg">(</span>f<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">+</span> extra<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    358</span>         mod<span class="ansi-blue-fg">.</span>index<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span>f<span class="ansi-blue-fg">:</span> fname<span class="ansi-blue-fg">.</span>name <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> names<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    359</span>         code <span class="ansi-blue-fg">=</span> re<span class="ansi-blue-fg">.</span>sub<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">r&#39; +$&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">,</span> code<span class="ansi-blue-fg">,</span> flags<span class="ansi-blue-fg">=</span>re<span class="ansi-blue-fg">.</span>MULTILINE<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/media/richard/SecondLinux/minconda3/envs/fastai/lib/python3.7/site-packages/nbdev/export.py</span> in <span class="ansi-cyan-fg">_add2all</span><span class="ansi-blue-fg">(fname, names, line_width)</span>
+<span class="ansi-green-intense-fg ansi-bold">    209</span>     tw <span class="ansi-blue-fg">=</span> TextWrapper<span class="ansi-blue-fg">(</span>width<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">120</span><span class="ansi-blue-fg">,</span> initial_indent<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">,</span> subsequent_indent<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39; &#39;</span><span class="ansi-blue-fg">*</span><span class="ansi-cyan-fg">11</span><span class="ansi-blue-fg">,</span> break_long_words<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    210</span>     re_all <span class="ansi-blue-fg">=</span> _re__all__def<span class="ansi-blue-fg">.</span>search<span class="ansi-blue-fg">(</span>text<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 211</span><span class="ansi-red-fg">     </span>start<span class="ansi-blue-fg">,</span>end <span class="ansi-blue-fg">=</span> re_all<span class="ansi-blue-fg">.</span>start<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>re_all<span class="ansi-blue-fg">.</span>end<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    212</span>     text_all <span class="ansi-blue-fg">=</span> tw<span class="ansi-blue-fg">.</span>wrap<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#34;{text[start:end-1]}{&#39;&#39; if text[end-2]==&#39;[&#39; else &#39;, &#39;}{&#39;, &#39;.join(names)}]&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    213</span>     <span class="ansi-green-fg">with</span> open<span class="ansi-blue-fg">(</span>fname<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;w&#39;</span><span class="ansi-blue-fg">,</span> encoding<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;utf8&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> f<span class="ansi-blue-fg">:</span> f<span class="ansi-blue-fg">.</span>write<span class="ansi-blue-fg">(</span>text<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">:</span>start<span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">&#39;\n&#39;</span><span class="ansi-blue-fg">.</span>join<span class="ansi-blue-fg">(</span>text_all<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> text<span class="ansi-blue-fg">[</span>end<span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;start&#39;</pre>
 </div>
 </div>
 
