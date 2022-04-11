@@ -13,7 +13,7 @@ jobs:
       run: |
         pip install nbdev jupyter
         pip install -e .
-        continue-on-error: true
+      continue-on-error: true
     - name: Read all notebooks
       run: |
         nbdev_read_nbs
