@@ -146,3 +146,8 @@ richardrun/
 
 # remove alvin static
 Alvin_static_*
+
+# ignore testdata for dev
+output
+data_2d_custom_richardrun2ddata.npz
+
