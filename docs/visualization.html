@@ -47,7 +47,7 @@ nb_path: "nbs/10_visualization.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_resolution" class="doc_header"><code>get_resolution</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_resolution</code>(<strong><code>filename</code></strong>)</p>
+<h4 id="get_resolution" class="doc_header"><code>get_resolution</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_resolution</code>(<strong><code>filename</code></strong>)</p>
 </blockquote>
 <p>Returns the height and widht for a given video file.</p>
 
@@ -79,7 +79,7 @@ nb_path: "nbs/10_visualization.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_fps" class="doc_header"><code>get_fps</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_fps</code>(<strong><code>filename</code></strong>)</p>
+<h4 id="get_fps" class="doc_header"><code>get_fps</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L28" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_fps</code>(<strong><code>filename</code></strong>)</p>
 </blockquote>
 <p>Returns the frames per second for a given video file.</p>
 
@@ -111,7 +111,7 @@ nb_path: "nbs/10_visualization.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="read_video" class="doc_header"><code>read_video</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>read_video</code>(<strong><code>filename</code></strong>, <strong><code>skip</code></strong>=<em><code>0</code></em>, <strong><code>limit</code></strong>=<em><code>-1</code></em>)</p>
+<h4 id="read_video" class="doc_header"><code>read_video</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>read_video</code>(<strong><code>filename</code></strong>, <strong><code>skip</code></strong>=<em><code>0</code></em>, <strong><code>limit</code></strong>=<em><code>-1</code></em>)</p>
 </blockquote>
 <p>Loads a given video file and returns it as a data generator.</p>
 
@@ -143,7 +143,7 @@ nb_path: "nbs/10_visualization.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="downsample_tensor" class="doc_header"><code>downsample_tensor</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>downsample_tensor</code>(<strong><code>X</code></strong>, <strong><code>factor</code></strong>)</p>
+<h4 id="downsample_tensor" class="doc_header"><code>downsample_tensor</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L62" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>downsample_tensor</code>(<strong><code>X</code></strong>, <strong><code>factor</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -174,15 +174,91 @@ nb_path: "nbs/10_visualization.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="render_animation" class="doc_header"><code>render_animation</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L65" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>render_animation</code>(<strong><code>keypoints</code></strong>, <strong><code>keypoints_metadata</code></strong>, <strong><code>poses</code></strong>, <strong><code>skeleton</code></strong>, <strong><code>fps</code></strong>, <strong><code>bitrate</code></strong>, <strong><code>azim</code></strong>, <strong><code>output</code></strong>, <strong><code>viewport</code></strong>, <strong><code>limit</code></strong>=<em><code>-1</code></em>, <strong><code>downsample</code></strong>=<em><code>1</code></em>, <strong><code>size</code></strong>=<em><code>6</code></em>, <strong><code>input_video_path</code></strong>=<em><code>None</code></em>, <strong><code>input_video_skip</code></strong>=<em><code>0</code></em>)</p>
+<h4 id="render_animation" class="doc_header"><code>render_animation</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>render_animation</code>(<strong><code>keypoints</code></strong>, <strong><code>keypoints_metadata</code></strong>, <strong><code>poses</code></strong>, <strong><code>skeleton</code></strong>, <strong><code>fps</code></strong>, <strong><code>bitrate</code></strong>, <strong><code>azim</code></strong>, <strong><code>output</code></strong>, <strong><code>viewport</code></strong>, <strong><code>limit</code></strong>=<em><code>-1</code></em>, <strong><code>downsample</code></strong>=<em><code>1</code></em>, <strong><code>size</code></strong>=<em><code>6</code></em>, <strong><code>input_video_path</code></strong>=<em><code>None</code></em>, <strong><code>input_video_skip</code></strong>=<em><code>0</code></em>)</p>
 </blockquote>
 <p>TODO
 Render an animation. The supported output modes are:
  -- 'interactive': display an interactive figure
-                   (also works on notebooks if associated with %matplotlib inline)
- -- 'html': render the animation as HTML5 video. Can be displayed in a notebook using HTML(...).
- -- 'filename.mp4': render and export the animation as an h264 video (requires ffmpeg).
- -- 'filename.gif': render and export the animation a gif file (requires imagemagick).</p>
+        (also works on notebooks if associated with %matplotlib inline)
+ -- 'html': render the animation as HTML5 video. Can be displayed in
+        a notebook using HTML(...).
+ -- 'filename.mp4': render and export the animation as an h264 video
+        (requires ffmpeg).
+ -- 'filename.gif': render and export the animation a gif file
+    (requires imagemagick).</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Angle-Calculation">Angle Calculation<a class="anchor-link" href="#Angle-Calculation"> </a></h2><blockquote><p>Function that handle calculating the runners joint angels.</p>
+</blockquote>
+<p>We use the dot product rule:$a \cdot b = \lVert a \rVert \lVert b \rVert cos(\theta)$.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="unit_vector" class="doc_header"><code>unit_vector</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L288" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>unit_vector</code>(<strong><code>vector</code></strong>)</p>
+</blockquote>
+<p>Returns the unit vector of the vector.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="angle_calc" class="doc_header"><code>angle_calc</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/visualization.py#L293" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>angle_calc</code>(<strong><code>front_keypoint</code></strong>, <strong><code>mid_keypoint</code></strong>, <strong><code>end_keypoint</code></strong>)</p>
+</blockquote>
+<p>Calculates and returns the degree (angle) between two vectors</p>
 
 </div>
 
