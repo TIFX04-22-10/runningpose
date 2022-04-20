@@ -49,10 +49,11 @@ def main(args):
         columns=[
             'HeadL', 'HeadR', 'Chest', 'LThighFrontLow', 'RThighFrontLow',
             'LShinFrontHigh', 'RShinFrontHigh', 'LForefoot5', 'RForefoot5',
-            'LHeelBack', 'RHeelBack', 'LArm', 'RArm'
+            'LHeelBack', 'RHeelBack', 'LArm', 'RArm','WaistLFront', 'WaistL',
+            'WaistRFront', 'WaistR'
         ]
     )
-    # Create "new" keypoints by finding the mean between some specific keypoints
+    # Create "new" keypoints by finding the mean between specific keypoints
     left_elbow_3D = data_3D.loc[:, ['LElbowOut','LElbowIn']].mean(axis=1)
     right_elbow_3D = data_3D.loc[:, ['RElbowOut','RElbowIn']].mean(axis=1)
 
@@ -62,16 +63,16 @@ def main(args):
     left_knee_3D = data_3D.loc[:, ['LKneeOut','LKneeIn']].mean(axis=1)
     right_knee_3D = data_3D.loc[:, ['RKneeOut','RKneeIn']].mean(axis=1)
 
-    left_waist_3D = data_3D.loc[:, ['WaistLFront','WaistL']].mean(axis=1)
-    right_waist_3D = data_3D.loc[:, ['WaistRFront','WaistR']].mean(axis=1)
+    left_ankle_3D = data_3D.loc[:, ['LAnkleOut','LAnkleIn']].mean(axis=1)
+    right_ankle_3D = data_3D.loc[:, ['RAnkleOut','RAnkleIn']].mean(axis=1)
 
     # Remove the keypoints that was taken as a mean
     data_3D = data_3D.drop(
         columns=[
-            'LElbowOut','LElbowIn', 'RElbowOut','RElbowIn', 'LWristIn',
-            'LWristOut', 'RWristIn','RWristOut', 'LKneeIn', 'LKneeOut',
-            'RKneeIn', 'RKneeOut', 'WaistLFront', 'WaistL', 'WaistRFront',
-            'WaistR'
+            'LElbowOut','LElbowIn', 'RElbowOut','RElbowIn',
+            'LWristIn','LWristOut', 'RWristIn','RWristOut',
+            'LKneeIn', 'LKneeOut','RKneeIn', 'RKneeOut',
+            'LAnkleOut','LAnkleIn','RAnkleOut','RAnkleIn'
         ]
     )
     # Adds the new keypoint data to the dataframe
@@ -81,36 +82,22 @@ def main(args):
     data_3D['RWrist'] = right_wrist_3D
     data_3D['LKnee'] = left_knee_3D
     data_3D['RKnee'] = right_knee_3D
-    data_3D['LWaist'] = left_waist_3D
-    data_3D['RWaist'] = right_waist_3D
+    data_3D['LAnkle'] = left_ankle_3D
+    data_3D['RAnkle'] = right_ankle_3D
 
-    # Convert all the data relative to the root 'WaistBack'
-    data_3D = data_3D.subtract(data_3D['WaistBack'], axis=0)
-
-    # Scale each frame with a norm vector
-    data_3D_scaled = []
-    for i in range(0, data_3D.shape[0], 3):
-        # Calculates the scale factor for each frame
-        norm_vector = np.sqrt(np.square(
-            data_3D['SpineThoracic2'].iloc[i:i+3]).sum(axis=0)
-        )
-        data_3D_scaled.append(data_3D.iloc[i:i+3].divide(norm_vector))
-
-    # Reformat to dataframe again after all data has been scaled
-    data_3D = pd.concat(data_3D_scaled, ignore_index=True)
-
-    # Remove the y-dimension to get the 2D data for side cam.
-    # OBS! This may vary between camera angels.
-    # TODO: Add argument argument for which dim to drop to 2D
-    data_2D = data_3D.drop(index=range(1, data_3D.shape[0], 3))
 
     # Creates output names that depends on the name of the data file
-    data_file_name = os.path.basename(os.path.normpath(args.data_file)).rsplit(".")[0]
-    out_2D = os.path.join(args.output_dir, data_file_name + '_2D_keypoints.csv')
-    out_3D = os.path.join(args.output_dir, data_file_name + '_3D_keypoints.csv')
+    data_file_name = os.path.basename(
+        os.path.normpath(args.data_file)).rsplit(".")[0]
+    out_2D = os.path.join(
+        args.output_dir, data_file_name + '_2D_keypoints.csv')
+    out_3D = os.path.join(
+        args.output_dir, data_file_name + '_3D_keypoints.csv')
 
     # Save the keypoint data as csv files
-    pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)
+    # TODO: Add reformat to 2D data i.e 3DWorld -> 3DCamera -> 2D (projection)
+    # pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)
+    # TODO: Check if it is better to save this as npz instead.
     pd.DataFrame.to_csv(data_3D, path_or_buf=out_3D)
 
 # Cell
