@@ -18,6 +18,7 @@
     "Inference Video": "infer_video.html",
     "Prepare data to COCO": "prepare_data_COCO.html",
     "Python COCO creator tools": "pycococreatortools.html",
-    "Format qtmdata": "format_qtmdata.html"
+    "Format qtmdata": "format_qtmdata.html",
+    "Runningpose Dataset": "runningpose_dataset.html"
   }
 }

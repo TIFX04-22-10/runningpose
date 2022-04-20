@@ -63,6 +63,9 @@ entries:
     - output: web,pdf
       title: Format qtmdata
       url: format_qtmdata.html
+    - output: web,pdf
+      title: Runningpose Dataset
+      url: runningpose_dataset.html
     output: web
     title: runningpose
   output: web

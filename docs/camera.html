@@ -114,6 +114,8 @@ aspect ratio.</p>
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="world_to_camera" class="doc_header"><code>world_to_camera</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
 </blockquote>
+<p>Converts from world to camera coordinates with Human3.6M extrinsic
+camera parameters structure.</p>
 
 </div>
 
@@ -143,8 +145,10 @@ aspect ratio.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="camera_to_world" class="doc_header"><code>camera_to_world</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
+<h4 id="camera_to_world" class="doc_header"><code>camera_to_world</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
 </blockquote>
+<p>Converts from camera to world coordinates with Human3.6M extrinsic
+camera parameters structure.</p>
 
 </div>
 
@@ -174,7 +178,7 @@ aspect ratio.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_to_2d" class="doc_header"><code>project_to_2d</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L39" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
+<h4 id="project_to_2d" class="doc_header"><code>project_to_2d</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
 </blockquote>
 <p>Project 3D points to 2D using the Human3.6M camera projection
 function.
@@ -212,13 +216,97 @@ camera_params -- intrinsic parameteres (N, 2+2+3+2=9)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_to_2d_linear" class="doc_header"><code>project_to_2d_linear</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L74" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d_linear</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
+<h4 id="project_to_2d_linear" class="doc_header"><code>project_to_2d_linear</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d_linear</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
 </blockquote>
 <p>Project 3D points to 2D using only linear parameters
 (focal length and principal point).</p>
 <p>Arguments:
 X -- 3D points in <em>camera space</em> to transform (N, *, 3)
 camera_params -- intrinsic parameteres (N, 2+2+3+2=9)</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Miqus-Camera">Miqus Camera<a class="anchor-link" href="#Miqus-Camera"> </a></h2><blockquote><p>Functions that handles extrinsic camera parameters from Qualisys calibration file</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="world_to_camera_miqus" class="doc_header"><code>world_to_camera_miqus</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L112" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera_miqus</code>(<strong><code>P</code></strong>, <strong><code>R</code></strong>, <strong><code>T</code></strong>)</p>
+</blockquote>
+<p>Convert points from world to camera coordinates
+Args
+  P: Nx3 3d points in world coordinates
+  R: 3x3 Camera rotation matrix
+  T: 3x1 Camera translation parameters
+Returns
+  X_cam: Nx3 3d points in camera coordinates</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="camera_to_world_miqus" class="doc_header"><code>camera_to_world_miqus</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world_miqus</code>(<strong><code>P</code></strong>, <strong><code>R</code></strong>, <strong><code>T</code></strong>)</p>
+</blockquote>
+<p>Inverse of world_to_camera_frame
+Args
+  P: Nx3 points in camera coordinates
+  R: 3x3 Camera rotation matrix
+  T: 3x1 Camera translation parameters
+Returns
+  X_cam: Nx3 points in world coordinates</p>
 
 </div>
 
@@ -275,6 +363,7 @@ Converted 14_infer_video.ipynb.
 Converted 15_prepare_data_COCO.ipynb.
 Converted 16_pycococreatortools.ipynb.
 Converted 17_format_qtmdata.ipynb.
+Converted 18_runningpose_dataset.ipynb.
 Converted index.ipynb.
 </pre>
 </div>

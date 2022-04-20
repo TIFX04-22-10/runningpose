@@ -26,6 +26,12 @@ def parse_args():
         default='./',
         type=str
     )
+    parser.add_argument(
+        '--cut-frame',
+        dest='cut_frame',
+        type=int,
+        choices=(0, 10e10),
+    )
 
     return parser.parse_args()
 
@@ -38,7 +44,7 @@ def main(args):
     root and 'SpineThoracic2'.
     """
     # Loads the textfiles
-    labels_np = np.loadtxt('qtm_labels_py.txt', dtype = 'str')
+    labels_np = np.loadtxt('qtm_labels.txt', dtype = 'str')
     data_3D = np.loadtxt(args.data_file, dtype = 'float', delimiter= ',')
 
     # Reformats the data to a dataframe
@@ -85,6 +91,12 @@ def main(args):
     data_3D['LAnkle'] = left_ankle_3D
     data_3D['RAnkle'] = right_ankle_3D
 
+    # Remove every other row, our videodata Miqus is 85hz and the data is 170hz
+    data_3D = data_3D.iloc[::2]
+
+    if args.cut_frame is not None:
+        # Cuts the data by the same frame as we cut the video.
+        data_3D = data_3D[:args.cut_frame]
 
     # Creates output names that depends on the name of the data file
     data_file_name = os.path.basename(
