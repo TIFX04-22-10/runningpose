@@ -28,12 +28,22 @@ def image_coordinates(X, w, h):
 
 # Cell
 def world_to_camera(X, R, t):
+    """
+    Converts from world to camera coordinates with Human3.6M extrinsic
+    camera parameters structure.
+    """
     Rt = wrap(qinverse, R) # Invert rotation
-    return wrap(qrot, np.tile(Rt, (*X.shape[:-1], 1)), X - t) # Rotate and translate
+    # Rotate and translate
+    return wrap(qrot, np.tile(Rt, (*X.shape[:-1], 1)), X - t)
 
 # Cell
 def camera_to_world(X, R, t):
-    return wrap(qrot, np.tile(R, (*X.shape[:-1], 1)), X) + t # Rotate and translate
+    """
+    Converts from camera to world coordinates with Human3.6M extrinsic
+    camera parameters structure.
+    """
+    # Rotate and translate
+    return wrap(qrot, np.tile(R, (*X.shape[:-1], 1)), X) + t
 
 # Cell
 def project_to_2d(X, camera_params):
@@ -63,7 +73,10 @@ def project_to_2d(X, camera_params):
     XX = torch.clamp(X[..., :2] / X[..., 2:], min=-1, max=1)
     r2 = torch.sum(XX[..., :2]**2, dim=len(XX.shape)-1, keepdim=True)
 
-    radial = 1 + torch.sum(k * torch.cat((r2, r2**2, r2**3), dim=len(r2.shape)-1), dim=len(r2.shape)-1, keepdim=True)
+    radial = 1 + torch.sum(k * torch.cat((r2, r2**2, r2**3),
+                           dim=len(r2.shape)-1),
+                           dim=len(r2.shape)-1,
+                           keepdim=True)
     tan = torch.sum(p*XX, dim=len(XX.shape)-1, keepdim=True)
 
     XXX = XX*(radial + tan) + p*r2
