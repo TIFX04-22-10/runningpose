@@ -51,7 +51,11 @@ index = {"TemporalModelBase": "00_model.ipynb",
          "close_contour": "16_pycococreatortools.ipynb",
          "binary_mask_to_polygon": "16_pycococreatortools.ipynb",
          "create_image_info": "16_pycococreatortools.ipynb",
-         "create_annotation_info": "16_pycococreatortools.ipynb"}
+         "create_annotation_info": "16_pycococreatortools.ipynb",
+         "RunningposeDataset": "18_runningpose_dataset.ipynb",
+         "runningpose_skeleton": "18_runningpose_dataset.ipynb",
+         "runningpose_cameras_intrinsic_params": "18_runningpose_dataset.ipynb",
+         "runningpose_cameras_extrinsic_params": "18_runningpose_dataset.ipynb"}
 
 modules = ["core/model.py",
            "core/loss.py",
