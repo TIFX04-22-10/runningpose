@@ -9,7 +9,7 @@ Runningpose predicts keypoints in 3D, and is especially made to be used for gait
 
 Tranfer learning with a pretrained architecture for VideoPose3D was used for a architecture for 3D predictions, RunningPose architecture. It was then trained with a custom dataset, RunningPose dataset. The dataset was made in collaboration with [Qualisys](https://www.qualisys.com) and [Swedish Athletics Association](https://www.friidrott.se).
 
-The model predicts keypoints that has been identified as especially important regarding gait analysis for running humans. One main difference between this model and the pretrained model for VideoPose3D is that a keypoint on each the foot is predicted, wich the VideoPose3D model does not do.
+The model predicts keypoints that has been identified as especially important regarding gait analysis for running humans. One main difference between this model and the pretrained model for VideoPose3D is that a keypoint on each foot is predicted, which the VideoPose3D model does not do.
 
 ## Results on the RunningPose dataset
 The mean per-joint position error (MPJPE) is shown in the table below.
