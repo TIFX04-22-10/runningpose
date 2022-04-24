@@ -45,12 +45,12 @@ ffmpeg -i input.mp4 -filter "minterpolate='fps=50'" -crf 0 output.mp4
 ```
 
 #### Step 3: inferring 2D keypoints with Detectron
-Set up [Detectron2](https://github.com/facebookresearch/detectron2) and use the script `runningpose/data/inference/infer_video_d2.py` (no need to copy this, as it directly uses the Detectron2 API). This script provides a convenient interface to generate 2D keypoint predictions from videos without manually extracting individual frames.
+Set up [Detectron2](https://github.com/facebookresearch/detectron2) and use the script `runningpose/data/inference/infer_video.py` (no need to copy this, as it directly uses the Detectron2 API). This script provides a convenient interface to generate 2D keypoint predictions from videos without manually extracting individual frames.
 
 To infer keypoints from all the mp4 videos in `input_directory`, run
 ```
 cd runningpose/data/inference
-python infer_video_d2.py \
+python infer_video.py \
     --cfg COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml \
     --output-dir output_directory \
     --image-ext mp4 \
