@@ -58,8 +58,8 @@ CATEGORIES = [
         "id": 1,
         "name": "person",
         "keypoints": [
-            'RWaist', # 1
-            'LWaist', # 2
+            'RAnkle', # 1         #
+            'LAnkle', # 2         #
             'RKnee',  # 3
             'LKnee',  # 4
             'RWrist', # 5
@@ -67,22 +67,20 @@ CATEGORIES = [
             'RElbow', # 7
             'LElbow', # 8
             'RForefoot2', # 9
-            'RAnkleOut', # 10
+            'RThigh2', # 10       #
             'LForefoot2', # 11
-            'LAnkleOut', # 12
+            'LThigh2', # 12       #
             'WaistBack', # 13
-            'RHand2', # 14
-            'RShoulderTop', # 15
-            'LHand2', # 16
-            'LShoulderTop', # 17
-            'SpineThoracic12', # 18
-            'SpineThoracic2', # 19
-            'HeadFront' # 20
+            'RShoulderTop', # 14
+            'LShoulderTop', # 15
+            'SpineThoracic12', # 16
+            'SpineThoracic2', # 17
+            'HeadFront' # 18
         ],
-        "skeleton": [
-            [20, 19], [19, 15], [19, 17], [19, 18], [18, 13], [13, 1], [13, 2],
-            [1, 3], [2, 4], [3, 10], [4, 12], [10, 9], [12, 11], [15, 7],
-            [17, 8], [7, 5], [8, 6], [5, 14], [6, 16]
+        "skeleton": [ # 17 connections in total
+            [18, 17], [17, 15], [17, 14], [17, 16], [16, 13], [13, 10], [13, 12],
+            [10, 3], [3, 1], [1, 9], [12, 4], [4, 2], [2, 11], [14, 7],
+            [7, 5], [15, 8], [8, 6]
         ]
     }
 ]
