@@ -53,6 +53,7 @@ def parse_args():
     return parser.parse_args()
 
 # Cell
+
 def convert_to_2D(data_3D, camera_num):
     """Returns the corresponding 2D list for a 3D dataframe"""
     # Get camera parameters.
@@ -71,8 +72,23 @@ def convert_to_2D(data_3D, camera_num):
         y_data = col_data[1::3]
         z_data = col_data[2::3]
         data_world = np.array([x_data, y_data, z_data]).T
-        Proj, _, _, _, _ = project_point_radial(data_world, R, T, f, c, k, p)
-        data_2D.append(Proj)
+        Proj, _, _, _, _ = project_point_radial(data_world, R, T, f, c, k, p) # Proj: Nx2 points in pixel space
+        #data_2D.append(Proj) # this doesen't return correct dimensions
+
+        # reform array [[x, x, x...], [y, y, y...]] to [x, y, x, y, x, y, x, y]
+        Proj_as_vector = []
+        for i in range(len(Proj)):
+            Proj_as_vector.append(Proj[i, 0])
+            Proj_as_vector.append(Proj[i, 1])
+
+        if len(data_2D) == 0:
+            data_2D = Proj_as_vector # initialize with correct dim
+        else:
+            data_2D = np.vstack((data_2D, Proj_as_vector)) # check Proj correct keypoint format
+
+
+    # Reformats the data to a dataframe
+    data_2D = pd.DataFrame(data_2D, index=data_3D.columns).T
 
     # TODO: Update so it returns a dataframe instead of a list.
     # Get column names from input data_3D.
@@ -152,7 +168,7 @@ def main(args):
         data_3D = data_3D[:args.cut_frame]
 
     # Convert 3D world to 2D camera coordinates
-    data_2D = convert_to_2D(data_3D, args.camera)
+    data_2D = convert_to_2D(data_3D, args.camera-1) # args.camera-1 for cameras (0,1,2) instead of (1,2,3)
 
     # Creates output names that depends on the name of the data file
     data_file_name = os.path.basename(
@@ -162,11 +178,14 @@ def main(args):
     out_3D = os.path.join(
         args.output_dir, data_file_name + '_3D_keypoints.csv')
 
+
+
     # Save the keypoint data as csv files
     # TODO: Add reformat to 2D data i.e 3DWorld -> 3DCamera -> 2D (projection)
     # pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)
     # TODO: Check if it is better to save this as npz instead.
     pd.DataFrame.to_csv(data_3D, path_or_buf=out_3D)
+    pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)
 
 # Cell
 try: from nbdev.imports import IN_NOTEBOOK
