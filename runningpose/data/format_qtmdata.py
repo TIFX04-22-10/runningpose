@@ -75,7 +75,7 @@ def convert_to_2D(data_3D, camera_num):
         Proj, _, _, _, _ = project_point_radial(data_world, R, T, f, c, k, p) # Proj: Nx2 points in pixel space
         #data_2D.append(Proj) # this doesen't return correct dimensions
 
-        # reform array [[x, x, x...], [y, y, y...]] to [x, y, x, y, x, y, x, y]
+        # reform array [[x, x, x...], [y, y, y...]] to [x, y, x, y, x, y, x, y...]
         Proj_as_vector = []
         for i in range(len(Proj)):
             Proj_as_vector.append(Proj[i, 0])
@@ -90,9 +90,8 @@ def convert_to_2D(data_3D, camera_num):
     # Reformats the data to a dataframe
     data_2D = pd.DataFrame(data_2D, index=data_3D.columns).T
 
-    # TODO: Update so it returns a dataframe instead of a list.
-    # Get column names from input data_3D.
     # TODO: Check the einsum in project_point_radial one more time.
+    # TODO: Check Proj format correctly restructured
     return data_2D
 
 # Cell
@@ -181,8 +180,6 @@ def main(args):
 
 
     # Save the keypoint data as csv files
-    # TODO: Add reformat to 2D data i.e 3DWorld -> 3DCamera -> 2D (projection)
-    # pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)
     # TODO: Check if it is better to save this as npz instead.
     pd.DataFrame.to_csv(data_3D, path_or_buf=out_3D)
     pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)

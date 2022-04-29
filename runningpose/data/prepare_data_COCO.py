@@ -66,10 +66,10 @@ CATEGORIES = [
             'LWrist', # 6
             'RElbow', # 7
             'LElbow', # 8
-            'RForefoot2', # 9
-            'RThigh2', # 10       #
-            'LForefoot2', # 11
-            'LThigh2', # 12       #
+            'RForefoot', # 9
+            'RTrochanterMajor', # 10       #
+            'LForefoot', # 11
+            'LTrochanterMajor', # 12       #
             'WaistBack', # 13
             'RShoulderTop', # 14
             'LShoulderTop', # 15
@@ -91,19 +91,25 @@ def parse_args():
         description='Reformat to COCO-keypoint json format.'
     )
     parser.add_argument(
-        '--image-ext',
-        dest='image_ext',
-        help='image file name extension (default: mp4)',
-        default='mp4',
+        '--video_ext',
+        dest='video_ext',
+        help='video file name extension (default: avi)',
+        default='avi',
         type=str
     )
-    parser.add_argument(
-        '--im_or_folder',
-        help='image or folder of images',
-        default="richardrun2",
-        type=str
-    )
+    #parser.add_argument(
+    #    '--video_or_folder',
+    #    help='video or folder of videos',
+    #    default="richardrun2",
+    #    type=str
+    #)
 
+    parser.add_argument(
+        '--train_valid_test',
+        help='Used as training, validation or test data (train, valid, test)',
+        default=0,
+        type=str
+    )
     return parser.parse_args()
 
 # Cell
@@ -127,10 +133,24 @@ def main(args):
     predictor = DefaultPredictor(cfg)
 
     # Load the video folder in which we should predict.
-    if os.path.isdir(args.im_or_folder):
-        im_list = glob.iglob(args.im_or_folder + '/*.' + args.image_ext)
+    if args.train_valid_test=='train':
+        path = 'data_for_COCO/test_data'
+    elif args.train_valid_test=='valid':
+        path = 'data_for_COCO/validation_data'
+    elif args.train_valid_test=='test':
+        path = 'data_for_COCO/test_data'
     else:
-        im_list = [args.im_or_folder]
+        raise KeyError('Invalid data specification, please choose train, valid, or test')
+
+    if os.path.isdir(args.video_or_folder):
+        video_list = glob.iglob(path + '/*.' + args.video_ext)
+    else:
+        raise KeyError('Invalid path')
+
+    #if os.path.isdir(args.video_or_folder):
+    #    video_list = glob.iglob(args.video_or_folder + '/*.' + args.video_ext)
+    #else:
+    #    video_list = [args.video_or_folder]
 
     # Initialize coco_outputs, annotation id and video id:
     coco_output = {
@@ -142,7 +162,7 @@ def main(args):
     }
     annotation_id = 0
     video_id = 0 # Increases by 1e4 if we have multiple videos.
-    for video_name in im_list:
+    for video_name in video_list:
         print("Processing {}".format(video_name))
 
         # Make sure video_name matches csv file for 2D keypoints
@@ -185,12 +205,13 @@ def main(args):
                 coco_output["annotations"].append(annotation_info)
                 annotation_id += 1
 
-                output_name = video_name.replace(".mp4", "").rstrip()
+        video_id += 1e4
+
+    output_name = 'COCO_data_json_files/' + args.train_valid_test
 
     with open("{}.json".format(output_name), "w") as output_json_file:
         json.dump(coco_output, output_json_file)
 
-    video_id += 1e4
 
 # Cell
 def get_COCO_keypoints(video_name):
@@ -204,7 +225,7 @@ def get_COCO_keypoints(video_name):
 
     Returns a list of list with keypoints for each frame.
     """
-    file_path = video_name.replace(".mp4", "_2D_keypoints.csv")
+    file_path = video_name.replace(args.video_ext, "_2D_keypoints.csv")
     data_2D = pd.read_csv(file_path, index_col=0)
 
     keypoints = []
