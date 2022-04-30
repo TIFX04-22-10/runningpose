@@ -18,6 +18,8 @@ except:
     from inference import infer_video
     from pycoco import pycococreatortools as pycoco
 
+from PIL import Image # to save images
+
 import argparse
 import os
 import time
@@ -142,10 +144,7 @@ def main(args):
     else:
         raise KeyError('Invalid data specification, please choose train, valid, or test')
 
-    if os.path.isdir(args.video_or_folder):
-        video_list = glob.iglob(path + '/*.' + args.video_ext)
-    else:
-        raise KeyError('Invalid path')
+    video_list = glob.iglob(path + '/*.' + args.video_ext)
 
     #if os.path.isdir(args.video_or_folder):
     #    video_list = glob.iglob(args.video_or_folder + '/*.' + args.video_ext)
@@ -187,10 +186,15 @@ def main(args):
                 bbox_tensor = outputs.pred_boxes.tensor.numpy()[0, :]
                 pred_masks_tensor = outputs.pred_masks.numpy()[0, :, :]
 
+                image_id = video_id + frame_i
+
+                # Save the images for detectron2
+                image_name = 'COCO_json_and_images/images/' + image_id + '.jpeg'
+                im.save(image_name)
+
                 # Create the image section, it contains the complete list
                 # of images in your dataset.
-                image_id = video_id + frame_i
-                image_info = pycoco.create_image_info(image_id, video_name, im)
+                image_info = pycoco.create_image_info(image_id, image_name, im)
                 coco_output["images"].append(image_info)
 
                 # Create the annotations in the single person coco-keypoint format.
@@ -207,7 +211,7 @@ def main(args):
 
         video_id += 1e4
 
-    output_name = 'COCO_data_json_files/' + args.train_valid_test
+    output_name = 'COCO_json_and_images/' + args.train_valid_test
 
     with open("{}.json".format(output_name), "w") as output_json_file:
         json.dump(coco_output, output_json_file)
@@ -216,7 +220,7 @@ def main(args):
 # Cell
 def get_COCO_keypoints(video_name):
     """
-    Loads the formated qtm data for the video (.mp4) and reformats it to
+    Loads the formated qtm data for the video (.avi) and reformats it to
     COCO format i.e list: [x, y, v, x, y, v, ... x, y, v], where v is a visual
     parameter (0, 1, 2); whether the keypoint is visual and measured.
         0 = not measured.
