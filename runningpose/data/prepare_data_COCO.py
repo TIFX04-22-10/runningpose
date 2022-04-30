@@ -96,7 +96,7 @@ def parse_args():
         '--video_ext',
         dest='video_ext',
         help='video file name extension (default: avi)',
-        default='avi',
+        default='.avi',
         type=str
     )
     #parser.add_argument(
@@ -136,7 +136,7 @@ def main(args):
 
     # Load the video folder in which we should predict.
     if args.train_valid_test=='train':
-        path = 'data_for_COCO/test_data'
+        path = 'data_for_COCO/training_data'
     elif args.train_valid_test=='valid':
         path = 'data_for_COCO/validation_data'
     elif args.train_valid_test=='test':
@@ -144,7 +144,7 @@ def main(args):
     else:
         raise KeyError('Invalid data specification, please choose train, valid, or test')
 
-    video_list = glob.iglob(path + '/*.' + args.video_ext)
+    video_list = glob.iglob(path + '/*' + args.video_ext)
 
     #if os.path.isdir(args.video_or_folder):
     #    video_list = glob.iglob(args.video_or_folder + '/*.' + args.video_ext)
@@ -160,7 +160,7 @@ def main(args):
         "annotations": []
     }
     annotation_id = 0
-    video_id = 0 # Increases by 1e4 if we have multiple videos.
+    video_id = 0 # Increases by 1e4 if we have multiple videos
     for video_name in video_list:
         print("Processing {}".format(video_name))
 
@@ -189,8 +189,9 @@ def main(args):
                 image_id = video_id + frame_i
 
                 # Save the images for detectron2
-                image_name = 'COCO_json_and_images/images/' + image_id + '.jpeg'
-                im.save(image_name)
+                image_name = 'COCO_json_and_images/images/' + str(image_id) + '.jpeg'
+                img = Image.fromarray(im, 'RGB')
+                img.save(image_name)
 
                 # Create the image section, it contains the complete list
                 # of images in your dataset.
