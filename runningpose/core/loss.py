@@ -3,6 +3,10 @@
 __all__ = ['mpjpe', 'p_mpjpe', 'mean_velocity_error', 'weighted_mpjpe', 'n_mpjpe']
 
 # Cell
+import torch
+import numpy as np
+
+# Cell
 def mpjpe(predicted, target):
     """
     Mean per-joint position error (i.e mean Euclidean distance),
