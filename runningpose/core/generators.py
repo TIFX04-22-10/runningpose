@@ -42,7 +42,7 @@ class ChunkedGenerator:
     """
     def __init__(
             self, batch_size, cameras, poses_3d, poses_2d, chunk_length, pad=0,
-            causal_shift=0, shuffle=True,random_seed=47, augment=False,
+            causal_shift=0, shuffle=True, random_seed=47, augment=False,
             kps_left=None, kps_right=None, joints_left=None,
             joints_right=None, endless=False):
 
