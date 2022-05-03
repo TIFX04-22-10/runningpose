@@ -23,33 +23,6 @@ from detectron2.data.datasets import register_coco_instances
 
 # Cell
 # TODO: Add names from dataframe.
-# TODO: Update to match the new model
-keypoint_names = [
-    'RWaist', # 1
-    'LWaist', # 2
-    'RKnee',  # 3
-    'LKnee',  # 4
-    'RWrist', # 5
-    'LWrist', # 6
-    'RElbow', # 7
-    'LElbow', # 8
-    'RForefoot2', # 9
-    'RAnkleOut', # 10
-    'LForefoot2', # 11
-    'LAnkleOut', # 12
-    'WaistBack', # 13
-    'RHand2', # 14
-    'RShoulderTop', # 15
-    'LHand2', # 16
-    'LShoulderTop', # 17
-    'SpineThoracic12', # 18
-    'SpineThoracic2', # 19
-    'HeadFront' # 20
-]
-keypoint_flip_map = [
-    ('RShoulderTop', 'LShoulderTop'), ('RElbow', 'LElbow'), ('RWrist', 'LWrist'),
-    ('RHand2', 'LHand2'), ('RWaist', 'LWaist'), ('RKnee', 'LKnee'),
-    ('RAnkleOut', 'LAnkleOut'), ('RForefoot2', 'LForefoot2')
 ]
 # MetadataCatalog.get("my_dataset_train").keypoint_names = keypoint_names
 # MetadataCatalog.get("my_dataset_train").keypoint_flip_map = keypoint_flip_map

@@ -23,7 +23,7 @@ WaistL
 WaistBack
 WaistR
 WaistRFront
-LThigh2
+LTrochanterMajor
 LThighFrontLow
 LKneeOut
 LKneeIn
@@ -31,9 +31,9 @@ LShinFrontHigh
 LAnkleOut
 LAnkleIn
 LHeelBack
-LForefoot2
+LForefoot
 LForefoot5
-RThigh2
+RTrochanterMajor
 RThighFrontLow
 RKneeOut
 RKneeIn
@@ -41,5 +41,5 @@ RShinFrontHigh
 RAnkleOut
 RAnkleIn
 RHeelBack
-RForefoot2
+RForefoot
 RForefoot5
