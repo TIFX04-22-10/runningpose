@@ -278,7 +278,7 @@ def render_animation(
         writer = Writer(fps=fps, metadata={}, bitrate=bitrate)
         anim.save(output, writer=writer)
     elif output.endswith('.gif'):
-        anim.save(output, dpi=80, writer='imagemagick')
+        anim.save(output, dpi=80, writer='pillow')
     else:
         raise ValueError(
             'Unsupported output format (only .mp4 and .gif are supported)')

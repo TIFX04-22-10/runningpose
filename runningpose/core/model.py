@@ -28,14 +28,14 @@ class TemporalModelBase(nn.Module):
         self.pad = [filter_witdhs[0] // 2]
 
         self.expand_bn = nn.BatchNorm1d(channels, momentum=0.1)
-        self.shrink = nn.Conv1d(channels, num_joints_in*3, 1)
+        self.shrink = nn.Conv1d(channels, num_joints_out*3, 1)
 
     def set_bn_momentum(self, momentum):
         """
         Sets the batch norm momentum and updates the
         corresponding layers where it is used.
         """
-        self.expand_bn = momentum
+        self.expand_bn.momentum = momentum
         for bn in self.layers_bn:
             bn.momentum = momentum
 

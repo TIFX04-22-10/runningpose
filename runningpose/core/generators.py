@@ -42,7 +42,7 @@ class ChunkedGenerator:
     """
     def __init__(
             self, batch_size, cameras, poses_3d, poses_2d, chunk_length, pad=0,
-            causal_shift=0, shuffle=True,random_seed=47, augment=False,
+            causal_shift=0, shuffle=True, random_seed=47, augment=False,
             kps_left=None, kps_right=None, joints_left=None,
             joints_right=None, endless=False):
 
@@ -96,122 +96,122 @@ class ChunkedGenerator:
         self.joints_left = joints_left
         self.joints_right = joints_right
 
-        def num_frames(self):
-            """Returns the total number of frames that we train on."""
-            return self.num_batches * self.batch_size
+    def num_frames(self):
+        """Returns the total number of frames that we train on."""
+        return self.num_batches * self.batch_size
 
-        def random_state(self):
-            """Returns the random state used by the chunked generator."""
-            return self.random
+    def random_state(self):
+        """Returns the random state used by the chunked generator."""
+        return self.random
 
-        def set_random_state(self, random):
-            """Sets the random state for the chunked generator."""
-            self.random = random
+    def set_random_state(self, random):
+        """Sets the random state for the chunked generator."""
+        self.random = random
 
-        def augment_enabled(self):
-            """Returns a boolean if we use data-augmentation or not."""
-            return self.augment
+    def augment_enabled(self):
+        """Returns a boolean if we use data-augmentation or not."""
+        return self.augment
 
-        def next_pairs(self):
-            """Returns the next pairs or None. Can also shuffle the data."""
-            if self.state is None:
-                if self.shuffle:
-                    pairs = self.random.permutation(self.pairs)
-                else:
-                    pairs = self.pairs
-                return 0, pairs
+    def next_pairs(self):
+        """Returns the next pairs or None. Can also shuffle the data."""
+        if self.state is None:
+            if self.shuffle:
+                pairs = self.random.permutation(self.pairs)
             else:
-                return self.state
+                pairs = self.pairs
+            return 0, pairs
+        else:
+            return self.state
 
-        def next_epoch(self):
-            """
-            Sets up the next forward pass + backward pass for all the
-            training samples.
-            Returns (or yields) a generator object.
-            """
-            enabled = True
-            while enabled:
-                start_idx, pairs = self.next_pairs()
-                for batch_index in range(start_idx, self.num_batches):
-                    chunks = pairs[
-                        batch_index*batch_size : (batch_index+1)*self.batch_size
-                    ]
-                    for i, (seq_idx, start_3d, end_3d, flip) in enumerate(chunks):
-                        start_2d = start_3d - self.pad - self.causal_shift
-                        end_2d = end_3d + self.pad - self.causal_shift
+    def next_epoch(self):
+        """
+        Sets up the next forward pass + backward pass for all the
+        training samples.
+        Returns (or yields) a generator object.
+        """
+        enabled = True
+        while enabled:
+            start_idx, pairs = self.next_pairs()
+            for batch_index in range(start_idx, self.num_batches):
+                chunks = pairs[
+                    batch_index*self.batch_size : (batch_index+1)*self.batch_size
+                ]
+                for i, (seq_idx, start_3d, end_3d, flip) in enumerate(chunks):
+                    start_2d = start_3d - self.pad - self.causal_shift
+                    end_2d = end_3d + self.pad - self.causal_shift
 
-                        # 2D poses
-                        seq_2d = self.poses_2d[seq_idx]
-                        low_2d = max(start_2d, 0)
-                        high_2d = min(end_2d, seq_2d.shape[0])
-                        pad_left_2d = low_2d - start_2d
-                        pad_right_2d = end_2d - high_2d
-                        if pad_left_2d != 0 or pad_right_2d != 0:
-                            self.batch_2d[i] = np.pad(
-                                seq_2d[low_2d:high_2d],
-                                ((pad_left_2d, pad_right_2d),
+                    # 2D poses
+                    seq_2d = self.poses_2d[seq_idx]
+                    low_2d = max(start_2d, 0)
+                    high_2d = min(end_2d, seq_2d.shape[0])
+                    pad_left_2d = low_2d - start_2d
+                    pad_right_2d = end_2d - high_2d
+                    if pad_left_2d != 0 or pad_right_2d != 0:
+                        self.batch_2d[i] = np.pad(
+                            seq_2d[low_2d:high_2d],
+                            ((pad_left_2d, pad_right_2d),
+                            (0, 0), (0, 0)), 'edge'
+                        )
+                    else:
+                        self.batch_2d[i] = seq_2d[low_2d:high_2d]
+
+                    if flip:
+                        # Flip 2D keypoints
+                        self.batch_2d[i, :, :, 0] *= -1
+                        self.batch_2d[
+                            i, :, self.kps_left + self.kps_right
+                        ] = self.batch_2d[
+                            i, :, self.kps_right + self.kps_left
+                        ]
+
+                    # 3D poses
+                    if self.poses_3d is not None:
+                        seq_3d = self.poses_3d[seq_idx]
+                        low_3d = max(start_3d, 0)
+                        high_3d = min(end_3d, seq_3d.shape[0])
+                        pad_left_3d = low_3d - start_3d
+                        pad_right_3d = end_3d - high_3d
+                        if pad_left_3d != 0 or pad_right_3d != 0:
+                            self.batch_3d[i] = np.pad(
+                                seq_3d[low_3d:high_3d],
+                                ((pad_left_3d, pad_right_3d),
                                 (0, 0), (0, 0)), 'edge'
                             )
                         else:
-                            self.batch_2d[i] = seq_2d[low_2d:high_2d]
+                            self.batch_3d[i] = seq_3d[low_3d:high_3d]
 
                         if flip:
-                            # Flip 2D keypoints
-                            self.batch_2d[i, :, :, 0] *= -1
-                            self.batch_2d[
-                                i, :, self.kps_left + self.kps_right
-                            ] = self.batch_2d[
-                                i, :, self.kps_right + self.kps_left
+                            # Flip 3D joints
+                            self.batch_3d[i, :, :, 0] *= -1
+                            self.batch_3d[
+                                i, :, self.joints_left + self.joints_right
+                            ] = self.batch_3d[
+                                i, :, self.joints_right + self.joints_left
                             ]
 
-                        # 3D poses
-                        if self.poses_3d is not None:
-                            seq_3d = self.poses_3d[seq_idx]
-                            low_3d = max(start_3d, 0)
-                            high_3d = min(end_3d, seq_3d.shape[0])
-                            pad_left_3d = low_3d - start_3d
-                            pad_right_3d = end_3d - high_3d
-                            if pad_left_3d != 0 or pad_right_3d != 0:
-                                self.batch_3d[i] = np.pad(
-                                    seq_3d[low_3d:high_3d],
-                                    ((pad_left_3d, pad_right_3d),
-                                    (0, 0), (0, 0)), 'edge'
-                                )
-                            else:
-                                self.batch_3d[i] = seq_3d[low_3d:high_3d]
-
-                            if flip:
-                                # Flip 3D joints
-                                self.batch_3d[i, :, :, 0] *= -1
-                                self.batch_3d[
-                                    i, :, self.joints_left + self.joints_right
-                                ] = self.batch_3d[
-                                    i, :, self.joints_right + self.joints_left
-                                ]
-
-                        # Cameras
-                        if self.cameras is not None:
-                            self.batch_cam[i] = self.cameras[seq_idx]
-                            if flip:
-                                # Flip horizontal distortion coefficients
-                                self.batch_cam[i, 2] *= -1
-                                self.batch_cam[i, 7] *= -1
-
-                    if self.endless:
-                        self.state = (batch_index + 1, pairs)
-                    if self.poses_3d is None and self.cameras is None:
-                        yield None, None, self.batch_2d[:len(chunks)]
-                    elif self.poses_3d is not None and self.cameras is None:
-                        yield None, self.batch_3d[:len(chunks)], self.batch_2d[:len(chunks)]
-                    elif self.poses_3d is None:
-                        yield self.batch_cam[:len(chunks)], None, self.batch_2d[:len(chunks)]
-                    else:
-                        yield self.batch_cam[:len(chunks)], self.batch_3d[:len(chunks)], self.batch_2d[:len(chunks)]
+                    # Cameras
+                    if self.cameras is not None:
+                        self.batch_cam[i] = self.cameras[seq_idx]
+                        if flip:
+                            # Flip horizontal distortion coefficients
+                            self.batch_cam[i, 2] *= -1
+                            self.batch_cam[i, 7] *= -1
 
                 if self.endless:
-                    self.state = None
+                    self.state = (batch_index + 1, pairs)
+                if self.poses_3d is None and self.cameras is None:
+                    yield None, None, self.batch_2d[:len(chunks)]
+                elif self.poses_3d is not None and self.cameras is None:
+                    yield None, self.batch_3d[:len(chunks)], self.batch_2d[:len(chunks)]
+                elif self.poses_3d is None:
+                    yield self.batch_cam[:len(chunks)], None, self.batch_2d[:len(chunks)]
                 else:
-                    enabled = False
+                    yield self.batch_cam[:len(chunks)], self.batch_3d[:len(chunks)], self.batch_2d[:len(chunks)]
+
+            if self.endless:
+                self.state = None
+            else:
+                enabled = False
 
 # Cell
 class UnchunkedGenerator:

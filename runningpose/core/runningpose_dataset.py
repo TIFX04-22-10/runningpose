@@ -48,13 +48,11 @@ class RunningposeDataset(MocapDataset):
                 }
 
 # Cell
-runningpose_skeleton = Skeleton( #TODO: fix skeleton
-       parents=[2, 3, 9, 11, 6, 7, 13, 14, 0, 12, 1, 12, 15, 16, 16, 16, 17, -1], # 'HeadFront has no parent'
-       joints_left=[1, 3, 5, 7, 10, 11, 14],
-       joints_right=[0, 2, 4, 6, 8, 9, 13]
+runningpose_skeleton = Skeleton(
+    parents=[1, 2, 5, 1, 1, -1, 5, 16, 5, 17, 3, 4, 10, 11, 6, 8, 14, 15],
+    joints_left=[3, 6, 7, 10, 12, 14, 16],
+    joints_right=[4, 8, 9, 11, 13, 15, 17]
 )
-#'RAnkle', 'LAnkle','RKnee', 'LKnee', 'RWrist', 'LWrist', 'RElbow', 'LElbow', 'RForefoot', 'RTrochanterMajor', 'LForefoot',
-#'LTrochanterMajor', 'WaistBack', 'RShoulderTop', 'LShoulderTop', 'SpineThoracic12', 'SpineThoracic2', 'HeadFront'
 
 # Cell
 runningpose_cameras_intrinsic_params = [
