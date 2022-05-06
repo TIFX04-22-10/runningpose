@@ -3,9 +3,10 @@
 __all__ = ['wrap', 'deterministic_random']
 
 # Cell
-import torch
-import numpy as np
 import hashlib
+
+import numpy as np
+import torch
 
 # Cell
 def wrap(func, *args, unsqueeze=False):

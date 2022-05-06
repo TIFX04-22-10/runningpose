@@ -3,12 +3,15 @@
 __all__ = ['custom_camera_params', 'CustomDataset']
 
 # Cell
-import numpy as np
 import copy
-from .skeleton import Skeleton
-from .mocap_dataset import MocapDataset
-from .camera import normalize_screen_coordinates, image_coordinates
+
+import numpy as np
+
+from .camera import (image_coordinates,
+                                     normalize_screen_coordinates)
 from .h36m_dataset import h36m_skeleton
+from .mocap_dataset import MocapDataset
+from .skeleton import Skeleton
 
 # Cell
 custom_camera_params = {

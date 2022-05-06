@@ -4,6 +4,7 @@ __all__ = ['MocapDataset']
 
 # Cell
 import numpy as np
+
 from .skeleton import Skeleton
 
 # Cell

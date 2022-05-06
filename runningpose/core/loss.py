@@ -3,8 +3,8 @@
 __all__ = ['mpjpe', 'p_mpjpe', 'mean_velocity_error', 'weighted_mpjpe', 'n_mpjpe']
 
 # Cell
-import torch
 import numpy as np
+import torch
 
 # Cell
 def mpjpe(predicted, target):

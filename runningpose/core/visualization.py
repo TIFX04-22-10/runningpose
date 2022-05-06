@@ -5,14 +5,16 @@ __all__ = ['get_resolution', 'get_fps', 'read_video', 'downsample_tensor', 'rend
 
 # Cell
 import matplotlib
+
 matplotlib.use('Agg')
 
+import json
+import subprocess as sp
+
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation, writers
 from mpl_toolkits.mplot3d import Axes3D
-import numpy as np
-import subprocess as sp
-import pandas as pd
 
 # Cell
 def get_resolution(filename):
@@ -82,17 +84,12 @@ def render_animation(
     """
     # Initializes the input plot (2D)
     plt.ioff()
-    fig = plt.figure(figsize=(size*(2 + len(poses)), size))
-    ax_in = fig.add_subplot(1, 2 + len(poses), 1)
+    fig = plt.figure(figsize=(size*(1 + len(poses)), size))
+    ax_in = fig.add_subplot(1, 1 + len(poses), 1)
     ax_in.get_xaxis().set_visible(False)
     ax_in.get_yaxis().set_visible(False)
     ax_in.set_axis_off()
     ax_in.set_title('Input')
-
-    # Initializes the angles plot
-    ax_ang = fig.add_subplot(1, 2 + len(poses), 3)
-    ax_ang.axis('off')
-    ax_ang.axis('tight')
 
     # This handles the 3D plot:
     ax_3d = []
@@ -100,7 +97,7 @@ def render_animation(
     trajectories = []
     radius = 1.7
     for index, (title, data) in enumerate(poses.items()):
-        ax = fig.add_subplot(1, 2 + len(poses), index+2, projection='3d')
+        ax = fig.add_subplot(1, 1 + len(poses), index+2, projection='3d')
         ax.view_init(elev=15., azim=azim)
         ax.set_xlim3d([-radius/2, radius/2])
         ax.set_zlim3d([0, radius])
@@ -165,108 +162,121 @@ def render_animation(
     # Holds all the associated values to each joint in the skeleton
     # model that is needed to calculate a specific angle.
     joints = {
-        "RKnee": [1, 2, 3],
-        "LKnee": [6, 7, 8],
-        "Rarm": [10, 11, 12],
-        "Larm": [13, 14, 15],
+        "LElbow": [3, 10, 12],
+        "RElbow": [4, 11, 13],
+        "Neck": [0, 1, 2],
+        "Spine": [1, 2, 3],
+        "LKnee": [6, 14, 16],
+        "RKnee": [8, 15, 17],
+        "LFot": [14, 16, 7],
+        "RFot": [15, 17, 9]
     }
-    angles = np.zeros((1, 4))
-    df = pd.DataFrame(angles, columns=joints.keys())
-    table_angles = ax_ang.table(cellText=df.values, colLabels=df.columns)
-
+    # Instansiate a dictionary that holds all angle calculations for the joints
+    angles = {}
     def update_video(i):
-        """Updates the video with a new frame, used in FuncAnim."""
-        nonlocal initialized, image, lines, points
+            """Updates the video with a new frame, used in FuncAnim."""
+            nonlocal initialized, image, lines, points
 
-        for n, ax in enumerate(ax_3d):
-            ax.set_xlim3d(
-                [-radius/2 + trajectories[n][i, 0], radius/2
-                + trajectories[n][i, 0]]
-            )
-            ax.set_ylim3d(
-                [-radius/2 + trajectories[n][i, 1], radius/2
-                + trajectories[n][i, 1]]
-            )
+            for n, ax in enumerate(ax_3d):
+                ax.set_xlim3d(
+                    [-radius/2 + trajectories[n][i, 0], radius/2
+                    + trajectories[n][i, 0]]
+                )
+                ax.set_ylim3d(
+                    [-radius/2 + trajectories[n][i, 1], radius/2
+                    + trajectories[n][i, 1]]
+                )
 
-        # Update 2D poses
-        joints_right_2d = keypoints_metadata['keypoints_symmetry'][1]
-        colors_2d = np.full(keypoints.shape[1], 'black')
-        colors_2d[joints_right_2d] = 'red'
+            # Update 2D poses
+            joints_right_2d = keypoints_metadata['keypoints_symmetry'][1]
+            colors_2d = np.full(keypoints.shape[1], 'black')
+            colors_2d[joints_right_2d] = 'red'
 
-        # This runs the first time we render animation.
-        if not initialized:
-            image = ax_in.imshow(all_frames[i], aspect='equal')
+            # This runs the first time we render animation.
+            if not initialized:
+                image = ax_in.imshow(all_frames[i], aspect='equal')
 
-            for j, j_parent in enumerate(parents):
-                if j_parent == -1:
-                    continue
+                # NOTE: pos is (num_joints_out, dim) for each frame
+                pos = 0
+                for j, j_parent in enumerate(parents):
+                    if j_parent == -1:
+                        continue
 
-                if len(parents) == keypoints.shape[1] \
-                        and keypoints_metadata['layout_name'] != 'coco':
-                    # Draw skeleton only if keypoints match (otherwise
-                    # we don't have the parents definition)
-                    lines.append(ax_in.plot(
-                        [keypoints[i, j, 0], keypoints[i, j_parent, 0]],
-                        [keypoints[i, j, 1], keypoints[i, j_parent, 1]],
-                        color='pink'
+                    if len(parents) == keypoints.shape[1] \
+                            and keypoints_metadata['layout_name'] != 'coco':
+                        # Draw skeleton only if keypoints match (otherwise
+                        # we don't have the parents definition)
+                        lines.append(ax_in.plot(
+                            [keypoints[i, j, 0], keypoints[i, j_parent, 0]],
+                            [keypoints[i, j, 1], keypoints[i, j_parent, 1]],
+                            color='pink'
+                            )
                         )
+
+                    # Color of the skelton
+                    col = 'red' if j in skeleton.joints_right() else 'black'
+                    for n, ax in enumerate(ax_3d):
+                        pos = poses[n][i]
+                        lines_3d[n].append(ax.plot(
+                            [pos[j, 0], pos[j_parent, 0]],
+                            [pos[j, 1], pos[j_parent, 1]],
+                            [pos[j, 2], pos[j_parent, 2]], zdir='z', c=col)
+                        )
+
+                # Angle calculation
+                for joint in joints.keys():
+                    keyp = joints[joint]
+                    angle = angle_calc(
+                        pos[keyp[0], :],
+                        pos[keyp[1], :],
+                        pos[keyp[2], :]
                     )
+                    angles[joint] = [angle]
 
-                col = 'red' if j in skeleton.joints_right() else 'black'
-                for n, ax in enumerate(ax_3d):
-                    pos = poses[n][i]
-                    lines_3d[n].append(ax.plot(
-                        [pos[j, 0], pos[j_parent, 0]],
-                        [pos[j, 1], pos[j_parent, 1]],
-                        [pos[j, 2], pos[j_parent, 2]], zdir='z', c=col))
+                points = ax_in.scatter(
+                    *keypoints[i].T, 10, color=colors_2d,
+                    edgecolors='white', zorder=10
+                )
 
-                    for m, key in enumerate(joints):
-                        keyp = joints[key]
-                        angle = angle_calc(
-                            pos[keyp[0], :], pos[keyp[1], :], pos[keyp[2], :]
+                initialized = True
+            else:
+                image.set_data(all_frames[i])
+
+                # NOTE: pos is (num_joints_out, dim) for each frame
+                pos = 0
+                for j, j_parent in enumerate(parents):
+                    if j_parent == -1:
+                        continue
+
+                    if len(parents) == keypoints.shape[1] and \
+                            keypoints_metadata['layout_name'] != 'coco':
+                        lines[j-1][0].set_data(
+                            [keypoints[i, j, 0], keypoints[i, j_parent, 0]],
+                            [keypoints[i, j, 1], keypoints[i, j_parent, 1]]
                         )
-                        table_angles.get_celld()[1, m].get_text().set_text(angle)
 
-            points = ax_in.scatter(
-                *keypoints[i].T, 10, color=colors_2d,
-                edgecolors='white', zorder=10
-            )
+                    for n, ax in enumerate(ax_3d):
+                        pos = poses[n][i]
+                        lines_3d[n][j-1][0].set_xdata(
+                            np.array([pos[j, 0], pos[j_parent, 0]]))
+                        lines_3d[n][j-1][0].set_ydata(
+                            np.array([pos[j, 1], pos[j_parent, 1]]))
+                        lines_3d[n][j-1][0].set_3d_properties(
+                            np.array([pos[j, 2], pos[j_parent, 2]]), zdir='z')
 
-            initialized = True
-        else:
-            image.set_data(all_frames[i])
-
-            for j, j_parent in enumerate(parents):
-                if j_parent == -1:
-                    continue
-
-                if len(parents) == keypoints.shape[1] and \
-                        keypoints_metadata['layout_name'] != 'coco':
-                    lines[j-1][0].set_data(
-                        [keypoints[i, j, 0], keypoints[i, j_parent, 0]],
-                        [keypoints[i, j, 1], keypoints[i, j_parent, 1]]
+                # Angle calculation
+                for joint in joints.keys():
+                    keyp = joints[joint]
+                    angle = angle_calc(
+                        pos[keyp[0], :],
+                        pos[keyp[1], :],
+                        pos[keyp[2], :]
                     )
+                    angles[joint].append(angle)
 
-                for n, ax in enumerate(ax_3d):
-                    pos = poses[n][i]
-                    lines_3d[n][j-1][0].set_xdata(
-                        np.array([pos[j, 0], pos[j_parent, 0]]))
-                    lines_3d[n][j-1][0].set_ydata(
-                        np.array([pos[j, 1], pos[j_parent, 1]]))
-                    lines_3d[n][j-1][0].set_3d_properties(
-                        np.array([pos[j, 2], pos[j_parent, 2]]), zdir='z')
+                points.set_offsets(keypoints[i])
 
-                    for m, key in enumerate(joints):
-                        keyp = joints[key]
-                        angle = angle_calc(
-                            pos[keyp[0], :], pos[keyp[1], :], pos[keyp[2], :]
-                        )
-                        table_angles.get_celld()[1, m].get_text().set_text(angle)
-
-            points.set_offsets(keypoints[i])
-
-        print('{}/{}'.format(i, limit), end='\r')
-
+            print('{}/{}'.format(i, limit), end='\r')
 
     fig.tight_layout()
 
@@ -283,6 +293,10 @@ def render_animation(
         raise ValueError(
             'Unsupported output format (only .mp4 and .gif are supported)')
     plt.close()
+    # Save angles as a json file for web app to read.
+    with open('angles.json', 'w', encoding='utf-8') as f:
+        json.dump(angles, f, ensure_ascii=False, indent=4)
+    f.close()
 
 # Cell
 def unit_vector(vector):

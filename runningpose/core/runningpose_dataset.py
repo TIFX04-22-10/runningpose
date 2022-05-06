@@ -4,11 +4,13 @@ __all__ = ['RunningposeDataset', 'runningpose_skeleton', 'runningpose_cameras_in
            'runningpose_cameras_extrinsic_params']
 
 # Cell
-import numpy as np
 import copy
-from .skeleton import Skeleton
-from .mocap_dataset import MocapDataset
+
+import numpy as np
+
 from .camera import normalize_screen_coordinates
+from .mocap_dataset import MocapDataset
+from .skeleton import Skeleton
 
 # Cell
 class RunningposeDataset(MocapDataset):
@@ -49,7 +51,7 @@ class RunningposeDataset(MocapDataset):
 
 # Cell
 runningpose_skeleton = Skeleton(
-    parents=[1, 2, 5, 1, 1, -1, 5, 16, 5, 17, 3, 4, 10, 11, 6, 8, 14, 15],
+    parents=[-1, 0, 1, 1, 1, 2, 5, 16, 5, 17, 3, 4, 10, 11, 6, 8, 14, 15],
     joints_left=[3, 6, 7, 10, 12, 14, 16],
     joints_right=[4, 8, 9, 11, 13, 15, 17]
 )

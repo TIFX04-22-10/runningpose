@@ -4,12 +4,16 @@ __all__ = ['keypoints_3D', 'keypoints_3D', 'joints_left', 'joints_right', 'keypo
            'keypoints_2D_symmetry', 'kps_left', 'kps_right', 'keypoints_2D', 'keypoints_2D', 'subjects',
            'subjects_extra_cut', 'subjects_cut', 'keypoints_3D_val', 'keypoints_3D_val', 'keypoints_2D_val',
            'keypoints_2D_val', 'keypoints_2D_val', 'subjects', 'subjects_cut', 'shapes_3d', 'shapes_2d',
-           'poses_2d_train', 'poses_3d_train', 'poses_2d_val', 'poses_3d_val', 'checkpoint', 'num_joints_in',
-           'in_features', 'num_joints_out', 'filter_widths', 'causal', 'dropout', 'channels', 'lr', 'lr_decay',
-           'batch_size', 'chunk_length', 'num_epochs', 'trigger_times', 'patience', 'model_run_train', 'model_run',
-           'receptive_field', 'pad', 'optimizer', 'scaler', 'losses_3d_train', 'losses_3d_train_eval',
-           'losses_3d_valid', 'initial_momentum', 'final_momentum', 'valid_generator', 'train_generator',
-           'train_generator_eval', 'epoch', 'chk_path']
+           'poses_2d_train', 'poses_3d_train', 'poses_2d_val', 'poses_3d_val', 'checkpoint', 'allsub_keypoints',
+           'mean_keypoints', 'mean_keypoints', 'num_joints_in', 'in_features', 'num_joints_out', 'filter_widths',
+           'causal', 'dropout', 'channels', 'lr', 'lr_decay', 'batch_size', 'chunk_length', 'num_epochs',
+           'unfreeze_epoch', 'trigger_times', 'patience', 'model_run_train', 'model_run', 'receptive_field', 'pad',
+           'optimizer', 'scaler', 'losses_3d_train', 'losses_3d_train_eval', 'losses_3d_valid', 'initial_momentum',
+           'final_momentum', 'valid_generator', 'train_generator', 'train_generator_eval', 'epoch', 'chk_path',
+           'keypoints_3D_test', 'keypoints_3D_test', 'keypoints_2D_test', 'keypoints_2D_metadata',
+           'keypoints_2D_symmetry', 'kps_left', 'kps_right', 'keypoints_2D_test', 'keypoints_2D_test', 'subjects',
+           'subjects', 'poses_2d_test', 'poses_3d_test', 'checkpoint', 'model_run', 'testing_generator',
+           'losses_3d_test']
 
 # Cell
 import os
@@ -31,16 +35,16 @@ from .camera import normalize_screen_coordinates
 
 # Cell
 print('Loading training dataset...')
-keypoints_3D = np.load('data_3d_train.npz', allow_pickle=True)
+keypoints_3D = np.load('data_files/data_3d_train.npz', allow_pickle=True)
 keypoints_3D = keypoints_3D['positions_3d'].item()
-joints_left = [1, 3, 5, 7, 10, 11, 14]
-joints_right = [0, 2, 4, 6, 8, 9, 13]
+joints_left = [3, 6, 7, 10, 12, 14, 16]
+joints_right = [4, 8, 9, 11, 13, 15, 17]
 print(keypoints_3D.keys())
 print(keypoints_3D['Ioanna3_Camera1_170Hz_3D_keypoints'].shape)
 
 # Cell
 print('Loading 2D training detections...')
-keypoints_2D = np.load('data_2d_custom_trainingdata.npz', allow_pickle=True)
+keypoints_2D = np.load('data_files/data_2d_custom_trainingdata.npz', allow_pickle=True)
 keypoints_2D_metadata = keypoints_2D['metadata'].item()
 keypoints_2D_symmetry = keypoints_2D_metadata['keypoints_symmetry']
 kps_left = list(keypoints_2D_symmetry[0])
@@ -49,6 +53,11 @@ keypoints_2D = keypoints_2D['positions_2d'].item()
 keypoints_2D = dict(sorted(keypoints_2D.items()))
 print(keypoints_2D.keys())
 print(keypoints_2D['miqus1_Ioanna_01.avi']['custom'][0].shape)
+
+# Cell
+# Converts all training data to meters
+for subject in keypoints_3D.keys():
+    keypoints_3D[subject] /= 1000
 
 # Cell
 # Normalize camera frame
@@ -87,17 +96,22 @@ for subject in subjects_cut:
 
 # Cell
 print('Loading validation dataset...')
-keypoints_3D_val = np.load('data_3d_val.npz', allow_pickle=True)
+keypoints_3D_val = np.load('data_files/data_3d_val.npz', allow_pickle=True)
 keypoints_3D_val = keypoints_3D_val['positions_3d'].item()
 print(keypoints_3D_val.keys())
 # print(keypoints_3D['Ioanna1_Camera1_170Hz_3D_keypoints'].shape)
 
 # Cell
 print('Loading 2D training detections...')
-keypoints_2D_val = np.load('data_2d_custom_validationdata.npz', allow_pickle=True)
+keypoints_2D_val = np.load('data_files/data_2d_custom_validationdata.npz', allow_pickle=True)
 keypoints_2D_val = keypoints_2D_val['positions_2d'].item()
 keypoints_2D_val = dict(sorted(keypoints_2D_val.items()))
 print(keypoints_2D_val.keys())
+
+# Cell
+# Converts all 3D validation data to meters
+for subject in keypoints_3D_val.keys():
+    keypoints_3D_val[subject] /= 1000
 
 # Cell
 subjects = [
@@ -145,6 +159,15 @@ for i in range(len(shapes_2d)):
     assert shapes_2d[i][0] == shapes_3d[i][0], f'subject {i}: {shapes_2d[i][0]}, {shapes_3d[i][0]}'
 
 # Cell
+for subject in keypoints_3D.keys():
+    for i in range(keypoints_3D[subject].shape[0]):
+        keypoints_3D[subject][i, :, :] -= keypoints_3D[subject][i, 5, :]
+
+for subject in keypoints_3D_val.keys():
+    for i in range(keypoints_3D_val[subject].shape[0]):
+        keypoints_3D_val[subject][i, :, :] -= keypoints_3D_val[subject][i, 5, :]
+
+# Cell
 poses_2d_train = []
 for subject in keypoints_2D.keys():
     poses_2d_train.append(keypoints_2D[subject]['custom'][0])
@@ -174,21 +197,33 @@ checkpoint = torch.load('pretrained_h36m_detectron_coco.bin',
 print('This model was trained for {} epochs'.format(checkpoint['epoch']))
 
 # Cell
+# Check what the output mean is for each keypoint over all subjects.
+allsub_keypoints = 0
+for subject in keypoints_3D.keys():
+    allsub_keypoints += np.mean(keypoints_3D[subject], axis=0)
+
+mean_keypoints = allsub_keypoints / len(keypoints_3D.keys())
+mean_keypoints = np.reshape(
+    mean_keypoints, (mean_keypoints.shape[0]*mean_keypoints.shape[1])
+)
+
+# Cell
 # Hyperparameters
 num_joints_in = 17 # COCO
 in_features = 2 # dimension of in joints
 num_joints_out = 18
 filter_widths = [3, 3, 3, 3, 3] # just as in inference
 causal = False # No real time predictions
-dropout = 0.333
+dropout = 0.125
 channels = 1024 # default
-lr = 1e-3
-lr_decay = 0.99
-batch_size = 256
+lr = 3e-3
+lr_decay = 0.97
+batch_size = 128
 chunk_length = 1
-num_epochs = 2500
+num_epochs = 230
+unfreeze_epoch = 4
 trigger_times = 0
-patience = 4
+patience = 6000 #################NOTE: Turned off
 
 # Load two models one for training and one for evaluation
 model_run_train = TemporalModel(
@@ -200,16 +235,21 @@ model_run = TemporalModel(
     dropout, channels
 )
 
-if torch.cuda.is_available():
-    model_run_train = model_run_train.cuda()
-    model_run = model_run.cuda()
-
 # Reintizialize the last output layer to fit new out.
 checkpoint['model_pos']['shrink.weight'] = torch.randn(num_joints_out*3, channels, 1)
 checkpoint['model_pos']['shrink.bias'] = torch.from_numpy(mean_keypoints)
 
 # Load the pretrained model i.e to do transfer learning
 model_run_train.load_state_dict(checkpoint['model_pos'])
+
+# Freeze all layers except the last new layer
+for name, param in model_run_train.named_parameters():
+    if name != 'shrink.weight' and name != 'shrink.bias':
+        param.requires_grad = False
+
+if torch.cuda.is_available():
+    model_run_train = model_run_train.cuda()
+    model_run = model_run.cuda()
 
 # Cell
 # Calculate padding based on receptive field
@@ -237,7 +277,7 @@ valid_generator = UnchunkedGenerator(
     kps_left=kps_left, kps_right=kps_right,
     joints_left=joints_left, joints_right=joints_right
 )
-print('INFO: Testing on {} frames'.format(valid_generator.num_frames()))
+print('INFO: Validating on {} frames'.format(valid_generator.num_frames()))
 
 train_generator = ChunkedGenerator(
     batch_size, cameras=None, poses_3d=poses_3d_train, poses_2d=poses_2d_train,
@@ -255,6 +295,13 @@ print('INFO: Training on {} frames'.format(train_generator_eval.num_frames()))
 epoch = 0
 while epoch < num_epochs:
     start_time = time.time()
+    # Unfreezes the layers after a given epoch
+    if epoch == unfreeze_epoch:
+        lr = 3e-4
+        print('Unfreezes the model after epoch:', epoch)
+        for param in model_run_train.parameters():
+            param.requires_grad = True
+
     # Initialize training loss
     epoch_loss_3d_train = 0
     epoch_loss_2d_train_unlabeled = 0
@@ -282,7 +329,6 @@ while epoch < num_epochs:
         scaler.step(optimizer)
         scaler.update()
 
-
     # Total loss over one epoch
     losses_3d_train.append(epoch_loss_3d_train / N)
 
@@ -293,7 +339,6 @@ while epoch < num_epochs:
         model_run.eval()
         # Initialize validation loss
         epoch_loss_3d_valid = 0
-        epoch_loss_2d_valid = 0
         N = 0
 
         # Evaluate on validation dataset
@@ -313,7 +358,7 @@ while epoch < num_epochs:
         # Total loss over one epoch
         losses_3d_valid.append(epoch_loss_3d_valid / N)
 
-        # # Early stopping
+        # Early stopping
         # if epoch > 1:
         #     if losses_3d_valid[-1] > losses_3d_valid[-2]:
         #         trigger_times += 1
@@ -322,7 +367,6 @@ while epoch < num_epochs:
         #         if trigger_times > patience:
         #             print('Early stopping! at epoch:', epoch+1)
         #             epoch = num_epochs
-
 
         # Evaluate on training set, this time in evaluation mode
         epoch_loss_3d_train_eval = 0
@@ -355,7 +399,7 @@ while epoch < num_epochs:
         f'''[{epoch+1}] time {elapsed:.2f} lr {lr}
         3d_train {losses_3d_train[-1] * 1000}
         3d_eval {losses_3d_train_eval[-1] * 1000}
-        3d_valid {losses_3d_valid[-1]  *1000}''',
+        3d_valid {losses_3d_valid[-1]  * 1000}''',
         flush=True
     )
 
@@ -372,18 +416,30 @@ while epoch < num_epochs:
     model_run_train.set_bn_momentum(momentum)
 
     # Save training curves after every epoch, as .png images
-    if epoch >= num_epochs:
+    if epoch%10 == 0:
         plt.figure()
-        epoch_x = np.arange(3, len(losses_3d_train)) + 1
-        plt.plot(epoch_x, losses_3d_train[3:], '--', color='C0')
-        plt.plot(epoch_x, losses_3d_train_eval[3:], color='C0')
-        plt.plot(epoch_x, losses_3d_valid[3:], color='C1')
+        epoch_x = np.arange(8, len(losses_3d_train)) + 1
+        plt.plot(epoch_x, losses_3d_train[8:], '--', color='C0')
+        plt.plot(epoch_x, losses_3d_train_eval[8:], color='C0')
+        plt.plot(epoch_x, losses_3d_valid[8:], color='C1')
         plt.legend(['3d train', '3d train (eval)', '3d valid (eval)'])
-        plt.ylabel('MPJPE (mm)')
+        plt.ylabel('MPJPE (m)')
         plt.xlabel('Epoch')
-        plt.xlim((3, epoch))
+        plt.xlim((8, epoch))
         plt.savefig('loss_plots/' + str(epoch) + '_loss_3d.png')
         plt.close('all')
+
+    if epoch >= 50:
+        chk_path = os.path.join('runningpose_epoch_{}.bin'.format(epoch))
+        print(chk_path)
+        print('Saving checkpoint to', chk_path)
+        torch.save({
+            'epoch': epoch,
+            'lr': lr,
+            'random_state': train_generator.random_state(),
+            'optimizer': optimizer.state_dict(),
+            'model_run': model_run_train.state_dict(),
+        }, chk_path)
 
 # Cell
 chk_path = os.path.join('runningpose_epoch_{}.bin'.format(epoch))
@@ -396,3 +452,109 @@ torch.save({
     'optimizer': optimizer.state_dict(),
     'model_run': model_run_train.state_dict(),
 }, chk_path)
+
+# Cell
+keypoints_3D_test = np.load('data_files/data_3d_test.npz', allow_pickle=True)
+keypoints_3D_test = keypoints_3D_test['positions_3d'].item()
+keypoints_3D_test.keys()
+
+# Cell
+print('Loading 2D training detections...')
+keypoints_2D_test = np.load('data_2d_custom_testdata.npz', allow_pickle=True)
+keypoints_2D_metadata = keypoints_2D_test['metadata'].item()
+keypoints_2D_symmetry = keypoints_2D_metadata['keypoints_symmetry']
+kps_left = list(keypoints_2D_symmetry[0])
+kps_right = list(keypoints_2D_symmetry[1])
+keypoints_2D_test = keypoints_2D_test['positions_2d'].item()
+keypoints_2D_test = dict(sorted(keypoints_2D_test.items()))
+print(keypoints_2D_test.keys())
+
+# Cell
+keypoints_3D_test['Anna2_Camera1_170Hz_3D_keypoints'] = keypoints_3D_test['Anna2_Camera1_170Hz_3D_keypoints'][:, 1:]
+keypoints_3D_test['Anna2_Camera2_170Hz_3D_keypoints'] = keypoints_3D_test['Anna2_Camera2_170Hz_3D_keypoints'][:, 1:]
+keypoints_3D_test['Anna2_Camera3_170Hz_3D_keypoints'] = keypoints_3D_test['Anna2_Camera3_170Hz_3D_keypoints'][:, 1:]
+
+# Cell
+# Scale the data
+for subject in keypoints_3D_test.keys():
+    keypoints_3D_test[subject] /= 1000
+
+for subject in keypoints_3D_test.keys():
+    for i in range(keypoints_3D_test[subject].shape[0]):
+        keypoints_3D_test[subject][i, :, :] -= keypoints_3D_test[subject][i, 5, :]
+
+subjects = ['Anna_Miqus_14.avi', 'Anna_Miqus_15.avi']
+for subject in subjects:
+    for action in keypoints_2D_test[subject]:
+        for idx, kps in enumerate(keypoints_2D_test[subject][action]):
+            kps[..., :2] = normalize_screen_coordinates(kps[..., :2], w=1920, h=1088)
+            keypoints_2D_test[subject][action][idx] = kps
+
+subjects = ['Anna_Miqus_16.avi']
+for subject in subjects:
+    for action in keypoints_2D_test[subject]:
+        for idx, kps in enumerate(keypoints_2D_test[subject][action]):
+            kps[..., :2] = normalize_screen_coordinates(kps[..., :2], w=1480, h=1088)
+            keypoints_2D_test[subject][action][idx] = kps
+
+# Cell
+poses_2d_test = []
+for subject in keypoints_2D_test.keys():
+    poses_2d_test.append(keypoints_2D_test[subject]['custom'][0])
+
+poses_3d_test = []
+for subject in keypoints_3D_test.keys():
+    poses_3d_test.append(keypoints_3D_test[subject])
+
+assert len(poses_2d_test) == len(poses_3d_test), "Number of runs doesn't match."
+
+# Cell
+# Load checkpoint
+print('Loading checkpoint')
+checkpoint = torch.load('runningpose_100.bin',
+                        map_location=lambda storage,
+                        loc: storage)
+print('This model was trained for {} epochs'.format(checkpoint['epoch']))
+model_run = TemporalModel(
+    num_joints_in, in_features, num_joints_out, filter_widths, causal,
+    dropout, channels
+)
+if torch.cuda.is_available():
+    model_run = model_run.cuda()
+
+model_run.load_state_dict(checkpoint['model_run'])
+
+testing_generator = UnchunkedGenerator(
+    cameras=None, poses_3d=poses_3d_test, poses_2d=poses_2d_test,
+    pad=pad, augment=False,
+    kps_left=kps_left, kps_right=kps_right,
+    joints_left=joints_left, joints_right=joints_right
+)
+print('INFO: Testing on {} frames'.format(testing_generator.num_frames()))
+
+losses_3d_test = []
+print('Predicting...')
+with torch.no_grad():
+    # Load the newly trained network
+    model_run.eval()
+
+    # Initialize validation loss
+    epoch_loss_3d_test = 0
+    N = 0
+    for _, batch_3d, batch2d in testing_generator.next_epoch():
+        inputs_2d_test = torch.from_numpy(batch2d.astype('float32'))
+        inputs_3d_test = torch.from_numpy(batch_3d.astype('float32'))
+        if torch.cuda.is_available():
+            inputs_2d_test = inputs_2d_test.cuda()
+            inputs_3d_test = inputs_3d_test.cuda()
+
+        # Predict 3D poses (forward)
+        predicted_3d_pos = model_run(inputs_2d_test)
+        loss_3d_pos = mpjpe(predicted_3d_pos, inputs_3d_test)
+        N += inputs_3d_test.shape[0]
+        epoch_loss_3d_test += inputs_3d_test.shape[0] * loss_3d_pos.item()
+
+    # Total loss over one epoch
+    losses_3d_test.append(epoch_loss_3d_test / N)
+
+    print(losses_3d_test[-1] * 1000)

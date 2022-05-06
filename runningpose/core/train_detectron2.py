@@ -4,25 +4,50 @@ __all__ = ['keypoint_names', 'keypoint_flip_map', 'cfg']
 
 # Cell
 # Import some common libraries
-import numpy as np
-import matplotlib.pyplot as plt
-# import os, json, cv2, random
-
 # Import some common detectron2 utilities
 import detectron2
+import matplotlib.pyplot as plt
+import numpy as np
 from detectron2 import model_zoo
-from detectron2.engine import DefaultTrainer
 from detectron2.config import get_cfg
-from detectron2.utils.visualizer import Visualizer
-from detectron2.data import MetadataCatalog, DatasetCatalog
+from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.data.datasets import register_coco_instances
+from detectron2.engine import DefaultTrainer
+from detectron2.utils.visualizer import Visualizer
+
+import os, json, cv2, random
 
 # Cell
 # register_coco_instances("my_dataset_train", {}, "json_annotation_train.json", "path/to/image/dir")
 # register_coco_instances("my_dataset_val", {}, "json_annotation_val.json", "path/to/image/dir")
 
+register_coco_instances("my_dataset_train", {}, "Ioanna_01_Miqus_14.json", "~/Desktop/RunningposeStuff")
+
 # Cell
 # TODO: Add names from dataframe.
+keypoint_names = [
+    'RAnkle', # 1         #
+    'LAnkle', # 2         #
+    'RKnee',  # 3
+    'LKnee',  # 4
+    'RWrist', # 5
+    'LWrist', # 6
+    'RElbow', # 7
+    'LElbow', # 8
+    'RForefoot', # 9
+    'RTrochanterMajor', # 10       #
+    'LForefoot', # 11
+    'LTrochanterMajor', # 12       #
+    'WaistBack', # 13
+    'RShoulderTop', # 14
+    'LShoulderTop', # 15
+    'SpineThoracic12', # 16
+    'SpineThoracic2', # 17
+    'HeadFront' # 18
+]
+keypoint_flip_map = [
+    ('RShoulderTop', 'LShoulderTop'), ('RElbow', 'LElbow'), ('RWrist', 'LWrist'), ('RWaist', 'LWaist'), ('RKnee', 'LKnee'),
+    ('RAnkle', 'LAnkle'), ('RForefoot', 'LForefoot'), ('RTrochanterMajor','LTrochanterMajor')
 ]
 # MetadataCatalog.get("my_dataset_train").keypoint_names = keypoint_names
 # MetadataCatalog.get("my_dataset_train").keypoint_flip_map = keypoint_flip_map

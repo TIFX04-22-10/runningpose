@@ -47,7 +47,7 @@ nb_path: "nbs/08_generators.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ChunkedGenerator" class="doc_header"><code>class</code> <code>ChunkedGenerator</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/generators.py#L10" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ChunkedGenerator</code>(<strong><code>batch_size</code></strong>, <strong><code>cameras</code></strong>, <strong><code>poses_3d</code></strong>, <strong><code>poses_2d</code></strong>, <strong><code>chunk_length</code></strong>, <strong><code>pad</code></strong>=<em><code>0</code></em>, <strong><code>causal_shift</code></strong>=<em><code>0</code></em>, <strong><code>shuffle</code></strong>=<em><code>True</code></em>, <strong><code>random_seed</code></strong>=<em><code>47</code></em>, <strong><code>augment</code></strong>=<em><code>False</code></em>, <strong><code>kps_left</code></strong>=<em><code>None</code></em>, <strong><code>kps_right</code></strong>=<em><code>None</code></em>, <strong><code>joints_left</code></strong>=<em><code>None</code></em>, <strong><code>joints_right</code></strong>=<em><code>None</code></em>, <strong><code>endless</code></strong>=<em><code>False</code></em>)</p>
+<h2 id="ChunkedGenerator" class="doc_header"><code>class</code> <code>ChunkedGenerator</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/generators.py#L11" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ChunkedGenerator</code>(<strong><code>batch_size</code></strong>, <strong><code>cameras</code></strong>, <strong><code>poses_3d</code></strong>, <strong><code>poses_2d</code></strong>, <strong><code>chunk_length</code></strong>, <strong><code>pad</code></strong>=<em><code>0</code></em>, <strong><code>causal_shift</code></strong>=<em><code>0</code></em>, <strong><code>shuffle</code></strong>=<em><code>True</code></em>, <strong><code>random_seed</code></strong>=<em><code>47</code></em>, <strong><code>augment</code></strong>=<em><code>False</code></em>, <strong><code>kps_left</code></strong>=<em><code>None</code></em>, <strong><code>kps_right</code></strong>=<em><code>None</code></em>, <strong><code>joints_left</code></strong>=<em><code>None</code></em>, <strong><code>joints_right</code></strong>=<em><code>None</code></em>, <strong><code>endless</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Batched data generator, used for training.
 The sequences are split into equal-length chunks and padded as necessary.</p>
@@ -100,7 +100,7 @@ augment -- Augment the dataset by flipping poses horizontally.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="UnchunkedGenerator" class="doc_header"><code>class</code> <code>UnchunkedGenerator</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/generators.py#L217" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>UnchunkedGenerator</code>(<strong><code>cameras</code></strong>, <strong><code>poses_3d</code></strong>, <strong><code>poses_2d</code></strong>, <strong><code>pad</code></strong>=<em><code>0</code></em>, <strong><code>causal_shift</code></strong>=<em><code>0</code></em>, <strong><code>augment</code></strong>=<em><code>False</code></em>, <strong><code>kps_left</code></strong>=<em><code>None</code></em>, <strong><code>kps_right</code></strong>=<em><code>None</code></em>, <strong><code>joints_left</code></strong>=<em><code>None</code></em>, <strong><code>joints_right</code></strong>=<em><code>None</code></em>)</p>
+<h2 id="UnchunkedGenerator" class="doc_header"><code>class</code> <code>UnchunkedGenerator</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/generators.py#L218" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>UnchunkedGenerator</code>(<strong><code>cameras</code></strong>, <strong><code>poses_3d</code></strong>, <strong><code>poses_2d</code></strong>, <strong><code>pad</code></strong>=<em><code>0</code></em>, <strong><code>causal_shift</code></strong>=<em><code>0</code></em>, <strong><code>augment</code></strong>=<em><code>False</code></em>, <strong><code>kps_left</code></strong>=<em><code>None</code></em>, <strong><code>kps_right</code></strong>=<em><code>None</code></em>, <strong><code>joints_left</code></strong>=<em><code>None</code></em>, <strong><code>joints_right</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Non-batched data generator, used for testing.
 Sequences are returned one at a time (i.e. batch size = 1),
@@ -179,6 +179,10 @@ Converted 14_infer_video.ipynb.
 Converted 15_prepare_data_COCO.ipynb.
 Converted 16_pycococreatortools.ipynb.
 Converted 17_format_qtmdata.ipynb.
+Converted 18_runningpose_dataset.ipynb.
+Converted 19_train_detectron2.ipynb.
+Converted 20_transfer_model.ipynb.
+Converted 21_prepare_data_3d.ipynb.
 Converted index.ipynb.
 </pre>
 </div>

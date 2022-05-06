@@ -6,8 +6,9 @@ __all__ = ['normalize_screen_coordinates', 'image_coordinates', 'world_to_camera
 # Cell
 import numpy as np
 import torch
+
+from .quaternion import qinverse, qrot
 from .utils import wrap
-from .quaternion import qrot, qinverse
 
 # Cell
 def normalize_screen_coordinates(X, w, h):
@@ -17,7 +18,7 @@ def normalize_screen_coordinates(X, w, h):
     """
     assert X.shape[-1] == 2
 
-    return X/w*2 - [1, h/w]
+    return 2*(X/w) - [1, h/w]
 
 # Cell
 def image_coordinates(X, w, h):

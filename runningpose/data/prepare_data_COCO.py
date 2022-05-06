@@ -4,10 +4,10 @@ __all__ = ['INFO', 'LICENSES', 'CATEGORIES', 'parse_args', 'main', 'get_COCO_key
 
 # Cell
 import detectron2
-from detectron2.utils.logger import setup_logger
-from detectron2.config import get_cfg
 from detectron2 import model_zoo
+from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor
+from detectron2.utils.logger import setup_logger
 
 # Workaround for the relative import error,
 # removes the dot (.) infront when converting to .py script.
@@ -19,12 +19,14 @@ except:
     from pycoco import pycococreatortools as pycoco
 
 import argparse
-import os
-import time
-import json
 import datetime
 import glob
+import json
+import os
+import time
+
 import pandas as pd
+
 
 # Cell
 # The INFO section contains high level information about the dataset.
@@ -66,10 +68,10 @@ CATEGORIES = [
             'LWrist', # 6
             'RElbow', # 7
             'LElbow', # 8
-            'RForefoot2', # 9
-            'RThigh2', # 10       #
-            'LForefoot2', # 11
-            'LThigh2', # 12       #
+            'RForefoot', # 9
+            'RTrochanterMajor', # 10       #
+            'LForefoot', # 11
+            'LTrochanterMajor', # 12       #
             'WaistBack', # 13
             'RShoulderTop', # 14
             'LShoulderTop', # 15

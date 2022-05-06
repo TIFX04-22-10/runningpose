@@ -4,12 +4,13 @@ __all__ = ['convert', 'natural_key', 'resize_binary_mask', 'close_contour', 'bin
            'create_image_info', 'create_annotation_info']
 
 # Cell
-import re
 import datetime
+import re
+
 import numpy as np
-from skimage import measure
 from PIL import Image
 from pycocotools import mask
+from skimage import measure
 
 convert = lambda text: int(text) if text.isdigit() else text.lower()
 natural_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]

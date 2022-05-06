@@ -3,11 +3,13 @@
 __all__ = ['Human36mDataset', 'h36m_skeleton']
 
 # Cell
-import numpy as np
 import copy
-from .skeleton import Skeleton
-from .mocap_dataset import MocapDataset
+
+import numpy as np
+
 from .camera import normalize_screen_coordinates
+from .mocap_dataset import MocapDataset
+from .skeleton import Skeleton
 
 # Cell
 class Human36mDataset(MocapDataset):

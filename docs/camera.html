@@ -47,7 +47,7 @@ nb_path: "nbs/05_camera.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="normalize_screen_coordinates" class="doc_header"><code>normalize_screen_coordinates</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>normalize_screen_coordinates</code>(<strong><code>X</code></strong>, <strong><code>w</code></strong>, <strong><code>h</code></strong>)</p>
+<h4 id="normalize_screen_coordinates" class="doc_header"><code>normalize_screen_coordinates</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L14" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>normalize_screen_coordinates</code>(<strong><code>X</code></strong>, <strong><code>w</code></strong>, <strong><code>h</code></strong>)</p>
 </blockquote>
 <p>Normalize so that [0, w] is mapped to [-1, 1], while preserving the
 aspect ratio.</p>
@@ -80,7 +80,7 @@ aspect ratio.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="image_coordinates" class="doc_header"><code>image_coordinates</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>image_coordinates</code>(<strong><code>X</code></strong>, <strong><code>w</code></strong>, <strong><code>h</code></strong>)</p>
+<h4 id="image_coordinates" class="doc_header"><code>image_coordinates</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>image_coordinates</code>(<strong><code>X</code></strong>, <strong><code>w</code></strong>, <strong><code>h</code></strong>)</p>
 </blockquote>
 <p>Return the image coordinates</p>
 
@@ -112,7 +112,7 @@ aspect ratio.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="world_to_camera" class="doc_header"><code>world_to_camera</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
+<h4 id="world_to_camera" class="doc_header"><code>world_to_camera</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
 </blockquote>
 <p>Converts from world to camera coordinates with Human3.6M extrinsic
 camera parameters structure.</p>
@@ -145,7 +145,7 @@ camera parameters structure.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="camera_to_world" class="doc_header"><code>camera_to_world</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
+<h4 id="camera_to_world" class="doc_header"><code>camera_to_world</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L41" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world</code>(<strong><code>X</code></strong>, <strong><code>R</code></strong>, <strong><code>t</code></strong>)</p>
 </blockquote>
 <p>Converts from camera to world coordinates with Human3.6M extrinsic
 camera parameters structure.</p>
@@ -178,7 +178,7 @@ camera parameters structure.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_to_2d" class="doc_header"><code>project_to_2d</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
+<h4 id="project_to_2d" class="doc_header"><code>project_to_2d</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L50" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
 </blockquote>
 <p>Project 3D points to 2D using the Human3.6M camera projection
 function.
@@ -216,7 +216,7 @@ camera_params -- intrinsic parameteres (N, 2+2+3+2=9)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_to_2d_linear" class="doc_header"><code>project_to_2d_linear</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d_linear</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
+<h4 id="project_to_2d_linear" class="doc_header"><code>project_to_2d_linear</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L88" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_to_2d_linear</code>(<strong><code>X</code></strong>, <strong><code>camera_params</code></strong>)</p>
 </blockquote>
 <p>Project 3D points to 2D using only linear parameters
 (focal length and principal point).</p>
@@ -260,7 +260,7 @@ camera_params -- intrinsic parameteres (N, 2+2+3+2=9)</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="world_to_camera_miqus" class="doc_header"><code>world_to_camera_miqus</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L112" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera_miqus</code>(<strong><code>P</code></strong>, <strong><code>R</code></strong>, <strong><code>T</code></strong>)</p>
+<h4 id="world_to_camera_miqus" class="doc_header"><code>world_to_camera_miqus</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L113" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>world_to_camera_miqus</code>(<strong><code>P</code></strong>, <strong><code>R</code></strong>, <strong><code>T</code></strong>)</p>
 </blockquote>
 <p>Convert points from world to camera coordinates
 Args
@@ -298,7 +298,7 @@ Returns
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="camera_to_world_miqus" class="doc_header"><code>camera_to_world_miqus</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world_miqus</code>(<strong><code>P</code></strong>, <strong><code>R</code></strong>, <strong><code>T</code></strong>)</p>
+<h4 id="camera_to_world_miqus" class="doc_header"><code>camera_to_world_miqus</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L132" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>camera_to_world_miqus</code>(<strong><code>P</code></strong>, <strong><code>R</code></strong>, <strong><code>T</code></strong>)</p>
 </blockquote>
 <p>Inverse of world_to_camera_frame
 Args
@@ -307,6 +307,53 @@ Args
   T: 3x1 Camera translation parameters
 Returns
   X_cam: Nx3 points in world coordinates</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="project_point_radial" class="doc_header"><code>project_point_radial</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/camera.py#L150" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_point_radial</code>(<strong><code>P</code></strong>, <strong><code>R</code></strong>, <strong><code>T</code></strong>, <strong><code>f</code></strong>, <strong><code>c</code></strong>, <strong><code>k</code></strong>, <strong><code>p</code></strong>)</p>
+</blockquote>
+<p>Project points from 3d to 2d using camera parameters
+including radial and tangential distortion
+Args
+  P: Nx3 points in world coordinates
+  R: 3x3 Camera rotation matrix
+  T: 3x1 Camera translation parameters
+  f: (scalar) Camera focal length
+  c: 2x1 Camera center
+  k: 3x1 Camera radial distortion coefficients
+  p: 2x1 Camera tangential distortion coefficients
+Returns
+  Proj: Nx2 points in pixel space
+  D: 1xN depth of each point in camera space
+  radial: 1xN radial distortion per point
+  tan: 1xN tangential distortion per point
+  r2: 1xN squared radius of the projected points before distortion</p>
 
 </div>
 
@@ -364,6 +411,9 @@ Converted 15_prepare_data_COCO.ipynb.
 Converted 16_pycococreatortools.ipynb.
 Converted 17_format_qtmdata.ipynb.
 Converted 18_runningpose_dataset.ipynb.
+Converted 19_train_detectron2.ipynb.
+Converted 20_transfer_model.ipynb.
+Converted 21_prepare_data_3d.ipynb.
 Converted index.ipynb.
 </pre>
 </div>
