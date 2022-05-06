@@ -12,12 +12,18 @@ Tranfer learning with a pretrained architecture for VideoPose3D was used for a a
 
 The model predicts keypoints that has been identified as especially important regarding gait analysis for running humans. One main difference between this model and the pretrained model for VideoPose3D is that a keypoint on each foot is predicted, which the VideoPose3D model does not do.
 
-## Results on the RunningPose dataset
-The mean per-joint position error (MPJPE) is shown in the table below.
+Note: Runningpose was written with (https://nbdev.fast.ai/)
 
+## Results on the RunningPose dataset
+The model was trained only 6426 frames of data for 100 epochs and showed high variance as a result. See the lossplot in nbs. 
+The mean per-joint position error (MPJPE) is shown in the table below: 
+| Training | Validation | Test |
+|:-------|:-------:|:-------:|
+| 45.11 mm | 115.03 mm | 90.09 mm |
 
 ## Quick start
-To get started quickly, follow these instructions. This will allow you to do inference on in the wild and produce basic visualizations. For more detailed instructions, plese refer to the original model [VideoPose3D] (https://github.com/facebookresearch/VideoPose3D).
+To get started quickly, follow these instructions. This will allow you to do inference on in the wild and produce basic visualizations.
+For more detailed instructions, plese refer to the original model [VideoPose3D] (https://github.com/facebookresearch/VideoPose3D).
 
 ### Dependencies
 Make sure you have the following dependencies installed before proceeding:
