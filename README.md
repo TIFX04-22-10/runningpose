@@ -3,6 +3,7 @@
 
 This is the implementation of the approach used for 3D pose estimation in the candidate project TIFX04-22-10 at Chalmers University of Technology. The approach is described in the [candidate report](). It is an adaption of the approach used for [VideoPose3D] (https://github.com/facebookresearch/VideoPose3D) made by Meta Research.
 
+![](runner3.gif)
 
 ## Description
 Runningpose predicts keypoints in 3D, and is especially made to be used for gait analysis on running humans using monocular vision. To predict 3D keypoints Detectron2 is first used to predict 2D keypoints. A temporal convolution network (TCN) is then used for lifting, that is predicting 3D keypoints from the 2D keypoints.
