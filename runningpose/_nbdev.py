@@ -157,8 +157,8 @@ modules = ["core/model.py",
            "core/transfer_model.py",
            "data/prepare_data_3d.py"]
 
-doc_url = "https://svenssona.github.io/runningpose/"
+doc_url = "https://pages.github.tifx04-22-10.com./runningpose/"
 
-git_url = "https://github.com/svenssona/runningpose/tree/master/"
+git_url = "https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/"
 
 def custom_doc_links(name): return None
