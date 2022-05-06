@@ -73,7 +73,7 @@ You can finally use the visualization feature to render a video of the 3D joint 
 To use the trained RunningPose architecture, specify the ckeckpoint as ....
 
 ```
-python run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject input_video.mp4 --viz-action custom --viz-camera 0 --viz-video /path/to/input_video.mp4 --viz-output output.mp4 --viz-size 6
+python run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate runningpose_100.bin --render --viz-subject input_video.mp4 --viz-action custom --viz-camera 0 --viz-video /path/to/input_video.mp4 --viz-output output.mp4 --viz-size 6
 ```
 
 You can also export the 3D joint positions (in camera space) to a NumPy archive. To this end, replace `--viz-output` with `--viz-export` and specify the file name.
