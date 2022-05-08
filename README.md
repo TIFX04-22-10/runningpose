@@ -1,7 +1,7 @@
 # RunningPose
 > We introduce a new 3D pose estimator and model designed for runners. 
 
-This is the implementation of the approach used for 3D pose estimation in the candidate project TIFX04-22-10 at Chalmers University of Technology. The approach is described in the [candidate report](). It is an adaption of the approach used for [VideoPose3D] (https://github.com/facebookresearch/VideoPose3D) made by Meta Research.
+This is the implementation of the approach used for 3D pose estimation in the candidate project TIFX04-22-10 at Chalmers University of Technology. The approach is described in the [candidate report](). It is an adaption of the approach used for [VideoPose3D](https://github.com/facebookresearch/VideoPose3D) made by Meta Research.
 
 ![](runner3.gif)
 
@@ -12,7 +12,7 @@ Tranfer learning with a pretrained architecture for VideoPose3D was used for a a
 
 The model predicts keypoints that has been identified as especially important regarding gait analysis for running humans. One main difference between this model and the pretrained model for VideoPose3D is that a keypoint on each foot is predicted, which the VideoPose3D model does not do.
 
-Note: Runningpose was written with [nbdev](https://nbdev.fast.ai/). Link to our documentation: (tifx04-22-10.github.io/runningpose/)
+Note: Runningpose was written with [nbdev](https://nbdev.fast.ai/).
 
 ## Results on the RunningPose dataset
 The model was trained only 6426 frames of data for 100 epochs and showed high variance as a result. See the lossplot in nbs. 
@@ -23,7 +23,7 @@ The mean per-joint position error (MPJPE) is shown in the table below:
 
 ## Quick start
 To get started quickly, follow these instructions. This will allow you to do inference on in the wild and produce basic visualizations.
-For more detailed instructions, plese refer to the original model [VideoPose3D] (https://github.com/facebookresearch/VideoPose3D).
+For more detailed instructions, please refer to our documentation: [docs](tifx04-22-10.github.io/runningpose/).
 
 ### Dependencies
 Make sure you have the following dependencies installed before proceeding:
