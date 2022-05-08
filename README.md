@@ -12,7 +12,7 @@ Tranfer learning with a pretrained architecture for VideoPose3D was used for a a
 
 The model predicts keypoints that has been identified as especially important regarding gait analysis for running humans. One main difference between this model and the pretrained model for VideoPose3D is that a keypoint on each foot is predicted, which the VideoPose3D model does not do.
 
-Note: Runningpose was written with [nbdev](https://nbdev.fast.ai/).
+Note: Runningpose was written with [nbdev](https://nbdev.fast.ai/). Link to our documentation: (tifx04-22-10.github.io/runningpose/)
 
 ## Results on the RunningPose dataset
 The model was trained only 6426 frames of data for 100 epochs and showed high variance as a result. See the lossplot in nbs. 
