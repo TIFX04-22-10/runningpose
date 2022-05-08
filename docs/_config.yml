@@ -2,7 +2,7 @@ repository: TIFX04-22-10/runningpose
 output: web
 topnav_title: runningpose
 site_title: runningpose
-company_name: @RichardSvensson
+company_name: runningpose.ai
 description: 3D pose estimator for runners.
 # Set to false to disable KaTeX math
 use_math: true
