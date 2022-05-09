@@ -55,7 +55,7 @@ nb_path: "nbs/01_loss.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mpjpe" class="doc_header"><code>mpjpe</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/loss.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
+<h4 id="mpjpe" class="doc_header"><code>mpjpe</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/core/loss.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
 </blockquote>
 <p>Mean per-joint position error (i.e mean Euclidean distance),
 often referred to as "Protocol #1" in many papers.</p>
@@ -73,6 +73,23 @@ often referred to as "Protocol #1" in many papers.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">mpjpe</span><span class="p">(</span><span class="n">predicted</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mean per-joint position error (i.e mean Euclidean distance),</span>
+<span class="sd">    often referred to as &quot;Protocol #1&quot; in many papers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">assert</span> <span class="n">predicted</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">target</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">predicted</span> <span class="o">-</span> <span class="n">target</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -96,7 +113,7 @@ often referred to as "Protocol #1" in many papers.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="p_mpjpe" class="doc_header"><code>p_mpjpe</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/loss.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>p_mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
+<h4 id="p_mpjpe" class="doc_header"><code>p_mpjpe</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/core/loss.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>p_mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
 </blockquote>
 <p>Pose error: MPJPE after rigid alignment (scale, rotation, and translation),
 often referred to as "Protocol #2" in many papers.</p>
@@ -137,7 +154,7 @@ often referred to as "Protocol #2" in many papers.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mean_velocity_error" class="doc_header"><code>mean_velocity_error</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/loss.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mean_velocity_error</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
+<h4 id="mean_velocity_error" class="doc_header"><code>mean_velocity_error</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/core/loss.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mean_velocity_error</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
 </blockquote>
 <p>Mean per-joint velocity error
 (i.e. mean Euclidean distance of the 1st derivative).</p>
@@ -170,7 +187,7 @@ often referred to as "Protocol #2" in many papers.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="weighted_mpjpe" class="doc_header"><code>weighted_mpjpe</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/loss.py#L78" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>weighted_mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>, <strong><code>w</code></strong>)</p>
+<h4 id="weighted_mpjpe" class="doc_header"><code>weighted_mpjpe</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/core/loss.py#L78" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>weighted_mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>, <strong><code>w</code></strong>)</p>
 </blockquote>
 <p>Weighted mean per-joint position error (i.e. mean Euclidean distance)</p>
 
@@ -202,10 +219,10 @@ often referred to as "Protocol #2" in many papers.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="n_mpjpe" class="doc_header"><code>n_mpjpe</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/loss.py#L88" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>n_mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
+<h4 id="n_mpjpe" class="doc_header"><code>n_mpjpe</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/core/loss.py#L88" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>n_mpjpe</code>(<strong><code>predicted</code></strong>, <strong><code>target</code></strong>)</p>
 </blockquote>
 <p>Normalized MPJPE (scale only), adapted from:
-<a href="https://github.com/hrhodin/UnsupervisedGeometryAwareRepresentationLearning/blob/master/losses/poses.py">https://github.com/hrhodin/UnsupervisedGeometryAwareRepresentationLearning/blob/master/losses/poses.py</a></p>
+<a href="https://github.com/hrhodin/UnsupervisedGeometryAwareRepresentationLearning">https://github.com/hrhodin/UnsupervisedGeometryAwareRepresentationLearning</a></p>
 
 </div>
 
@@ -220,59 +237,6 @@ often referred to as "Protocol #2" in many papers.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted 15_prepare_data_COCO.ipynb.
-Converted 16_pycococreatortools.ipynb.
-Converted 17_format_qtmdata.ipynb.
-Converted 18_runningpose_dataset.ipynb.
-Converted 19_train_detectron2.ipynb.
-Converted 20_transfer_model.ipynb.
-Converted 21_prepare_data_3d.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     {% endraw %}

@@ -47,7 +47,7 @@ nb_path: "nbs/14_infer_video.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/inference/infer_video.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>()</p>
+<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/inference/infer_video.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>()</p>
 </blockquote>
 
 </div>
@@ -63,6 +63,45 @@ nb_path: "nbs/14_infer_video.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;End-to-end inference&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--cfg&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;cfg&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;cfg model file (/path/to/model_config.yaml)&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--output-dir&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;output_dir&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;directory for visualization pdfs (default: /tmp/infer_simple)&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/tmp/infer_simple&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--image-ext&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;image_ext&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;image file name extension (default: mp4)&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;mp4&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;im_or_folder&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;image or folder of images&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -78,7 +117,7 @@ nb_path: "nbs/14_infer_video.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_resolution" class="doc_header"><code>get_resolution</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/inference/infer_video.py#L53" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_resolution</code>(<strong><code>filename</code></strong>)</p>
+<h4 id="get_resolution" class="doc_header"><code>get_resolution</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/inference/infer_video.py#L53" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_resolution</code>(<strong><code>filename</code></strong>)</p>
 </blockquote>
 <p>Returns the width and height for a given video file.</p>
 
@@ -110,7 +149,7 @@ nb_path: "nbs/14_infer_video.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="read_video" class="doc_header"><code>read_video</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/inference/infer_video.py#L65" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>read_video</code>(<strong><code>filename</code></strong>)</p>
+<h4 id="read_video" class="doc_header"><code>read_video</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/inference/infer_video.py#L65" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>read_video</code>(<strong><code>filename</code></strong>)</p>
 </blockquote>
 <p>Loads a given video file and returns it as a data generator.</p>
 
@@ -127,6 +166,35 @@ nb_path: "nbs/14_infer_video.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">read_video</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a given video file and returns it as a data generator.&quot;&quot;&quot;</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">get_resolution</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="n">command</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;ffmpeg&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;-hide_banner&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span>
+        <span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;image2pipe&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;-pix_fmt&#39;</span><span class="p">,</span> <span class="s1">&#39;bgr24&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;-vsync&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;-vcodec&#39;</span><span class="p">,</span> <span class="s1">&#39;rawvideo&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span>
+    <span class="p">]</span>
+
+    <span class="n">pipe</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">yield</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -142,7 +210,7 @@ nb_path: "nbs/14_infer_video.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/inference/infer_video.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/inference/infer_video.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
 </blockquote>
 <p>Runs inference on the video files and saves the dataset in .npz file format.
 Predicts the boundary box and the coco keypoints.</p>
@@ -160,62 +228,91 @@ Predicts the boundary box and the coco keypoints.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs inference on the video files and saves the dataset in .npz file format.</span>
+<span class="sd">    Predicts the boundary box and the coco keypoints. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create a detectron2 config and a detectron2 DefaultPredictor to run inference on video.</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_cfg</span><span class="p">()</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">merge_from_file</span><span class="p">(</span><span class="n">model_zoo</span><span class="o">.</span><span class="n">get_config_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cfg</span><span class="p">))</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">ROI_HEADS</span><span class="o">.</span><span class="n">SCORE_TRESH_TEST</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="c1"># Set threshold for this model.</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">WEIGHTS</span> <span class="o">=</span> <span class="n">model_zoo</span><span class="o">.</span><span class="n">get_checkpoint_url</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cfg</span><span class="p">)</span> 
+    <span class="n">predictor</span> <span class="o">=</span> <span class="n">DefaultPredictor</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="c1"># Load the video folder in which we should predict.</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">im_or_folder</span><span class="p">):</span>
+        <span class="n">im_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">im_or_folder</span> <span class="o">+</span> <span class="s1">&#39;/*.&#39;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">image_ext</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">im_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">im_or_folder</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">video_name</span> <span class="ow">in</span> <span class="n">im_list</span><span class="p">:</span>
+        <span class="n">out_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">video_name</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Processing </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">video_name</span><span class="p">))</span>
+
+        <span class="c1"># Initialize results:</span>
+        <span class="n">boundary_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">segments</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Sets to None.</span>
+        <span class="n">keypoints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">frame_i</span><span class="p">,</span> <span class="n">im</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">read_video</span><span class="p">(</span><span class="n">video_name</span><span class="p">)):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">predictor</span><span class="p">(</span><span class="n">im</span><span class="p">)[</span><span class="s1">&#39;instances&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frame </span><span class="si">{}</span><span class="s2"> processed in </span><span class="si">{:.3f}</span><span class="s2">s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frame_i</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t</span><span class="p">))</span> 
+            
+            <span class="c1"># Checks if image is &quot;empty or not&quot;.</span>
+            <span class="n">has_bbox</span> <span class="o">=</span> <span class="kc">False</span> 
+            <span class="k">if</span> <span class="n">outputs</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="s1">&#39;pred_boxes&#39;</span><span class="p">):</span>
+                <span class="n">bbox_tensor</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">pred_boxes</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bbox_tensor</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">has_bbox</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">scores</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">scores</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]</span>
+                    <span class="n">bbox_tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">bbox_tensor</span><span class="p">,</span> <span class="n">scores</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">has_bbox</span><span class="p">:</span>
+                <span class="n">kps</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">pred_keypoints</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+                <span class="n">kps_xy</span> <span class="o">=</span> <span class="n">kps</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">kps_prob</span> <span class="o">=</span> <span class="n">kps</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">kps_logit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">kps_prob</span><span class="p">)</span> <span class="c1"># Dummy variable.</span>
+                <span class="n">kps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">kps_xy</span><span class="p">,</span> <span class="n">kps_logit</span><span class="p">,</span> <span class="n">kps_prob</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">kps</span> <span class="o">=</span> <span class="n">kps</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">kps</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">bbox_tensor</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># Mimic Detectron1 format</span>
+            <span class="n">cls_boxes</span> <span class="o">=</span> <span class="p">[[],</span> <span class="n">bbox_tensor</span><span class="p">]</span>
+            <span class="n">cls_keyps</span> <span class="o">=</span> <span class="p">[[],</span> <span class="n">kps</span><span class="p">]</span>
+
+            <span class="n">boundary_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cls_boxes</span><span class="p">)</span>
+            <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">keypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cls_keyps</span><span class="p">)</span>
+        
+        <span class="c1"># Video resolution.</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="p">}</span>
+        
+        <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span>
+            <span class="n">out_name</span><span class="p">,</span> <span class="n">boxes</span><span class="o">=</span><span class="n">boundary_boxes</span><span class="p">,</span> <span class="n">segments</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span> 
+            <span class="n">keypoints</span><span class="o">=</span><span class="n">keypoints</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span>
+        <span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+</div>
+    {% endraw %}
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted 15_prepare_data_COCO.ipynb.
-Converted 16_pycococreatortools.ipynb.
-Converted 17_format_qtmdata.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

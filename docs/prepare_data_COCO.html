@@ -39,6 +39,24 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The INFO section contains high level information about the dataset.</span>
+<span class="n">INFO</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Runningpose Dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/TIFX04-22-10/runningpose&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="mi">2022</span><span class="p">,</span>
+    <span class="s2">&quot;contributor&quot;</span><span class="p">:</span> <span class="s2">&quot;svenssona&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;date_created&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -46,6 +64,24 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The “licenses” section contains a list of image licenses </span>
+<span class="c1"># that apply to images in the dataset.</span>
+<span class="n">LICENSES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Creative Commons Attribution 4.0 International&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://dataworldsupport.atlassian.net/servicedesk/customer/portals&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -53,6 +89,50 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># In the case of a person, “keypoints” indicate different body parts. </span>
+<span class="c1"># The “skeleton” indicates connections between points. </span>
+<span class="c1"># For example, [20, 19] means &quot;HeadFront&quot; connects to &quot;SpineThoracic2&quot;.</span>
+<span class="n">CATEGORIES</span> <span class="o">=</span> <span class="p">[</span>
+   <span class="p">{</span>
+        <span class="s2">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;person&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;person&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;keypoints&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;RAnkle&#39;</span><span class="p">,</span> <span class="c1"># 1         #</span>
+            <span class="s1">&#39;LAnkle&#39;</span><span class="p">,</span> <span class="c1"># 2         #</span>
+            <span class="s1">&#39;RKnee&#39;</span><span class="p">,</span>  <span class="c1"># 3</span>
+            <span class="s1">&#39;LKnee&#39;</span><span class="p">,</span>  <span class="c1"># 4</span>
+            <span class="s1">&#39;RWrist&#39;</span><span class="p">,</span> <span class="c1"># 5</span>
+            <span class="s1">&#39;LWrist&#39;</span><span class="p">,</span> <span class="c1"># 6</span>
+            <span class="s1">&#39;RElbow&#39;</span><span class="p">,</span> <span class="c1"># 7</span>
+            <span class="s1">&#39;LElbow&#39;</span><span class="p">,</span> <span class="c1"># 8</span>
+            <span class="s1">&#39;RForefoot&#39;</span><span class="p">,</span> <span class="c1"># 9</span>
+            <span class="s1">&#39;RTrochanterMajor&#39;</span><span class="p">,</span> <span class="c1"># 10       #</span>
+            <span class="s1">&#39;LForefoot&#39;</span><span class="p">,</span> <span class="c1"># 11    </span>
+            <span class="s1">&#39;LTrochanterMajor&#39;</span><span class="p">,</span> <span class="c1"># 12       #</span>
+            <span class="s1">&#39;WaistBack&#39;</span><span class="p">,</span> <span class="c1"># 13</span>
+            <span class="s1">&#39;RShoulderTop&#39;</span><span class="p">,</span> <span class="c1"># 14</span>
+            <span class="s1">&#39;LShoulderTop&#39;</span><span class="p">,</span> <span class="c1"># 15</span>
+            <span class="s1">&#39;SpineThoracic12&#39;</span><span class="p">,</span> <span class="c1"># 16</span>
+            <span class="s1">&#39;SpineThoracic2&#39;</span><span class="p">,</span> <span class="c1"># 17</span>
+            <span class="s1">&#39;HeadFront&#39;</span> <span class="c1"># 18</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;skeleton&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="c1"># 17 connections in total</span>
+            <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">17</span><span class="p">],</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -68,7 +148,7 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/prepare_data_COCO.py#L91" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>()</p>
+<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/prepare_data_COCO.py#L91" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>()</p>
 </blockquote>
 
 </div>
@@ -84,6 +164,34 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Reformat to COCO-keypoint json format.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--image-ext&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;image_ext&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;image file name extension (default: mp4)&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;mp4&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--im_or_folder&#39;</span><span class="p">,</span> 
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;image or folder of images&#39;</span><span class="p">,</span> 
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;richardrun2&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -99,7 +207,7 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/prepare_data_COCO.py#L112" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/prepare_data_COCO.py#L112" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -115,6 +223,99 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Runs inference on the video files and saves the dataset in json </span>
+<span class="sd">    file format. Predicts the boundary box and segementation points.</span>
+<span class="sd">    Then adds the Qualisys keypoint data. </span>
+<span class="sd">    </span>
+<span class="sd">    OBS! Make sure video_name matches csv file for 2D keypoints and </span>
+<span class="sd">    that they are in the same folder. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create a detectron2 config and DefaultPredictor to run inference on video.</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_cfg</span><span class="p">()</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">merge_from_file</span><span class="p">(</span><span class="n">model_zoo</span><span class="o">.</span><span class="n">get_config_file</span><span class="p">(</span>
+        <span class="s2">&quot;COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml&quot;</span><span class="p">))</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">ROI_HEADS</span><span class="o">.</span><span class="n">SCORE_THRESH_TEST</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="c1"># Set threshold for this model.</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">MODEL</span><span class="o">.</span><span class="n">WEIGHTS</span> <span class="o">=</span> <span class="n">model_zoo</span><span class="o">.</span><span class="n">get_checkpoint_url</span><span class="p">(</span>
+        <span class="s2">&quot;COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml&quot;</span><span class="p">)</span> 
+    <span class="n">predictor</span> <span class="o">=</span> <span class="n">DefaultPredictor</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="c1"># Load the video folder in which we should predict.</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">im_or_folder</span><span class="p">):</span>
+        <span class="n">im_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">im_or_folder</span> <span class="o">+</span> <span class="s1">&#39;/*.&#39;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">image_ext</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">im_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">im_or_folder</span><span class="p">]</span>
+
+    <span class="c1"># Initialize coco_outputs, annotation id and video id:</span>
+    <span class="n">coco_output</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">INFO</span><span class="p">,</span>
+        <span class="s2">&quot;licenses&quot;</span><span class="p">:</span> <span class="n">LICENSES</span><span class="p">,</span>
+        <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="n">CATEGORIES</span><span class="p">,</span>
+        <span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+    <span class="n">annotation_id</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">video_id</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Increases by 1e4 if we have multiple videos.</span>
+    <span class="k">for</span> <span class="n">video_name</span> <span class="ow">in</span> <span class="n">im_list</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Processing </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">video_name</span><span class="p">))</span>
+         
+        <span class="c1"># Make sure video_name matches csv file for 2D keypoints </span>
+        <span class="c1"># and that they are in the same folder. </span>
+        <span class="c1"># TODO: Change so that it only works for mp4</span>
+        <span class="n">keypoints</span> <span class="o">=</span> <span class="n">get_COCO_keypoints</span><span class="p">(</span><span class="n">video_name</span><span class="p">)</span>
+
+        <span class="n">annotation_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">frame_i</span><span class="p">,</span> <span class="n">im</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">infer_video</span><span class="o">.</span><span class="n">read_video</span><span class="p">(</span><span class="n">video_name</span><span class="p">)):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">predictor</span><span class="p">(</span><span class="n">im</span><span class="p">)[</span><span class="s2">&quot;instances&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frame </span><span class="si">{}</span><span class="s2"> processed in </span><span class="si">{:.3f}</span><span class="s2">s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frame_i</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t</span><span class="p">))</span> 
+            <span class="c1"># Filter out the person class from the prediction; </span>
+            <span class="c1"># 0 is the index for persons.</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">outputs</span><span class="o">.</span><span class="n">pred_classes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Checks if image is &quot;empty or not&quot; and makes sure there </span>
+            <span class="c1"># is only one person detected.</span>
+            <span class="k">if</span> <span class="n">outputs</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="s2">&quot;pred_boxes&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Converts the tensors to a numpy arrays and slice away </span>
+                <span class="c1"># the person class.</span>
+                <span class="n">bbox_tensor</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">pred_boxes</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">pred_masks_tensor</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">pred_masks</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+                
+                <span class="c1"># Create the image section, it contains the complete list </span>
+                <span class="c1"># of images in your dataset.</span>
+                <span class="n">image_id</span> <span class="o">=</span> <span class="n">video_id</span> <span class="o">+</span> <span class="n">frame_i</span>
+                <span class="n">image_info</span> <span class="o">=</span> <span class="n">pycoco</span><span class="o">.</span><span class="n">create_image_info</span><span class="p">(</span><span class="n">image_id</span><span class="p">,</span> <span class="n">video_name</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span>
+                <span class="n">coco_output</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_info</span><span class="p">)</span>
+
+                <span class="c1"># Create the annotations in the single person coco-keypoint format. </span>
+                <span class="n">annotation_info</span> <span class="o">=</span> <span class="n">pycoco</span><span class="o">.</span><span class="n">create_annotation_info</span><span class="p">(</span>
+                    <span class="n">annotation_id</span><span class="p">,</span> 
+                    <span class="n">image_id</span><span class="p">,</span> 
+                    <span class="n">pred_masks_tensor</span><span class="p">,</span> 
+                    <span class="n">bbox_tensor</span><span class="p">,</span> 
+                    <span class="n">keypoints</span><span class="o">=</span><span class="n">keypoints</span><span class="p">[</span><span class="n">frame_i</span><span class="p">]</span>
+                <span class="p">)</span>
+
+                <span class="n">coco_output</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation_info</span><span class="p">)</span>
+                <span class="n">annotation_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">output_name</span> <span class="o">=</span> <span class="n">video_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.mp4&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output_name</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output_json_file</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">coco_output</span><span class="p">,</span> <span class="n">output_json_file</span><span class="p">)</span>
+
+    <span class="n">video_id</span> <span class="o">+=</span> <span class="mf">1e4</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -130,7 +331,7 @@ nb_path: "nbs/15_prepare_data_COCO.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_COCO_keypoints" class="doc_header"><code>get_COCO_keypoints</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/prepare_data_COCO.py#L198" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_COCO_keypoints</code>(<strong><code>video_name</code></strong>)</p>
+<h4 id="get_COCO_keypoints" class="doc_header"><code>get_COCO_keypoints</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/prepare_data_COCO.py#L198" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_COCO_keypoints</code>(<strong><code>video_name</code></strong>)</p>
 </blockquote>
 <p>Loads the formated qtm data for the video (.mp4) and reformats it to
 COCO format i.e list: [x, y, v, x, y, v, ... x, y, v], where v is a visual
@@ -153,64 +354,51 @@ parameter (0, 1, 2); whether the keypoint is visual and measured.
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_COCO_keypoints</span><span class="p">(</span><span class="n">video_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads the formated qtm data for the video (.mp4) and reformats it to </span>
+<span class="sd">    COCO format i.e list: [x, y, v, x, y, v, ... x, y, v], where v is a visual </span>
+<span class="sd">    parameter (0, 1, 2); whether the keypoint is visual and measured.  </span>
+<span class="sd">        0 = not measured.</span>
+<span class="sd">        1 = measured but not visual.</span>
+<span class="sd">        2 = measured and visual.</span>
+
+<span class="sd">    Returns a list of list with keypoints for each frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">video_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.mp4&quot;</span><span class="p">,</span> <span class="s2">&quot;_2D_keypoints.csv&quot;</span><span class="p">)</span>
+    <span class="n">data_2D</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">keypoints</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data_2D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">x_keypoints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_2D</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">y_keypoints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_2D</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">keypoints_one_frame</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">y_keypoints</span><span class="p">):</span>
+            <span class="c1"># Remember that pop() reverses the order of the keypoints.</span>
+            <span class="n">keypoints_one_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_keypoints</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="n">keypoints_one_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_keypoints</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="c1"># Assume v=2 for lack of better way to do it. </span>
+            <span class="n">keypoints_one_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="n">keypoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">keypoints_one_frame</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">keypoints</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+</div>
+    {% endraw %}
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted 15_prepare_data_COCO.ipynb.
-Converted 16_pycococreatortools.ipynb.
-Converted 17_format_qtmdata.ipynb.
-Converted 18_runningpose_dataset.ipynb.
-Converted 19_train_detectron2.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

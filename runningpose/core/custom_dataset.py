@@ -3,7 +3,6 @@
 __all__ = ['custom_camera_params', 'CustomDataset']
 
 # Cell
-import copy
 
 import numpy as np
 

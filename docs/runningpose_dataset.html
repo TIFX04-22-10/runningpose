@@ -47,7 +47,7 @@ nb_path: "nbs/18_runningpose_dataset.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="RunningposeDataset" class="doc_header"><code>class</code> <code>RunningposeDataset</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/runningpose_dataset.py#L16" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>RunningposeDataset</code>(<strong><code>path</code></strong>) :: <a href="/runningpose/mocap_dataset.html#MocapDataset"><code>MocapDataset</code></a></p>
+<h2 id="RunningposeDataset" class="doc_header"><code>class</code> <code>RunningposeDataset</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/core/runningpose_dataset.py#L16" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>RunningposeDataset</code>(<strong><code>path</code></strong>) :: <a href="/runningpose/mocap_dataset.html#MocapDataset"><code>MocapDataset</code></a></p>
 </blockquote>
 <p>Runningpose pose estimation dataset.</p>
 
@@ -64,6 +64,50 @@ nb_path: "nbs/18_runningpose_dataset.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">RunningposeDataset</span><span class="p">(</span><span class="n">MocapDataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Runningpose pose estimation dataset.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="mi">85</span><span class="p">,</span> <span class="n">skeleton</span><span class="o">=</span><span class="n">runningpose_skeleton</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cameras</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">runningpose_cameras_extrinsic_params</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">cameras</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cameras</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cam</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cameras</span><span class="p">):</span>
+                <span class="n">cam</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">runningpose_cameras_intrinsic_params</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cam</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;res_w&quot;</span><span class="p">,</span> <span class="s2">&quot;res_h&quot;</span><span class="p">]:</span>
+                        <span class="n">cam</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Normalize camera frame.</span>
+        <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize_screen_coordinates</span><span class="p">(</span>
+            <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span> <span class="n">w</span><span class="o">=</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;res_w&#39;</span><span class="p">],</span> <span class="n">h</span><span class="o">=</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;res_h&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;focal_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;focal_length&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;res_w&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span>
+        <span class="k">if</span> <span class="s1">&#39;translation&#39;</span> <span class="ow">in</span> <span class="n">cam</span><span class="p">:</span>
+            <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;translation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;translation&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span> <span class="c1"># Milimeters to meters.  </span>
+        <span class="c1"># Add intrinsic parameters vector.</span>
+        <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;intrinsic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">cam</span><span class="p">[</span><span class="s1">&#39;focal_length&#39;</span><span class="p">],</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;center&#39;</span><span class="p">],</span> 
+            <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;radial_distortion&#39;</span><span class="p">],</span> <span class="n">cam</span><span class="p">[</span><span class="s1">&#39;tangential_distortion&#39;</span><span class="p">]))</span>
+
+        <span class="c1"># Load serialized dataset.</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">&#39;positions_3d&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> 
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">subject</span><span class="p">,</span> <span class="n">actions</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">action_name</span><span class="p">,</span> <span class="n">positions</span> <span class="ow">in</span> <span class="n">actions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">subject</span><span class="p">][</span><span class="n">action_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;positions&#39;</span><span class="p">:</span> <span class="n">positions</span><span class="p">,</span>
+                    <span class="s1">&#39;cameras&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cameras</span><span class="p">[</span><span class="n">subject</span><span class="p">],</span>
+                <span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -78,20 +122,20 @@ nb_path: "nbs/18_runningpose_dataset.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">runningpose_skeleton</span> <span class="o">=</span> <span class="n">Skeleton</span><span class="p">(</span>
+    <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+    <span class="n">joints_left</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> 
+    <span class="n">joints_right</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
@@ -103,46 +147,83 @@ nb_path: "nbs/18_runningpose_dataset.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">runningpose_cameras_intrinsic_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;miqusVideo1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">60818.726563</span><span class="p">,</span> <span class="mf">32822.339844</span><span class="p">],</span>
+        <span class="s1">&#39;focal_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">107467.257813</span><span class="p">,</span> <span class="mf">107467.640625</span><span class="p">],</span>
+        <span class="s1">&#39;radial_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.045952</span><span class="p">,</span> <span class="mf">0.137059</span><span class="p">,</span> <span class="mf">0.000000</span><span class="p">],</span>
+        <span class="s1">&#39;tangential_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.000110</span><span class="p">,</span> <span class="mf">0.000532</span><span class="p">],</span>
+        <span class="s1">&#39;res_w&#39;</span><span class="p">:</span> <span class="mi">1920</span><span class="p">,</span>
+        <span class="s1">&#39;res_h&#39;</span><span class="p">:</span> <span class="mi">1080</span><span class="p">,</span>
+        <span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span> <span class="c1"># Only used for visualization</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;miqusVideo2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">61535.457031</span><span class="p">,</span> <span class="mf">529684.667969</span><span class="p">],</span>
+        <span class="s1">&#39;focal_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">106897.671875</span><span class="p">,</span> <span class="mf">106903.906250</span><span class="p">],</span>
+        <span class="s1">&#39;radial_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.044311</span><span class="p">,</span> <span class="mf">0.129243</span><span class="p">,</span><span class="mf">0.000000</span><span class="p">],</span>
+        <span class="s1">&#39;tangential_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.000380</span><span class="p">,</span> <span class="mf">0.000067</span><span class="p">],</span>
+        <span class="s1">&#39;res_w&#39;</span><span class="p">:</span> <span class="mi">1920</span><span class="p">,</span>
+        <span class="s1">&#39;res_h&#39;</span><span class="p">:</span> <span class="mi">1080</span><span class="p">,</span>
+        <span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span> <span class="c1"># Only used for visualization</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;miqusVideo3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">60224.542969</span><span class="p">,</span> <span class="mf">33399.539063</span><span class="p">],</span>
+        <span class="s1">&#39;focal_length&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">107180.078125</span><span class="p">,</span> <span class="mf">107196.359375</span><span class="p">],</span>
+        <span class="s1">&#39;radial_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.044245</span><span class="p">,</span><span class="mf">0.134407</span><span class="p">,</span> <span class="mf">0.000000</span><span class="p">],</span>
+        <span class="s1">&#39;tangential_distortion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.000612</span><span class="p">,</span> <span class="mf">0.000214</span><span class="p">],</span>
+        <span class="s1">&#39;res_w&#39;</span><span class="p">:</span> <span class="mi">1920</span><span class="p">,</span>
+        <span class="s1">&#39;res_h&#39;</span><span class="p">:</span> <span class="mi">1080</span><span class="p">,</span>
+        <span class="s1">&#39;azimuth&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span> <span class="c1"># Only used for visualization</span>
+    <span class="p">}</span>
+<span class="p">]</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted 15_prepare_data_COCO.ipynb.
-Converted 16_pycococreatortools.ipynb.
-Converted 17_format_qtmdata.ipynb.
-Converted 18_runningpose_dataset.ipynb.
-Converted 19_train_detectron2.ipynb.
-Converted 20_transfer_model.ipynb.
-Converted 21_prepare_data_3d.ipynb.
-Converted index.ipynb.
-</pre>
 </div>
-</div>
+    {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">runningpose_cameras_extrinsic_params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>   <span class="c1"># Miqus video camera 1</span>
+        <span class="s1">&#39;rotation&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="mf">0.735354</span><span class="p">,</span> <span class="mf">0.677463</span><span class="p">,</span> <span class="mf">0.017256</span><span class="p">],</span> 
+            <span class="p">[</span><span class="o">-</span><span class="mf">0.104186</span><span class="p">,</span> <span class="mf">0.087855</span><span class="p">,</span> <span class="mf">0.990670</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mf">0.669627</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.730291</span><span class="p">,</span> <span class="mf">0.135186</span><span class="p">]</span>
+        <span class="p">]),</span>
+        <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">6643.345215</span><span class="p">,</span> <span class="o">-</span><span class="mf">2730.456543</span><span class="p">,</span> <span class="mf">1153.752808</span><span class="p">],</span>
+    <span class="p">},</span>
+    <span class="p">{</span>   <span class="c1"># Miqus video camera 2</span>
+        <span class="s1">&#39;rotation&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="mf">0.997871</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.064902</span><span class="p">,</span> <span class="mf">0.006349</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">0.006020</span><span class="p">,</span> <span class="mf">0.005255</span><span class="p">,</span> <span class="mf">0.999968</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">0.064933</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.997878</span> <span class="p">,</span> <span class="mf">0.004853</span><span class="p">]</span>
+        <span class="p">]),</span>
+        <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">697.331482</span><span class="p">,</span> <span class="o">-</span><span class="mf">2968.999268</span><span class="p">,</span> <span class="mf">1121.579468</span><span class="p">],</span>
+    <span class="p">},</span>
+    <span class="p">{</span>   <span class="c1"># Miqus video camera 3</span>
+        <span class="s1">&#39;rotation&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">0.641654</span><span class="p">,</span> <span class="mf">0.766908</span><span class="p">,</span> <span class="mf">0.011533</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">0.137808</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.130067</span><span class="p">,</span> <span class="mf">0.981882</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">0.754513</span><span class="p">,</span> <span class="mf">0.628438</span><span class="p">,</span> <span class="mf">0.189144</span><span class="p">]</span>
+        <span class="p">]),</span>
+        <span class="s1">&#39;translation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">14351.271484</span><span class="p">,</span> <span class="mf">3795.722412</span><span class="p">,</span> <span class="mf">1504.888672</span><span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 

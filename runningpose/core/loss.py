@@ -88,7 +88,7 @@ def weighted_mpjpe(predicted, target, w):
 def n_mpjpe(predicted, target):
     """
     Normalized MPJPE (scale only), adapted from:
-    https://github.com/hrhodin/UnsupervisedGeometryAwareRepresentationLearning/blob/master/losses/poses.py
+    https://github.com/hrhodin/UnsupervisedGeometryAwareRepresentationLearning
     """
     assert predicted.shape == target.shape
 

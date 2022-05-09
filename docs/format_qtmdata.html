@@ -47,7 +47,7 @@ nb_path: "nbs/17_format_qtmdata.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/format_qtmdata.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>()</p>
+<h4 id="parse_args" class="doc_header"><code>parse_args</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/format_qtmdata.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_args</code>()</p>
 </blockquote>
 
 </div>
@@ -63,10 +63,58 @@ nb_path: "nbs/17_format_qtmdata.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Reformat qtmdata so that we can train.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--data-file&#39;</span><span class="p">,</span> 
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;data_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;qtm text file that has been formated in matlab&#39;</span><span class="p">,</span> 
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--output-dir&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;output_dir&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;directory for reformated keypoint data (default: ./)&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;./&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--cut-frame&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;cut_frame&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;input what frame to cut the dataframe at.&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--camera&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;camera&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;which misqus camera (1, 2, 3) to use in runningpose dataset&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>TODO: Fix 2D converter</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -85,7 +133,7 @@ nb_path: "nbs/17_format_qtmdata.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/format_qtmdata.py#L88" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/format_qtmdata.py#L88" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
 </blockquote>
 <p>Loads the qtm data then removes unwanted keypoints.
 Then it infers new keypoints adds them.</p>
@@ -103,66 +151,104 @@ Then it infers new keypoints adds them.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads the qtm data then removes unwanted keypoints.</span>
+<span class="sd">    Then it infers new keypoints adds them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Loads the textfiles</span>
+    <span class="n">labels_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;qtm_labels.txt&#39;</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span><span class="p">)</span>
+    <span class="n">data_3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_file</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Reformats the data to a dataframe</span>
+    <span class="n">data_3D</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_3D</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">labels_np</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Remove unwanted keypoints</span>
+    <span class="n">data_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+            <span class="s1">&#39;HeadL&#39;</span><span class="p">,</span> <span class="s1">&#39;HeadR&#39;</span><span class="p">,</span> <span class="s1">&#39;Chest&#39;</span><span class="p">,</span> <span class="s1">&#39;LThighFrontLow&#39;</span><span class="p">,</span> <span class="s1">&#39;RThighFrontLow&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;LShinFrontHigh&#39;</span><span class="p">,</span> <span class="s1">&#39;RShinFrontHigh&#39;</span><span class="p">,</span> <span class="s1">&#39;LForefoot5&#39;</span><span class="p">,</span> <span class="s1">&#39;RForefoot5&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;LHeelBack&#39;</span><span class="p">,</span> <span class="s1">&#39;RHeelBack&#39;</span><span class="p">,</span> <span class="s1">&#39;LArm&#39;</span><span class="p">,</span> <span class="s1">&#39;RArm&#39;</span><span class="p">,</span><span class="s1">&#39;WaistLFront&#39;</span><span class="p">,</span> <span class="s1">&#39;WaistL&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;WaistRFront&#39;</span><span class="p">,</span> <span class="s1">&#39;WaistR&#39;</span><span class="p">,</span> <span class="s1">&#39;LHand2&#39;</span><span class="p">,</span> <span class="s1">&#39;RHand2&#39;</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># Create &quot;new&quot; keypoints by finding the mean between specific keypoints</span>
+    <span class="n">left_elbow_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;LElbowOut&#39;</span><span class="p">,</span><span class="s1">&#39;LElbowIn&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">right_elbow_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;RElbowOut&#39;</span><span class="p">,</span><span class="s1">&#39;RElbowIn&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">left_wrist_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;LWristIn&#39;</span><span class="p">,</span><span class="s1">&#39;LWristOut&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">right_wrist_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;RWristOut&#39;</span><span class="p">,</span><span class="s1">&#39;RWristIn&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">left_knee_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;LKneeOut&#39;</span><span class="p">,</span><span class="s1">&#39;LKneeIn&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">right_knee_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;RKneeOut&#39;</span><span class="p">,</span><span class="s1">&#39;RKneeIn&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">left_ankle_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;LAnkleOut&#39;</span><span class="p">,</span><span class="s1">&#39;LAnkleIn&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">right_ankle_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;RAnkleOut&#39;</span><span class="p">,</span><span class="s1">&#39;RAnkleIn&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Remove the keypoints that was taken as a mean</span>
+    <span class="n">data_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+            <span class="s1">&#39;LElbowOut&#39;</span><span class="p">,</span><span class="s1">&#39;LElbowIn&#39;</span><span class="p">,</span> <span class="s1">&#39;RElbowOut&#39;</span><span class="p">,</span><span class="s1">&#39;RElbowIn&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;LWristIn&#39;</span><span class="p">,</span><span class="s1">&#39;LWristOut&#39;</span><span class="p">,</span> <span class="s1">&#39;RWristIn&#39;</span><span class="p">,</span><span class="s1">&#39;RWristOut&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;LKneeIn&#39;</span><span class="p">,</span> <span class="s1">&#39;LKneeOut&#39;</span><span class="p">,</span><span class="s1">&#39;RKneeIn&#39;</span><span class="p">,</span> <span class="s1">&#39;RKneeOut&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;LAnkleOut&#39;</span><span class="p">,</span><span class="s1">&#39;LAnkleIn&#39;</span><span class="p">,</span><span class="s1">&#39;RAnkleOut&#39;</span><span class="p">,</span><span class="s1">&#39;RAnkleIn&#39;</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># Adds the new keypoint data to the dataframe</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;LElbow&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_elbow_3D</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;RElbow&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">right_elbow_3D</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;LWrist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_wrist_3D</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;RWrist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">right_wrist_3D</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;LKnee&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_knee_3D</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;RKnee&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">right_knee_3D</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;LAnkle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_ankle_3D</span>
+    <span class="n">data_3D</span><span class="p">[</span><span class="s1">&#39;RAnkle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">right_ankle_3D</span>
+   
+    <span class="c1"># Remove every other frame, our videodata Miqus is 85hz and the data is 170hz</span>
+    <span class="c1"># OBS! (3 rows corresponds to 1 frame.)</span>
+    <span class="n">remove</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">remove</span> <span class="o">=</span> <span class="ow">not</span><span class="p">(</span><span class="n">remove</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">remove</span><span class="p">:</span>
+            <span class="n">data_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+    <span class="n">data_3D</span> <span class="o">=</span> <span class="n">data_3D</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Convert 3D world to 2D camera coordinates</span>
+    <span class="c1"># data_2D = convert_to_2D(data_3D, args.camera-1) # args.camera-1 for cameras (0,1,2) instead of (1,2,3)</span>
+
+    <span class="c1"># Creates output names that depends on the name of the data file </span>
+    <span class="n">data_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_file</span><span class="p">))</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># out_2D = os.path.join(</span>
+    <span class="c1">#     args.output_dir, data_file_name + &#39;_2D_keypoints.csv&#39;)</span>
+    <span class="n">out_3D</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">data_file_name</span> <span class="o">+</span> <span class="s1">&#39;_3D_keypoints.csv&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Save the keypoint data as csv files</span>
+    <span class="c1"># TODO: Add reformat to 2D data i.e 3DWorld -&gt; 3DCamera -&gt; 2D (projection)</span>
+    <span class="c1"># pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)</span>
+    <span class="c1"># TODO: Check if it is better to save this as npz instead.</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">data_3D</span><span class="p">,</span> <span class="n">path_or_buf</span><span class="o">=</span><span class="n">out_3D</span><span class="p">)</span>
+    <span class="c1"># pd.DataFrame.to_csv(data_2D, path_or_buf=out_2D)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+</div>
+    {% endraw %}
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted 15_prepare_data_COCO.ipynb.
-Converted 16_pycococreatortools.ipynb.
-Converted 17_format_qtmdata.ipynb.
-Converted 18_runningpose_dataset.ipynb.
-Converted 19_train_detectron2.ipynb.
-Converted 20_transfer_model.ipynb.
-Converted 21_prepare_data_3d.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

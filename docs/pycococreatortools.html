@@ -47,7 +47,7 @@ nb_path: "nbs/16_pycococreatortools.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="resize_binary_mask" class="doc_header"><code>resize_binary_mask</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>resize_binary_mask</code>(<strong><code>array</code></strong>, <strong><code>new_size</code></strong>)</p>
+<h4 id="resize_binary_mask" class="doc_header"><code>resize_binary_mask</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>resize_binary_mask</code>(<strong><code>array</code></strong>, <strong><code>new_size</code></strong>)</p>
 </blockquote>
 <p>Returns a resized binary mask array.</p>
 
@@ -64,6 +64,20 @@ nb_path: "nbs/16_pycococreatortools.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">resize_binary_mask</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">new_size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a resized binary mask array.&quot;&quot;&quot;</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">new_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -79,7 +93,7 @@ nb_path: "nbs/16_pycococreatortools.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="close_contour" class="doc_header"><code>close_contour</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>close_contour</code>(<strong><code>contour</code></strong>)</p>
+<h4 id="close_contour" class="doc_header"><code>close_contour</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>close_contour</code>(<strong><code>contour</code></strong>)</p>
 </blockquote>
 <p>Returns a closed contour i.e the last and first element in the
 countour is equal.</p>
@@ -97,6 +111,23 @@ countour is equal.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">close_contour</span><span class="p">(</span><span class="n">contour</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a closed contour i.e the last and first element in the </span>
+<span class="sd">    countour is equal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">contour</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">contour</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">contour</span><span class="p">,</span> <span class="n">contour</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">contour</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -112,7 +143,7 @@ countour is equal.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="binary_mask_to_polygon" class="doc_header"><code>binary_mask_to_polygon</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>binary_mask_to_polygon</code>(<strong><code>binary_mask</code></strong>, <strong><code>tolerance</code></strong>=<em><code>0</code></em>)</p>
+<h4 id="binary_mask_to_polygon" class="doc_header"><code>binary_mask_to_polygon</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>binary_mask_to_polygon</code>(<strong><code>binary_mask</code></strong>, <strong><code>tolerance</code></strong>=<em><code>0</code></em>)</p>
 </blockquote>
 <p>Converts a binary mask to COCO polygon representation.</p>
 <p>Args:</p>
@@ -136,6 +167,44 @@ coordinate array is returned.</li>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">binary_mask_to_polygon</span><span class="p">(</span><span class="n">binary_mask</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a binary mask to COCO polygon representation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - binary_mask: a 2D binary numpy array where &#39;1&#39;s represent the object.</span>
+<span class="sd">    - tolerance: Maximum distance from original points of polygon to </span>
+<span class="sd">    approximated polygonal chain. If tolerance is 0, the original </span>
+<span class="sd">    coordinate array is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">polygons</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># pad mask to close contours of shapes which start and end at an edge</span>
+    <span class="n">padded_binary_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span>
+        <span class="n">binary_mask</span><span class="p">,</span> <span class="n">pad_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+    <span class="n">contours</span> <span class="o">=</span> <span class="n">measure</span><span class="o">.</span><span class="n">find_contours</span><span class="p">(</span><span class="n">padded_binary_mask</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">contours</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">contour</span> <span class="ow">in</span> <span class="n">contours</span><span class="p">:</span>
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">close_contour</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">measure</span><span class="o">.</span><span class="n">approximate_polygon</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">segmentation</span> <span class="o">=</span> <span class="n">contour</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># After padding and subtracting 1 we may get -0.5 points in our segmentation </span>
+        <span class="n">segmentation</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">segmentation</span><span class="p">]</span>
+        <span class="n">polygons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segmentation</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">polygons</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -151,7 +220,7 @@ coordinate array is returned.</li>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="create_image_info" class="doc_header"><code>create_image_info</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_image_info</code>(<strong><code>image_id</code></strong>, <strong><code>file_name</code></strong>, <strong><code>image</code></strong>, <strong><code>date_captured</code></strong>=<em><code>'2022-05-06 17:02:10.561827'</code></em>, <strong><code>license_id</code></strong>=<em><code>1</code></em>, <strong><code>coco_url</code></strong>=<em><code>''</code></em>, <strong><code>flickr_url</code></strong>=<em><code>''</code></em>)</p>
+<h4 id="create_image_info" class="doc_header"><code>create_image_info</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_image_info</code>(<strong><code>image_id</code></strong>, <strong><code>file_name</code></strong>, <strong><code>image</code></strong>, <strong><code>date_captured</code></strong>=<em><code>'2022-05-09 15:32:55.711749'</code></em>, <strong><code>license_id</code></strong>=<em><code>1</code></em>, <strong><code>coco_url</code></strong>=<em><code>''</code></em>, <strong><code>flickr_url</code></strong>=<em><code>''</code></em>)</p>
 </blockquote>
 <p>Returns the image information in JSON style format.</p>
 
@@ -168,6 +237,33 @@ coordinate array is returned.</li>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">create_image_info</span><span class="p">(</span>
+        <span class="n">image_id</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> 
+        <span class="n">date_captured</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">),</span> 
+        <span class="n">license_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">coco_url</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flickr_url</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the image information in JSON style format.&quot;&quot;&quot;</span>
+    
+    <span class="n">image_info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">image_id</span><span class="p">,</span>
+        <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="n">file_name</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s2">&quot;date_captured&quot;</span><span class="p">:</span> <span class="n">date_captured</span><span class="p">,</span>
+        <span class="s2">&quot;license&quot;</span><span class="p">:</span> <span class="n">license_id</span><span class="p">,</span>
+        <span class="s2">&quot;coco_url&quot;</span><span class="p">:</span> <span class="n">coco_url</span><span class="p">,</span>
+        <span class="s2">&quot;flickr_url&quot;</span><span class="p">:</span> <span class="n">flickr_url</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">image_info</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -183,7 +279,7 @@ coordinate array is returned.</li>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="create_annotation_info" class="doc_header"><code>create_annotation_info</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_annotation_info</code>(<strong><code>annotation_id</code></strong>, <strong><code>image_id</code></strong>, <strong><code>binary_mask</code></strong>, <strong><code>bounding_box</code></strong>, <strong><code>image_size</code></strong>=<em><code>None</code></em>, <strong><code>tolerance</code></strong>=<em><code>2</code></em>, <strong><code>keypoints</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="create_annotation_info" class="doc_header"><code>create_annotation_info</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/pycoco/pycococreatortools.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_annotation_info</code>(<strong><code>annotation_id</code></strong>, <strong><code>image_id</code></strong>, <strong><code>binary_mask</code></strong>, <strong><code>bounding_box</code></strong>, <strong><code>image_size</code></strong>=<em><code>None</code></em>, <strong><code>tolerance</code></strong>=<em><code>2</code></em>, <strong><code>keypoints</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Returns annotation information as a dictionary for COCO-keypoints in a
 JSON style format.</p>
@@ -201,53 +297,44 @@ JSON style format.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">create_annotation_info</span><span class="p">(</span>
+        <span class="n">annotation_id</span><span class="p">,</span> <span class="n">image_id</span><span class="p">,</span> <span class="n">binary_mask</span><span class="p">,</span> 
+        <span class="n">bounding_box</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keypoints</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns annotation information as a dictionary for COCO-keypoints in a </span>
+<span class="sd">    JSON style format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">image_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">binary_mask</span> <span class="o">=</span> <span class="n">resize_binary_mask</span><span class="p">(</span><span class="n">binary_mask</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+
+    <span class="n">binary_mask_encoded</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="n">binary_mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)))</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">area</span><span class="p">(</span><span class="n">binary_mask_encoded</span><span class="p">)</span>
+    
+    <span class="n">segmentation</span> <span class="o">=</span> <span class="n">binary_mask_to_polygon</span><span class="p">(</span><span class="n">binary_mask</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">segmentation</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">annotation_info</span> <span class="o">=</span> <span class="p">{</span>
+       <span class="s2">&quot;segmentation&quot;</span><span class="p">:</span> <span class="n">segmentation</span><span class="p">,</span> 
+       <span class="s2">&quot;num_keypoints&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+       <span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="n">area</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+       <span class="s2">&quot;iscrowd&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+       <span class="s2">&quot;keypoints&quot;</span><span class="p">:</span> <span class="n">keypoints</span><span class="p">,</span>
+       <span class="s2">&quot;image_id&quot;</span><span class="p">:</span> <span class="n">image_id</span><span class="p">,</span>
+       <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="n">bounding_box</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+       <span class="s2">&quot;category_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+       <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">annotation_id</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">annotation_info</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted 15_prepare_data_COCO.ipynb.
-Converted 16_pycococreatortools.ipynb.
-Converted 17_format_qtmdata.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 

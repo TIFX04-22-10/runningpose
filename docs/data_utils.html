@@ -32,6 +32,23 @@ nb_path: "nbs/12_data_utils.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">coco_metadata</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;layout_name&#39;</span><span class="p">:</span> <span class="s1">&#39;coco&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;num_joints&#39;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+    <span class="s1">&#39;keypoints_symmetry&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -39,6 +56,23 @@ nb_path: "nbs/12_data_utils.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">h36m_metadata</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;layout_name&#39;</span><span class="p">:</span> <span class="s1">&#39;h36m&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;num_joints&#39;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+    <span class="s1">&#39;keypoints_symmetry&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -54,7 +88,7 @@ nb_path: "nbs/12_data_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="suggest_metadata" class="doc_header"><code>suggest_metadata</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/data/data_utils.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>suggest_metadata</code>(<strong><code>name</code></strong>)</p>
+<h4 id="suggest_metadata" class="doc_header"><code>suggest_metadata</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/data/data_utils.py#L26" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>suggest_metadata</code>(<strong><code>name</code></strong>)</p>
 </blockquote>
 <p>Returns the metadata for a specific dataset.</p>
 
@@ -71,50 +105,21 @@ nb_path: "nbs/12_data_utils.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">suggest_metadata</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the metadata for a specific dataset.&quot;&quot;&quot;</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="p">[</span><span class="n">coco_metadata</span><span class="p">,</span> <span class="n">h36m_metadata</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;layout_name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">metadata</span>
+        <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;layout_name&#39;</span><span class="p">])</span>
+    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;Cannot infer keypoint layout from name &quot;</span><span class="si">{}</span><span class="s1">&quot;. Tried </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 

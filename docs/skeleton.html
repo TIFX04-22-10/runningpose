@@ -47,7 +47,7 @@ nb_path: "nbs/02_skeleton.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Skeleton" class="doc_header"><code>class</code> <code>Skeleton</code><a href="https://github.com/svenssona/runningpose/tree/master/runningpose/core/skeleton.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Skeleton</code>(<strong><code>parents</code></strong>, <strong><code>joints_left</code></strong>, <strong><code>joints_right</code></strong>)</p>
+<h2 id="Skeleton" class="doc_header"><code>class</code> <code>Skeleton</code><a href="https://github.tifx04-22-10.com/TIFX04-22-10/runningpose/tree/master/runningpose/core/skeleton.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Skeleton</code>(<strong><code>parents</code></strong>, <strong><code>joints_left</code></strong>, <strong><code>joints_right</code></strong>)</p>
 </blockquote>
 <p>A skeleton model with a number of joints and limb orientation.</p>
 <p>Attributes:
@@ -68,50 +68,102 @@ joints_right -- All the joints to the right of our skeleton model.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">nbdev.export</span> <span class="kn">import</span> <span class="n">notebook2script</span><span class="p">;</span> <span class="n">notebook2script</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Skeleton</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A skeleton model with a number of joints and limb orientation.</span>
+
+<span class="sd">    Attributes: </span>
+<span class="sd">    parents -- An array with all the parent nodes for each of the joints.</span>
+<span class="sd">    joints_left -- All the joints to the left of our skeleton model.</span>
+<span class="sd">    joints_right -- All the joints to the right of our skeleton model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parents</span><span class="p">,</span> <span class="n">joints_left</span><span class="p">,</span> <span class="n">joints_right</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">joints_left</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">joints_right</span><span class="p">),</span> <span class="s2">&quot;Skeleton is not symmetric.&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parents</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_joints_left</span> <span class="o">=</span> <span class="n">joints_left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_joints_right</span> <span class="o">=</span> <span class="n">joints_right</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_metadata</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">remove_joints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">joints_to_remove</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove the joints specified in &#39;joints_to_remove&#39;.</span>
+<span class="sd">        return: A list with all the remaining nodes after removal. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">valid_joints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">joint</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">joint</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">joints_to_remove</span><span class="p">:</span>
+                <span class="n">valid_joints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">joint</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">)):</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">joints_to_remove</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                
+        <span class="n">index_offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">new_parents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">joints_to_remove</span><span class="p">:</span>
+                <span class="n">new_parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent</span> <span class="o">-</span> <span class="n">index_offsets</span><span class="p">[</span><span class="n">parent</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">index_offsets</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parents</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_parents</span><span class="p">)</span>
+        
+        <span class="c1"># Re-assigns the remaining joints to left and right respectivly. </span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_joints_left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_joints_left</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">joint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_joints_left</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">joint</span> <span class="ow">in</span> <span class="n">valid_joints</span><span class="p">:</span>
+                    <span class="n">new_joints_left</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">joint</span> <span class="o">-</span> <span class="n">index_offsets</span><span class="p">[</span><span class="n">joint</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_joints_left</span> <span class="o">=</span> <span class="n">new_joints_left</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_joints_right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_joints_right</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">joint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_joints_right</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">joint</span> <span class="ow">in</span> <span class="n">valid_joints</span><span class="p">:</span>
+                    <span class="n">new_joints_right</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">joint</span> <span class="o">-</span> <span class="n">index_offsets</span><span class="p">[</span><span class="n">joint</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_joints_right</span> <span class="o">=</span> <span class="n">new_joints_right</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_metadata</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">valid_joints</span>
+         
+    <span class="k">def</span> <span class="nf">_compute_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_has_children</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">parent</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_has_children</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">parent</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="c1"># Bunch of getter methods. </span>
+    <span class="k">def</span> <span class="nf">num_joints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parents</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">parents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parents</span>
+
+    <span class="k">def</span> <span class="nf">has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_children</span>
+
+    <span class="k">def</span> <span class="nf">children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_childre</span>
+    
+    <span class="k">def</span> <span class="nf">joints_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_joints_left</span>
+
+    <span class="k">def</span> <span class="nf">joints_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_joints_right</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_model.ipynb.
-Converted 01_loss.ipynb.
-Converted 02_skeleton.ipynb.
-Converted 03_mocap_dataset.ipynb.
-Converted 04_h36m_dataset.ipynb.
-Converted 05_camera.ipynb.
-Converted 06_quaternion.ipynb.
-Converted 07_utils.ipynb.
-Converted 08_generators.ipynb.
-Converted 09_custom_dataset.ipynb.
-Converted 10_visualization.ipynb.
-Converted 11_arguments.ipynb.
-Converted 12_data_utils.ipynb.
-Converted 13_prepare_data_2d_custom.ipynb.
-Converted 14_infer_video.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
