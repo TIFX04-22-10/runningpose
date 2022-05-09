@@ -29,6 +29,62 @@ nb_path: "nbs/index.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is the implementation of the approach used for 3D pose estimation in the candidate project TIFX04-22-10 at Chalmers University of Technology. The approach is described in the <a href="">candidate report</a>. It is an adaption of the approach used for <a href="https://github.com/facebookresearch/VideoPose3D">VideoPose3D</a> made by Meta Research.</p>
+<p><img src="/runningpose/runner3.gif" alt=""></p>
+<h2 id="Description">Description<a class="anchor-link" href="#Description"> </a></h2><p>Runningpose predicts keypoints in 3D, and is especially made to be used for gait analysis on running humans using monocular vision. To predict 3D keypoints Detectron2 is first used to predict 2D keypoints. A temporal convolution network (TCN) is then used for lifting, that is predicting 3D keypoints from the 2D keypoints.</p>
+<p>Tranfer learning with a pretrained architecture for VideoPose3D was used for a architecture for 3D predictions, RunningPose architecture. It was then trained with a custom dataset, RunningPose dataset. The dataset was made in collaboration with <a href="https://www.qualisys.com">Qualisys</a> and <a href="https://www.friidrott.se">Swedish Athletics Association</a>.</p>
+<p>The model predicts keypoints that has been identified as especially important regarding gait analysis for running humans. One main difference between this model and the pretrained model for VideoPose3D is that a keypoint on each foot is predicted, which the VideoPose3D model does not do.</p>
+<p>Note: Runningpose was written with <a href="https://nbdev.fast.ai/">nbdev</a>.</p>
+<h2 id="Results-on-the-RunningPose-dataset">Results on the RunningPose dataset<a class="anchor-link" href="#Results-on-the-RunningPose-dataset"> </a></h2><p>The model was trained only 6426 frames of data for 100 epochs and showed high variance as a result. See the lossplot in nbs. 
+The mean per-joint position error (MPJPE) is shown in the table below: 
+| Training | Validation | Test |
+|:-------|:-------:|:-------:|
+| 45.11 mm | 115.03 mm | 90.09 mm |</p>
+<h2 id="Quick-start">Quick start<a class="anchor-link" href="#Quick-start"> </a></h2><p>To get started quickly, follow these instructions. This will allow you to do inference on in the wild and produce basic visualizations.
+For more detailed instructions, please refer to our documentation: <a href="tifx04-22-10.github.io/runningpose/">docs</a>.</p>
+<h3 id="Dependencies">Dependencies<a class="anchor-link" href="#Dependencies"> </a></h3><p>Make sure you have the following dependencies installed before proceeding:</p>
+<ul>
+<li>Python 3+ distribution</li>
+<li>PyTorch &gt;= 0.4.0</li>
+</ul>
+<p>Optional:</p>
+<ul>
+<li>Matplotlib, if you want to visualize predictions. Additionally, you need <em>ffmpeg</em> to export MP4 videos, and <em>imagemagick</em> to export GIFs.</li>
+</ul>
+<h3 id="Inference">Inference<a class="anchor-link" href="#Inference"> </a></h3><p>Videos used for inference should only contain one person. The instructions below show how to prepare the trained model, do optional video processing, infer 2D keypoints, create a custom dataset for the videos, and then do the inference and visualize the results.</p>
+<h4 id="Step-1:-setup">Step 1: setup<a class="anchor-link" href="#Step-1:-setup"> </a></h4><p>Download the <a href="">pretrained model</a> for generating 3D predictions. Can it not just be left in the correct place?</p>
+<h4 id="Step-2:-(optional):-video-preprocessing">Step 2: (optional): video preprocessing<a class="anchor-link" href="#Step-2:-(optional):-video-preprocessing"> </a></h4><p>Since the script expects a single-person scenario, you may want to extract a portion of your video. This is very easy to do with ffmpeg, e.g.</p>
+
+<pre><code>ffmpeg -i input.mp4 -ss 1:00 -to 1:30 -c copy output.mp4</code></pre>
+<p>extracts a clip from minute 1:00 to minute 1:30 of <code>input.mp4</code>, and exports it to <code>output.mp4</code>.</p>
+<p>Optionally, you can also adapt the frame rate of the video. Most videos have a frame rate of about 25 FPS, but our runningpose model was trained on 85-FPS videos. Since our model is robust to alterations in speed, this step is not very important and can be skipped, but if you want the best possible results you can use ffmpeg again for this task:</p>
+
+<pre><code>ffmpeg -i input.mp4 -filter "minterpolate='fps=85'" -crf 0 output.mp4</code></pre>
+<h4 id="Step-3:-inferring-2D-keypoints-with-Detectron">Step 3: inferring 2D keypoints with Detectron<a class="anchor-link" href="#Step-3:-inferring-2D-keypoints-with-Detectron"> </a></h4><p>Set up <a href="https://github.com/facebookresearch/detectron2">Detectron2</a> and use the script <code>runningpose/data/inference/infer_video.py</code> (no need to copy this, as it directly uses the Detectron2 API). This script provides a convenient interface to generate 2D keypoint predictions from videos without manually extracting individual frames.</p>
+<p>To infer keypoints from all the mp4 videos in <code>input_directory</code>, run</p>
+
+<pre><code>cd runningpose/data/inference
+python infer_video.py \
+    --cfg COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml \
+    --output-dir output_directory \
+    --image-ext mp4 \
+    input_directory</code></pre>
+<p>The results will be exported to <code>output_directory</code> as custom NumPy archives (<code>.npz</code> files). You can change the video extension in <code>--image-ext</code> (ffmpeg supports a wide range of formats).</p>
+<h4 id="Step-4:-creating-a-custom-dataset">Step 4: creating a custom dataset<a class="anchor-link" href="#Step-4:-creating-a-custom-dataset"> </a></h4><p>Run the dataset preprocessing script from the <code>runningpose/data</code> directory:</p>
+
+<pre><code>python prepare_data_2d_custom.py -i output_directory -o myvideos</code></pre>
+<p>This creates a custom dataset named <code>myvideos</code> (which contains all the videos in <code>output_directory</code>, each of which is mapped to a different subject) and saved to <code>data_2d_custom_myvideos.npz</code>. You are free to specify any name for the dataset.</p>
+<h4 id="Step-5:-rendering-a-custom-video-and-exporting-coordinates">Step 5: rendering a custom video and exporting coordinates<a class="anchor-link" href="#Step-5:-rendering-a-custom-video-and-exporting-coordinates"> </a></h4><p>You can finally use the visualization feature to render a video of the 3D joint predictions. You must specify the <code>custom</code> dataset (<code>-d custom</code>), the input keypoints as exported in the previous step (<code>-k myvideos</code>), the correct architecture/checkpoint, and the action <code>custom</code> (<code>--viz-action custom</code>). The subject is the file name of the input video, and the camera is always 0.</p>
+<p>To use the trained RunningPose architecture, specify the ckeckpoint as runningpose_100.bin</p>
+
+<pre><code>python run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate runningpose_100.bin --render --viz-subject input_video.mp4 --viz-action custom --viz-camera 0 --viz-video /path/to/input_video.mp4 --viz-output output.mp4 --viz-size 6</code></pre>
+<p>You can also export the 3D joint positions (in camera space) to a NumPy archive. To this end, replace <code>--viz-output</code> with <code>--viz-export</code> and specify the file name.</p>
+
+</div>
+</div>
+</div>
 </div>
  
 
