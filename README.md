@@ -38,7 +38,7 @@ Optional:
 Videos used for inference should only contain one person. The instructions below show how to prepare the trained model, do optional video processing, infer 2D keypoints, create a custom dataset for the videos, and then do the inference and visualize the results.
 
 #### Step 1: setup
-Download the [pretrained model](https://file.io/wsJVsirqqobS) for generating 3D predictions. Put this model in the `checkpoint` directory of this repo.
+Download the [pretrained model](https://drive.google.com/file/d/1bEPUXcjW7u7oMbeXkLBsnLoDMlnRIt8i/view?usp=sharing) for generating 3D predictions. Put this model in the `checkpoint` directory of this repo.
 
 
 #### Step 2: (optional): video preprocessing
