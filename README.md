@@ -50,7 +50,7 @@ extracts a clip from minute 1:00 to minute 1:30 of `input.mp4`, and exports it t
 
 Optionally, you can also adapt the frame rate of the video. Most videos have a frame rate of about 25 FPS, but our runningpose model was trained on 85-FPS videos. Since our model is robust to alterations in speed, this step is not very important and can be skipped, but if you want the best possible results you can use ffmpeg again for this task:
 ```
-ffmpeg -i input.mp4 -filter "minterpolate='fps=85'" -crf 0 output.mp4
+ffmpeg -i input.mp4 -filter:v "minterpolate='fps=85'" -crf 0 output.mp4
 ```
 
 #### Step 3: inferring 2D keypoints with Detectron
