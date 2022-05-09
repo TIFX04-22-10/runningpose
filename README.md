@@ -78,7 +78,7 @@ This creates a custom dataset named `myvideos` (which contains all the videos in
 #### Step 5: rendering a custom video and exporting coordinates
 You can finally use the visualization feature to render a video of the 3D joint predictions. You must specify the `custom` dataset (`-d custom`), the input keypoints as exported in the previous step (`-k myvideos`), the correct architecture/checkpoint, and the action `custom` (`--viz-action custom`). The subject is the file name of the input video, and the camera is always 0.
 
-To use the trained RunningPose architecture, specify the ckeckpoint as runningpose_100.bin
+To use the trained RunningPose architecture, specify the checkpoint as runningpose_100.bin
 
 ```
 python run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate runningpose_100.bin --render --viz-subject input_video.mp4 --viz-action custom --viz-camera 0 --viz-video /path/to/input_video.mp4 --viz-output output.mp4 --viz-size 6
