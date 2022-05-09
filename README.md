@@ -76,8 +76,8 @@ python prepare_data_2d_custom.py -i output_directory -o myvideos
 This creates a custom dataset named `myvideos` (which contains all the videos in `output_directory`, each of which is mapped to a different subject) and saved to `data_2d_custom_myvideos.npz`. You are free to specify any name for the dataset.
 
 
-#### Step 5: rendering a custom video and exporting coordinates
-You can finally use the visualization feature to render a video of the 3D joint predictions. You must specify the `custom` dataset (`-d custom`), the input keypoints as exported in the previous step (`-k myvideos`), the correct architecture/checkpoint, and the action `custom` (`--viz-action custom`). The subject is the file name of the input video, and the camera is always 0.
+#### Step 5: rendering a runningpose video and exporting coordinates
+You can finally use the visualization feature to render a video of the 3D joint predictions. You must specify the `runningpose` dataset (`-d runningpose`), the input keypoints as exported in the previous step (`-k myvideos`), the correct architecture/checkpoint, and the action `runningpose` (`--viz-action custom`). The subject is the file name of the input video, and the camera is always 0.
 
 To use the trained RunningPose architecture, specify the checkpoint as runningpose_100.bin
 
