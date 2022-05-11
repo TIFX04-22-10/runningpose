@@ -16,7 +16,7 @@ The model predicts keypoints that has been identified as especially important re
 Note: Runningpose was written with [nbdev](https://nbdev.fast.ai/).
 
 ## Results on the RunningPose dataset
-The model was trained only 6426 frames of data for 100 epochs and showed high variance as a result. See the lossplot in nbs. 
+The model was trained on only 6426 frames of data for 100 epochs and showed high variance as a result. See the lossplot in nbs. 
 The mean per-joint position error (MPJPE) is shown in the table below: 
 | Training | Validation | Test |
 |:-------|:-------:|:-------:|
