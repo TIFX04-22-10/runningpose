@@ -2,7 +2,7 @@
 > We introduce a new 3D pose estimator and model designed for runners. 
 
 
-This is the implementation of the approach used for 3D pose estimation in the bachelor thesis project TIFX04-22-10 at Chalmers University of Technology. The approach is described in the [bachelor thesis](). It is an adaption of the approach used for [VideoPose3D](https://github.com/facebookresearch/VideoPose3D) made by Meta Research.
+This is the implementation of the approach used for 3D pose estimation in the bachelor thesis project TIFX04-22-10 at Chalmers University of Technology. The approach is described in the [bachelor thesis](https://drive.google.com/file/d/1FGJZwcN7_oU1l5wtiZIYw_D0PJNm3iXg/view?usp=sharing). It is an adaption of the approach used for [VideoPose3D](https://github.com/facebookresearch/VideoPose3D) made by Meta Research.
 
 ![](nbs/runner3.gif)
 
