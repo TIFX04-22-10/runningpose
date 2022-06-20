@@ -9,7 +9,7 @@ This is the implementation of the approach used for 3D pose estimation in the ba
 ## Description
 Runningpose predicts keypoints in 3D, and is especially made to be used for gait analysis on running humans using monocular vision. To predict 3D keypoints Detectron2 is first used to predict 2D keypoints. A temporal convolution network (TCN) is then used for lifting, that is predicting 3D keypoints from the 2D keypoints.
 
-Tranfer learning with a pretrained architecture for VideoPose3D was used for a architecture for 3D predictions, RunningPose architecture. It was then trained with a custom dataset, RunningPose dataset. The dataset was made in collaboration with [Qualisys](https://www.qualisys.com) and [Swedish Athletics Association](https://www.friidrott.se).
+Transfer learning with a pretrained architecture for VideoPose3D was used for a architecture for 3D predictions, RunningPose architecture. It was then trained with a custom dataset, RunningPose dataset. The dataset was made in collaboration with [Qualisys](https://www.qualisys.com) and [Swedish Athletics Association](https://www.friidrott.se).
 
 The model predicts keypoints that has been identified as especially important regarding gait analysis for running humans. One main difference between this model and the pretrained model for VideoPose3D is that a keypoint on each foot is predicted, which the VideoPose3D model does not do.
 
